@@ -1,0 +1,1 @@
+<img src="{!! !empty($avatar) ? $avatar : url('resources/assets/gentellela-alela/images/user.png') !!}" alt="User Image" class="img-thumbnail" style="height:45px; width:45px">
