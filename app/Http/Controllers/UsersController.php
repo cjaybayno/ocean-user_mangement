@@ -286,12 +286,6 @@ class UsersController extends Controller
 		;
 	}
 	
-	public function getTest()
-	{
-		
-	}
-
-	
 	/**
 	* Process dynamic status selection
 	*
@@ -303,7 +297,7 @@ class UsersController extends Controller
 		/* === get status list === */
 		$statusList = Config::get('users.status');
 		
-		/* === get selectStatus === */
+		/* === get status selections === */
 		$selectStatus = Config::get('users.inverted_status');
 		
 		/* === no need for Temporary PAssword and Expired === */
