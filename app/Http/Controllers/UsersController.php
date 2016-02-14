@@ -279,7 +279,9 @@ class UsersController extends Controller
 			'userStatus'      => $user->status,
 			'statusSelection' => $this->statusSelection($user->status),
 		])
-		->nest('changeGroup', 'users.changeGroup')
+		->nest('changeGroup', 'users.changeGroup', [
+			'userGroup' => $user->group_access_id
+		])
 		->nest('terminate', 'users.terminate')
 		->nest('changePassword', 'users.password.change')
 		->nest('changeReset', 'users.password.reset')
@@ -496,7 +498,7 @@ class UsersController extends Controller
 		$user->status = $request->change_status;
 		$user->save();
 		
-		Log::info('User Change Status: ', [
+		Log::info('User Change Status : ', [
 			'table'	=> [
 				'name' => 'users',
 				'data' => [
@@ -510,6 +512,36 @@ class UsersController extends Controller
 		return response()->json([
 			'success' => true,
 			'message' => trans('users.successChangeStatus')
+		]);
+	}
+	
+	/**
+	* Change Group
+	*
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
+	public function postChangeGroup(Request $request)
+	{
+		$userId = Crypt::decrypt($request->userId);
+		$user   = User::findOrFail($userId);
+		$user->group_access_id = $request->change_group;
+		$user->save();
+		
+		Log::info('User Change Group : ', [
+			'table'	=> [
+				'name' => 'users',
+				'data' => [
+					'id' 	 		  => $userId,
+					'group_access_id' => $request->change_group
+				]
+			],
+			'session' => Session::all()
+		]);
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('users.successChangeGroup')
 		]);
 	}
 }

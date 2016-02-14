@@ -90,7 +90,9 @@
 									<li><a href="#change-status-user-modal" data-toggle="modal">Change Status</a></li>
 								@endif
 								
-								<li><a href="#">Change Group</a></li>
+								@if ($isCurrentUser === false)
+									<li><a href="#change-group-user-modal" data-toggle="modal">Change Group</a></li>
+								@endif
 								
 								@if ($user->status !== Config::get('users.status.terminated') AND $isCurrentUser === false)
 									<li><a href="#terminate-user-modal" data-toggle="modal">Terminated</a></li>

@@ -23,6 +23,9 @@ return [
 	
 	/* === User Change Status  === */
     'successChangeStatus' => "Status Changed! <br> <br> Great, your account status is change.",
+    
+	/* === User Change Group  === */
+	'successChangeGroup' => "Group Changed! <br> <br> Great, your account group is change.",
 	
 	/* === General error Message === */
    'oops' => "Sorry, we couldn't complete your action because of some problem on our server. Please try again.",

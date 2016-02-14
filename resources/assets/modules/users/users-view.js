@@ -16,6 +16,7 @@
 		clickConfirmExtend();
 		clickConfirmTerminate();
 		clickConfirmChangeStatus();
+		clickConfirmChangeGroup();
 		clickModalCloseBtnDone();
 	}
 	
@@ -117,6 +118,36 @@
 				data: {
 					userId : encrptyId,
 					change_status : $('#change_status').val()
+				},
+				dataType: 'json',
+				error: function(result) {
+					$(modalID+' .action-btn').show();
+					$(modalID+' .close-btn').hide();
+					$(modalID+' .action-input').removeAttr('disabled');
+					notifier('danger',modalID+' .load-bar-notif', oops);
+				},
+				success: function(result) {
+					$(modalID+' .close-btn-done').show();
+					notifier('success', modalID+' .load-bar-notif', result.message);
+				}
+			});
+			
+		});
+	}
+	
+	function clickConfirmChangeGroup() {
+		var modalID = '#change-group-user-modal';
+		$(modalID+' #confirm-btn').on('click', function () {
+			loadingBar(modalID+' .load-bar', 'Changing group in process...');
+			$(modalID+' .action-input').attr('disabled', true);
+			$(modalID+' .action-btn').hide();
+			ajaxCsrfToken();
+			$.ajax({
+				url: url+"/users/change-group",
+				type: "post",
+				data: {
+					userId : encrptyId,
+					change_group : $('#change_group').val()
 				},
 				dataType: 'json',
 				error: function(result) {
