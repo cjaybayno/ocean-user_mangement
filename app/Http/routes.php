@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('login', 'Auth\AuthController@getLogin');
-Route::post('login', 'Auth\AuthController@postLogin');
-Route::get('logout', 'Auth\AuthController@getLogout');
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -31,7 +27,12 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::group(['middleware' => 'web'], function () {
-    Route::auth();
+	
+	//Authentication Route
+	Route::get('login', 'Auth\AuthController@getLogin');
+	Route::post('login', 'Auth\AuthController@auth');
+	Route::get('logout', 'Auth\AuthController@logout');
+    //Route::auth();
 	
 	Route::group(['middleware' => 'auth'], function () {
 		
