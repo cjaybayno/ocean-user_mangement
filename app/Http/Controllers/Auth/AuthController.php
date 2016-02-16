@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Log;
 use Auth;
 use Config;
+use Session;
 use App\User;
 use Validator;
 use Illuminate\Http\Request;
@@ -71,40 +73,108 @@ class AuthController extends Controller
 		];
 		
 		if (Auth::validate($credentials)) {
-			
-			$user = User::select('status')->where('username', $request->username)->first();
+			$user = User::select([
+				'id', 
+				'status', 
+				'expired_at'
+			])
+			->where('username', $request->username)
+			->first();
 			
 			switch ($user->status) {
 				
 				case Config::get('users.status.active') : 
-					return 'User is active and able to login';
+					if ($this->checkExpiry($user->expired_at) === false) {
+						/* === auth success === */
+						Auth::login($user);
+						
+						Log::info('Login : ', [
+							'username' => $request->username, 
+							'result'   => 'login success',
+							'session'  => Session::all()
+						]);
+						
+						return redirect()->intended($this->redirectTo);
+					} else {
+						$notif = $this->tagAsExpired($user->id);
+					}
 					break;
 				
 				case Config::get('users.status.disabled') :
-					return 'user is disabled';
+					$notif = trans('users.disabled');
 					break;
 					
 				case Config::get('users.status.expired') :
-					return 'user is expired';
+					$notif = trans('users.expired');
 					break;
 					
 				case Config::get('users.status.terminated') :
-					return 'user is Terminated';
+					$notif = trans('users.terminated');
 					break;
 					
 				case Config::get('users.status.temporary_password') :
-					return 'user is on temporary password';
+					$notif = trans('users.temporary_password');
 					break;
 				
 				default :
-					echo 'Invalid Username status';
+					$notif = trans('users.invalid_status');
 			}
 			
-			echo 'test';
-			
 		} else {
-			echo 'Invalid Username';
+			$notif = trans('users.invalid');
 		}
+		
+		Log::info('Login : ',['username' => $request->username, 'result' => $notif]);
+		
+		return redirect('login')->with([
+			'notif' => $notif,
+			'username' => $request->username,
+		]);
+	}
+	
+	/**
+     * Check user expiry
+     * 
+     * @param  date $expiryDate
+     * @return boolean
+     */
+	private function checkExpiry($expiryDate)
+	{
+		$expiryDateString  = strtotime($expiryDate);
+		$todayDateString   = strtotime(date('Y-m-d'));
+		
+		/* === check if today is greater than expiry date=== */ 
+		if ($todayDateString >= $expiryDateString) {
+			// user is expired
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+     * Tag user as expired
+     * 
+     * @param  int $id
+     * @return string
+     */
+	private function tagAsExpired($id)
+	{
+		$user = User::find($id);
+		$user->status = Config::get('users.status.expired');
+		$user->save();
+		
+		Log::info('Tag user as Expired : ', [
+			'table'	=> [
+				'name' => 'users',
+				'data' => [
+					'status' => Config::get('users.status.expired')
+				]
+			],
+			'session' => Session::all()
+		]);
+		
+		return trans('users.expired');
 	}
 	
 	/**
@@ -114,13 +184,10 @@ class AuthController extends Controller
      */
 	public function logout()
 	{
+		Log::info('Logout : ', ['session' => Session::all()]);
+		
 		Auth::guard('web')->logout();
 		
 		return redirect($this->redirectAfterLogout);
-	}
-	
-	public function isActive()
-	{
-		return false;
 	}
 }

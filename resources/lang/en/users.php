@@ -18,8 +18,7 @@ return [
     'successUpdateProfile' => "Success Modification! <br> Great, your account is updated.",
 	
 	/* === User Extend Expiry  === */
-    'successExtendExpiry' => "Expiry Extend! <br> Great, your account is extended.",
-	
+    'successExtendExpiry' => "Expiry Extend! <br> Great, your account is extended.",	
 	
 	/* === User Change Status  === */
     'successChangeStatus' => "Status Changed! <br> <br> Great, your account status is change.",
@@ -29,5 +28,12 @@ return [
 	
 	/* === General error Message === */
    'oops' => "Sorry, we couldn't complete your action because of some problem on our server. Please try again.",
-
+   
+   /* === Login notif === */
+   	'disabled' 	  => "Your account is temporary disabled. <br> Please contact the administrator",
+   	'expired' 	  => "Your account already expired. <br> Please contact the administrator",
+   	'terminated'  => "Invalid user access",
+	'temporary_password' => 'Your account is in temporary password. <br> I have sent you an email to active your account',
+	'invalid_status'	 => "Invalid user status <br> Please contact the administrator",
+	'invalid'	 		 => "Invalid username and password",
 ];

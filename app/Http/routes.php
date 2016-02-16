@@ -32,6 +32,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('login', 'Auth\AuthController@getLogin');
 	Route::post('login', 'Auth\AuthController@auth');
 	Route::get('logout', 'Auth\AuthController@logout');
+	Route::get('test/{expiryDate}', 'Auth\AuthController@checkExpiry');
     //Route::auth();
 	
 	Route::group(['middleware' => 'auth'], function () {

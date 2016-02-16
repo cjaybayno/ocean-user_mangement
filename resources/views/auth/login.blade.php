@@ -19,9 +19,15 @@
 							@endforeach
 						</div>
 					@endif
+					
+					@if (session('notif'))
+						<div class="alert alert-danger alert-dismissible fade in" role="alert">
+							{!! session('notif') !!}
+						</div>
+					@endif
 
 					<div>
-						<input type="text" name="username" class="form-control" placeholder="Username" required="" />
+						<input type="text" name="username" class="form-control" placeholder="Username" required="" value="{!! Session('username') !!}" />
 					</div>
 					<div>
 						<input type="password" name="password" class="form-control" placeholder="Password" required="" />
