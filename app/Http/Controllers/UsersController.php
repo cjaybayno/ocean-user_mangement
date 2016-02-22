@@ -259,10 +259,15 @@ class UsersController extends Controller
 			]
 		];
 		
+		/* === unset unnecessary user data for loggin === */
+		$usersArray = $user->toArray();
+		unset($usersArray['avatar']);
+		unset($usersArray['encrptyID']);
+	
 		Log::info('View user : ', [
 			'table'	=> [
 				'name' => 'users',
-				'data' => $user->toArray()
+				'data' => $usersArray
 			],
 			'session' => Session::all()
 		]);
