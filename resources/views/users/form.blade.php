@@ -100,7 +100,9 @@
 								
 								<li class="divider"></li>
 								<li><a href="#change-password-user-modal" data-toggle="modal">Change Password</a>
-								<li><a href="#">Reset Password</a>
+								@if ($user->status !== Config::get('users.status.expired') AND $user->status !== Config::get('users.status.temporary_password') AND $isCurrentUser === false)
+									<li><a href="#reset-password-user-modal" data-toggle="modal">Reset Password</a>
+								@endif
 								</li>
 							</ul>
 						</div> &nbsp

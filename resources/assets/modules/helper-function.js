@@ -118,7 +118,7 @@ function notifier(alertNotif, selector, message) {
 			'<div class="alert alert-'+alertNotif+'">'+
 				'<i><center>'+message+'</center></i>'+
 			'</div>'+
-		'</div>');
+		'</div><br><br>');
 }
 
 /* === add Edit button in === */

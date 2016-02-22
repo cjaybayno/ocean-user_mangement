@@ -18,6 +18,7 @@
 		clickConfirmChangeStatus();
 		clickConfirmChangeGroup();
 		clickConfirmChangePassword();
+		clickConfirmResetPassword();
 		clickModalCloseBtnDone();
 	}
 	
@@ -196,6 +197,30 @@
 					}
 				});
 			}
+		});
+	}
+	
+	function clickConfirmResetPassword() {
+		var modalID = '#reset-password-user-modal';
+		$(modalID+' #confirm-btn').on('click', function () {
+			loadingBar(modalID+' .load-bar', 'Reset Password in process...');
+			$(modalID+' .reset-notif').hide();
+			$(modalID+' .action-btn').hide();
+			ajaxCsrfToken();
+			$.ajax({
+				url: url+"/users/reset-password",
+				type: "post",
+				data: { userId : encrptyId },
+				dataType: 'json',
+				error: function(result) {
+					$(modalID+' .close-btn').hide();
+					notifier('danger',modalID+' .load-bar-notif', oops);
+				},
+				success: function(result) {
+					$(modalID+' .close-btn-done').show();
+					notifier('success', modalID+' .load-bar-notif', result.message);
+				}
+			});
 		});
 	}
 	

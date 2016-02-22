@@ -28,6 +28,9 @@ return [
 	
 	/* === User Change Password  === */
 	'successChangePassword' => "Password Change! <br> <br> Great, successful password change.",
+
+	/* === User Reset Password  === */
+	'successResetPassword' => "An email is sent! <br> <br> Great, Tell the user to activate his account with temporary password.",
 	
 	/* === General error Message === */
    'oops' => "Sorry, we couldn't complete your action because of some problem on our server. Please try again.",

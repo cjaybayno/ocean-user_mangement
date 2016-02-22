@@ -572,4 +572,38 @@ class UsersController extends Controller
 			'message' => trans('users.successChangePassword')
 		]);
 	}
+	
+	/**
+	* Change Password
+	*
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
+	public function postResetPassword(Request $request)
+	{
+		$userId = Crypt::decrypt($request->userId);
+		$user   = User::findOrFail($userId);
+		
+		$tempPassword = str_random(8);
+		$user->password = bcrypt($tempPassword);
+		$user->status = Config::get('users.status.temporary_password');
+		$user->save();
+		
+		Log::info('User Reset Password : ', [
+			'table'	=> [
+				'name' => 'users',
+				'data' => [
+					'id' 	 => $userId,
+					'status' => Config::get('users.status.temporary_password'),
+					'temp_password' => $tempPassword,
+				]
+			],
+			'session' => Session::all()
+		]);
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('users.successResetPassword')
+		]);
+	}
 }
