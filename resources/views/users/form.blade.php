@@ -123,6 +123,22 @@
 				<form id="user-register-form" class="form-horizontal form-label-left">
 					<div id="user-creation-result" class="col-sm-12"></div>
 					
+					
+					<!-- view notification -->
+					@if ($viewType === 'view')
+						<div class="col-md-offset-1 col-xs-10">
+						@if ($user->status ===  Config::get('users.status.disabled'))
+							<div class="alert alert-danger"><i><center>Note: This user is <b>Disabled</b></center></i></div>
+						@elseif ($user->status ===  Config::get('users.status.expired'))
+							<div class="alert alert-warning"><i><center>Note: This user is <b>Expired</b></center></i></div>
+						@elseif ($user->status ===  Config::get('users.status.terminated'))
+							<div class="alert alert-danger"><i><center>Note: This user is <b>Terminated</b></center></i></div>
+						@elseif ($user->status ===  Config::get('users.status.temporary_password'))
+							<div class="alert alert-info"><i><center>Note: This user is in <b>Temporary Password</b></center></i></div>
+						@endif
+						</div>
+					@endif
+					
 					<!-- left side form -->
 					<div class="col-sm-6">
 					
