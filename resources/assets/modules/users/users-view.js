@@ -17,6 +17,7 @@
 		clickConfirmTerminate();
 		clickConfirmChangeStatus();
 		clickConfirmChangeGroup();
+		clickConfirmChangePassword();
 		clickModalCloseBtnDone();
 	}
 	
@@ -162,6 +163,39 @@
 				}
 			});
 			
+		});
+	}
+	
+	function clickConfirmChangePassword() {
+		var modalID = '#change-password-user-modal';
+		var formID = '#change-password-form'; 
+		$(modalID+' #confirm-btn').on('click', function () {
+			$(formID).parsley().validate();
+			if ($(formID).parsley().isValid()) {
+				loadingBar(modalID+' .load-bar', 'Changing Password in process...');
+				$(modalID+' .action-input').attr('disabled', true);
+				$(modalID+' .action-btn').hide();
+				ajaxCsrfToken();
+				$.ajax({
+					url: url+"/users/change-password",
+					type: "post",
+					data: {
+						userId : encrptyId,
+						change_password : $('#change_password').val()
+					},
+					dataType: 'json',
+					error: function(result) {
+						$(modalID+' .action-btn').show();
+						$(modalID+' .close-btn').hide();
+						$(modalID+' .action-input').removeAttr('disabled');
+						notifier('danger',modalID+' .load-bar-notif', oops);
+					},
+					success: function(result) {
+						$(modalID+' .close-btn-done').show();
+						notifier('success', modalID+' .load-bar-notif', result.message);
+					}
+				});
+			}
 		});
 	}
 	

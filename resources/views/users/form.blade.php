@@ -99,7 +99,7 @@
 								@endif
 								
 								<li class="divider"></li>
-								<li><a href="#">Change Password</a>
+								<li><a href="#change-password-user-modal" data-toggle="modal">Change Password</a>
 								<li><a href="#">Reset Password</a>
 								</li>
 							</ul>

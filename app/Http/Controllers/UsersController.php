@@ -250,6 +250,7 @@ class UsersController extends Controller
 				'/assets/gentellela-alela/js/moment.min2.js',
 				'/assets/gentellela-alela/js/datepicker/daterangepicker.js',
 				'/assets/gentellela-alela/js/icheck/icheck.min.js',
+				'/assets/gentellela-alela/js/parsley/parsley.min.js',
 				'/assets/modules/users/users-view.js',
 			],
 			'stylesheets' => [
@@ -542,6 +543,33 @@ class UsersController extends Controller
 		return response()->json([
 			'success' => true,
 			'message' => trans('users.successChangeGroup')
+		]);
+	}
+	
+	/**
+	* Change Password
+	*
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
+	public function postChangePassword(Request $request)
+	{
+		$userId = Crypt::decrypt($request->userId);
+		$user   = User::findOrFail($userId);
+		$user->password = bcrypt($request->change_password);
+		$user->save();
+		
+		Log::info('User Change Password : ', [
+			'table'	=> [
+				'name' => 'users',
+				'data' => ['id' => $userId]
+			],
+			'session' => Session::all()
+		]);
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('users.successChangePassword')
 		]);
 	}
 }

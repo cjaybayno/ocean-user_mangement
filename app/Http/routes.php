@@ -53,7 +53,6 @@ Route::group(['middleware' => 'web'], function () {
 			'getShow'           => 'users.show',
 			'getEditProfile'    => 'users.editProfile',
 			'postUpdateProfile' => 'users.UpdateProfile',
-			'postTerminate'     => 'users.terminate',
 		]);
 		
 	});

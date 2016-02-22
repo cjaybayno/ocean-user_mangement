@@ -15,16 +15,19 @@ return [
 	'successTermination'  => "User successfully Terminated",
    
     /* === User Modification === */
-    'successUpdateProfile' => "Success Modification! <br> Great, your account is updated.",
+    'successUpdateProfile' => "Success Modification! <br> Great, successful account update.",
 	
 	/* === User Extend Expiry  === */
-    'successExtendExpiry' => "Expiry Extend! <br> Great, your account is extended.",	
+    'successExtendExpiry' => "Expiry Extend! <br> Great, successful account extension.",	
 	
 	/* === User Change Status  === */
-    'successChangeStatus' => "Status Changed! <br> <br> Great, your account status is change.",
+    'successChangeStatus' => "Status Changed! <br> <br> Great, successful status change.",
     
 	/* === User Change Group  === */
-	'successChangeGroup' => "Group Changed! <br> <br> Great, your account group is change.",
+	'successChangeGroup' => "Group Changed! <br> <br> Great, successful group change.",
+	
+	/* === User Change Password  === */
+	'successChangePassword' => "Password Change! <br> <br> Great, successful password change.",
 	
 	/* === General error Message === */
    'oops' => "Sorry, we couldn't complete your action because of some problem on our server. Please try again.",
