@@ -10,20 +10,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+	
     <title>Ocean | @yield('title')</title>
 	
-	<!-- Bootstrap core CSS -->
+	<!-- CSS -->
     <link href="{!! asset('resources/assets/gentellela-alela/css/bootstrap.min.css') !!}" rel="stylesheet">
     <link href="{!! asset('resources/assets/gentellela-alela/fonts/css/font-awesome.min.css') !!}" rel="stylesheet">
     <link href="{!! asset('resources/assets/gentellela-alela/css/animate.min.css') !!}" rel="stylesheet">
-	
-    <!-- Custom styling plus plugins -->
     <link href="{!! asset('resources/assets/gentellela-alela/css/custom.css') !!}" rel="stylesheet">
     <link href="{!! asset('resources/assets/gentellela-alela/css/icheck/flat/green.css') !!}" rel="stylesheet">
-	
-	
-	<!-- Jquery core js -->
     <script src="{!! asset('resources/assets/gentellela-alela/js/jquery.min.js') !!}"></script>
 	
 	<!-- Put modal in center -->
@@ -132,17 +127,26 @@
         <div id="notif-group" class="tabbed_notifications"></div>
     </div>
 	
-	<!-- Bootstrap core js -->
-	<script src="{!! asset('resources/assets/gentellela-alela/js/bootstrap.min.js') !!}"></script>
+	<script>
+		/* === javascript global variable === */
 	
+		// base url of application 
+		var url = "{{ url('') }}";
+		
+		// opps message
+		var oops = "{{ trans('users.oops') }}";
+		
+		//current url
+		var currentUrl = "{{ Route::getCurrentRoute()->getPath() }}";
+		
+	</script>
+	
+	<!-- JS -->
+	<script src="{!! asset('resources/assets/gentellela-alela/js/bootstrap.min.js') !!}"></script>
 	<script src="{!! asset('resources/assets/gentellela-alela/js/nicescroll/jquery.nicescroll.min.js') !!}"></script>
 	<script src="{!! asset('resources/assets/gentellela-alela/js/custom.js') !!}"></script>
-	
 	<script src="{!! asset('resources/assets/modules/helper-function.js') !!}"></script>
-	<script>
-		/* === base url of application === */ 
-		var url = "{{ url('') }}";
-	</script>
+	
 	<!-- Additional Script -->
 	@if (! empty($assets['scripts']))
 		@foreach ($assets['scripts'] as $scripts)
