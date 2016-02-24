@@ -80,7 +80,7 @@
 		<h3>User Management</h3>
 		<ul class="nav side-menu">
 			<li class="{{ $userActiveMenu or '' }}"><a href="{{ URL::route('users') }}"><i class="fa fa-user"></i>Users</span></a></li>
-			<li><a href="#"><i class="fa fa-users"></i><span>Groups</span></a></li>
+			<li class="{{ $userGroupActiveMenu or '' }}" ><a href="{{ URL::route('user.groups') }}"><i class="fa fa-users"></i><span>Groups</span></a></li>
 			<li><a href="#"><i class="fa fa-key"></i><span>Access</span></a></li>
 		</ul>
 	</div>

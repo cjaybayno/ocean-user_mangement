@@ -136,9 +136,6 @@
 		// opps message
 		var oops = "{{ trans('users.oops') }}";
 		
-		//current url
-		var currentUrl = "{{ url(Route::getCurrentRoute()->getPath()) }}";
-		
 	</script>
 	
 	<!-- JS -->

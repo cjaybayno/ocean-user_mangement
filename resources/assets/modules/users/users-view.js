@@ -62,7 +62,7 @@
 			$(modalID+' .action-btn').hide();
 			ajaxCsrfToken();
 			$.ajax({
-				url: url+"/users/extend-expiry",
+				url: currentUrl+"/extend-expiry",
 				type: "post",
 				data: {
 					userId : encrptyId, 
