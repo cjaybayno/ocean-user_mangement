@@ -60,6 +60,10 @@ class UsersController extends Controller
      */
     public function getPaginate(Request $request)
     {
+		if (! $request->ajax()) {
+			abort(404);
+		}
+		
         $users = User::select([
 			'id',
 			'avatar',
