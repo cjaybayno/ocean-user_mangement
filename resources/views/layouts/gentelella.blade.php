@@ -137,7 +137,7 @@
 		var oops = "{{ trans('users.oops') }}";
 		
 		//current url
-		var currentUrl = "{{ Route::getCurrentRoute()->getPath() }}";
+		var currentUrl = "{{ url(Route::getCurrentRoute()->getPath()) }}";
 		
 	</script>
 	
