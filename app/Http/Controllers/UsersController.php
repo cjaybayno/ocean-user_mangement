@@ -32,14 +32,15 @@ class UsersController extends Controller
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/icheck/icheck.min.js',
-				'/assets/plugins/datatables/jquery.dataTables.min.js',
-				'/assets/plugins/datatables/dataTables.bootstrap.min.js',
-				'/assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
+				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
+				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
+				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
+				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
 				'/assets/modules/users/users-list.js' 
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
-				'/assets/plugins/dataTables/extensions/Responsive/css/dataTables.responsive.css',
+				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
 			]
 		];
 		
@@ -103,7 +104,7 @@ class UsersController extends Controller
     {
 		$assets = [
 			'scripts' => [
-				'/assets/plugins/fileinput/js/fileinput.min.js',
+				'/assets/gentellela-alela/js/fileinput/js/fileinput.min.js',
 				'/assets/gentellela-alela/js/moment.min2.js',
 				'/assets/gentellela-alela/js/datepicker/daterangepicker.js',
 				'/assets/gentellela-alela/js/icheck/icheck.min.js',
@@ -112,7 +113,7 @@ class UsersController extends Controller
 				'/assets/modules/users/users-register-form.js',
 			],
 			'stylesheets' => [
-				'/assets/plugins/fileinput/css/fileinput.min.css',
+				'/assets/gentellela-alela/js/fileinput/css/fileinput.min.css',
 				'/assets/gentellela-alela/css/icheck/flat/green.css',
 				'/assets/gentellela-alela/css/select/select2.min.css'
 			]
@@ -350,13 +351,13 @@ class UsersController extends Controller
 		
 		$assets = [
 			'scripts' => [
-				'/assets/plugins/fileinput/js/fileinput.min.js',
+				'/assets/gentellela-alela/js/fileinput/js/fileinput.min.js',
 				'/assets/gentellela-alela/js/moment.min2.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
 				'/assets/modules/users/users-modify-form.js',
 			],
 			'stylesheets' => [
-				'/assets/plugins/fileinput/css/fileinput.min.css',
+				'/assets/gentellela-alela/js/fileinput/css/fileinput.min.css',
 				'/assets/gentellela-alela/css/select/select2.min.css'
 			]
 		];
