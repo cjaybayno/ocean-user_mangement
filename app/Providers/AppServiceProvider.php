@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
 				'users.list',
 				'users.create',
 				'users.form',
+				'users/groups.list',
 			], 
 			'App\Http\ViewComposers\AuthUserProfileComposer'
 		);

@@ -45,8 +45,9 @@ Route::group(['middleware' => 'web'], function () {
 			return view('home');
 		});
 		
+		
 		//users route
-		Route::controller('users', 'UsersController', [
+		Route::controller('users', 'UsersManagement\UsersController', [
 			'getIndex'          => 'users',
 			'getRegister'       => 'users.register',
 			'postStore'         => 'users.store',
@@ -54,6 +55,15 @@ Route::group(['middleware' => 'web'], function () {
 			'getEditProfile'    => 'users.editProfile',
 			'postUpdateProfile' => 'users.UpdateProfile',
 		]);
+		
+		Route::group(['prefix' => 'user'], function () {
+			//users route
+			Route::controller('groups', 'UsersManagement\UserGroupController', [
+				'getIndex'          => 'user.groups',
+			]);
+		});
+		
+		
 		
 	});
 });

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\UsersManagement;
 
 use Illuminate\Http\Request;
+
 use DB;
 use Log;
 use Auth;
@@ -10,8 +11,8 @@ use Crypt;
 use Config;
 use Session;
 use Datatables;
+
 use App\User;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
