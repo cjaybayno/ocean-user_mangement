@@ -5,6 +5,7 @@ namespace App\Http\Controllers\UsersManagement;
 use Illuminate\Http\Request;
 
 use Log;
+use Crypt;
 use Session;
 use Datatables;
 
@@ -60,11 +61,18 @@ class UserGroupController extends Controller
 			abort(404);
 		}
 		
-        $userGroup = UserGroup::select([
-			'name',
-			'description',
-		]);
+		/* === get order of name from request === */
+		$orderBy = $request->input('order')[0]['dir'];
+		
+        $userGroup = UserGroup::select()->orderBy('name', $orderBy);
 			
-		return Datatables::of($userGroup)->editColumn('action',  function ($userGroup) {return 'test';})->make();
+		return Datatables::of($userGroup)
+				->editColumn('action', function ($userGroup) {
+					return view('users/groups/datatables.action', [
+								'encryptID' => Crypt::encrypt($userGroup->id)
+							])->render();
+				})
+				->removeColumn('id')
+				->make();
     }
 }
