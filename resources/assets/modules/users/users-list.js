@@ -15,10 +15,11 @@
 	/* === dataTables === */
 	function dataTables() {
 		$('#user-list').DataTable({
+			lengthMenu : [ 5, 10, 25, 50, 75, 100 ],
+			iDisplayLength : 5,
 			responsive: true,
 			processing: true,
 			serverSide: true,
-			//'iDisplayLength': 2,
 			ajax: url+'/users/paginate',
 		});
 	}

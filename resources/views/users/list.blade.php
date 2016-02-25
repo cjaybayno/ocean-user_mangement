@@ -30,7 +30,7 @@
 							<th>Username</th>
 							<th>Full Name</th>
 							<th>Email</th>
-							<th>Currenlty Login</th>
+							<th>Login State</th>
 							<th>Status</th>
 							<th>Action</th>
 						</tr>

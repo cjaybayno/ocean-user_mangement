@@ -88,6 +88,9 @@ class AuthController extends Controller
 						/* === auth success === */
 						Auth::login($user);
 						
+						/* === update user is_login to 1 === */
+						User::where('id', $user->id)->update(['is_login' => 1]);
+						
 						Log::info('Login : ', [
 							'username' => $request->username, 
 							'result'   => 'login success',
@@ -186,7 +189,14 @@ class AuthController extends Controller
 	{
 		Log::info('Logout : ', ['session' => Session::all()]);
 		
+		/* === get user id before logout === */
+		$userId = Auth::user()->id;
+		
+		/* === logout user from web === */
 		Auth::guard('web')->logout();
+		
+		/* === update user is_login to 0 === */
+		User::where('id', $userId)->update(['is_login' => 0]);
 		
 		return redirect($this->redirectAfterLogout);
 	}
