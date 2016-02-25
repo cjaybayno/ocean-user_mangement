@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use Log;
 use Session;
+use Datatables;
 
+use App\UserGroup;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -45,5 +47,24 @@ class UserGroupController extends Controller
 			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets
 		]);
+    }
+	
+	/**
+     * Return user gruop list for paginated.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPaginate(Request $request)
+    {
+		if (! $request->ajax()) {
+			abort(404);
+		}
+		
+        $userGroup = UserGroup::select([
+			'name',
+			'description',
+		]);
+			
+		return Datatables::of($userGroup)->editColumn('action',  function ($userGroup) {return 'test';})->make();
     }
 }

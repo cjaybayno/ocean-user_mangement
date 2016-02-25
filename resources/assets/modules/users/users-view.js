@@ -9,7 +9,7 @@
  
 	/* ==== function to init this page === */
 	function initialPages($) {
-		$('#change_status').select2();
+		$('.select2').select2();
 		disabledInput();
 		expiryDateRange('#expiry');
 		extendEXpiryDatePicker('#extend_expiry');

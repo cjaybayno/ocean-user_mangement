@@ -9,7 +9,7 @@
 	  <center>
 		<h5><span class="load-bar-notif"></span></h5>
 		<div class="load-bar"></div>
-		{!! Form::select('change_group', ['admin', 'client'], $userGroup, ['class' => 'form-control select2 action-input', 'id' => 'change_group', 'style' => 'width:50%']) !!}
+		{!! Form::select('change_group', $userGroup, $userGroupId, ['class' => 'form-control select2 action-input', 'id' => 'change_group', 'style' => 'width:50%']) !!}
 	  </center>
 	  </div>
 	  <div class="modal-footer">

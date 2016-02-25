@@ -299,7 +299,7 @@
 								<label class="control-label col-md-3">Group Access</label>
 								<div class="col-md-7 form-group has-feedback">
 									<?php  $group_access_id = ($viewType === 'view') ? $user->group_access_id : null ?> 
-									{!! Form::select('group_access', ['Admin', 'Client', 'Backoffice'], $group_access_id, ['class' => 'form-control select2', 'id' => 'group_access']) !!}
+									{!! Form::select('group_access', $userGroup, $group_access_id, ['class' => 'form-control select2', 'id' => 'group_access']) !!}
 								</div>
 							</div>
 						@endif

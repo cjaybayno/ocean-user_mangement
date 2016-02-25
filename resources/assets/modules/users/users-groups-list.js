@@ -15,11 +15,19 @@
 	/* === dataTables === */
 	function dataTables() {
 		$('#user-group-list').DataTable({
+			columns : [
+				{"searchable" : true},
+				{"searchable" : false},
+				null,
+			],
+			oLanguage : {
+				"sSearch": "Search Group Name"
+			},
 			responsive: true,
-			processing: true,
+			processing: false,
 			serverSide: true,
 			//'iDisplayLength': 2,
-			ajax: currentUrl+'/paginate',
+			ajax: url+'/user/groups/paginate',
 		});
 	}
 	

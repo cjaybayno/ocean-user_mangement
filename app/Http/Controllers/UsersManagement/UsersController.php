@@ -13,15 +13,33 @@ use Session;
 use Datatables;
 
 use App\User;
+use App\UserGroup;
+use App\Repository\UserManagement;
 use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
 	/**
-	* Determine Active Menu
-	*/
+	 * Determine Active Menu
+	 */
 	public $menuKey   = 'userActiveMenu';
 	public $menuValue = 'current-page';
+	
+	/**
+     * The user repository implementation.
+     */
+	protected $userRepo;
+	
+	/**
+     * Create a new instance.
+     *
+     * @param  UserManagement  $UserRepository
+     * @return void
+     */
+	public function __construct(UserManagement $UserRepository)
+	{
+		$this->userRepo = $UserRepository;
+	}
 	
     /**
      * Display a listing of the users.
@@ -129,6 +147,7 @@ class UsersController extends Controller
         return view('users.form')->with([
 			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
+			'userGroup'    => $this->userRepo->userGroup(),
 			'viewType'	   => 'create'
 		]);
     }
@@ -283,6 +302,7 @@ class UsersController extends Controller
 			$this->menuKey    => $this->menuValue,
 			'assets'	      => $assets,
 			'user'		      => $user,
+			'userGroup'		  => $this->userRepo->userGroup(),
 			'viewType'	      => 'view',
 			'isCurrentUser'	  => ((Auth::user()->id === $user->id) ? true : false)
 		])
@@ -292,7 +312,8 @@ class UsersController extends Controller
 			'statusSelection' => $this->statusSelection($user->status),
 		])
 		->nest('changeGroup', 'users.changeGroup', [
-			'userGroup' => $user->group_access_id
+			'userGroupId' => $user->group_access_id,
+			'userGroup'   => $this->userRepo->userGroup(),
 		])
 		->nest('terminate', 'users.terminate')
 		->nest('changePassword', 'users.password.change')
