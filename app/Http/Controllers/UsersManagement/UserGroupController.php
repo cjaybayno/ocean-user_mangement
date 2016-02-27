@@ -4,6 +4,7 @@ namespace App\Http\Controllers\UsersManagement;
 
 use Illuminate\Http\Request;
 
+use DB;
 use Log;
 use Crypt;
 use Session;
@@ -64,8 +65,8 @@ class UserGroupController extends Controller
 		/* === get order of name from request === */
 		$orderBy = $request->input('order')[0]['dir'];
 		
-        $userGroup = UserGroup::select()->orderBy('name', $orderBy);
-			
+		$userGroup = UserGroup::select(['id', 'name', 'description'])->orderBy('name', $orderBy);
+		
 		return Datatables::of($userGroup)
 				->editColumn('action', function ($userGroup) {
 					return view('users/groups/datatables.action', [

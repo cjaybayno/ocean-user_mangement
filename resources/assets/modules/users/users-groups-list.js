@@ -16,8 +16,8 @@
 	function dataTables() {
 		$('#user-group-list').DataTable({
 			columns : [
-				{"searchable" : true},
 				{"searchable" : false},
+				{"searchable" : true},
 				null,
 			],
 			oLanguage : {
