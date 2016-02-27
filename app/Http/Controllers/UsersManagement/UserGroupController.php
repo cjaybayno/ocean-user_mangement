@@ -4,7 +4,6 @@ namespace App\Http\Controllers\UsersManagement;
 
 use Illuminate\Http\Request;
 
-use DB;
 use Log;
 use Crypt;
 use Session;
@@ -48,7 +47,8 @@ class UserGroupController extends Controller
         return view('users/groups.list')->with([
 			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets
-		]);
+		])
+		->nest('editUserGroupView', 'users/groups.edit');
     }
 	
 	/**
@@ -76,4 +76,60 @@ class UserGroupController extends Controller
 				->removeColumn('id')
 				->make();
     }
+	
+	/**
+	* Return details of specific Group.
+	*
+	* @param  string  encrptyID
+	* @return \Illuminate\Http\Response
+	*/
+	public function getGetGroup(Request $request, $encryptID)
+	{
+		if (! $request->ajax()) {
+			abort(404);
+		}
+		
+		$userGroup = UserGroup::findOrFail(Crypt::decrypt($encryptID));
+		
+		return response()->json([
+			'encryptId'  => $encryptID,
+			'groupNAme' => $userGroup->name,
+			'groupDesc' => $userGroup->description,
+		]);
+		
+		Log::info('Edit user groups (get group details) : ', [
+			'table'	=> [
+				'name' => 'user_groups',
+				'data' => $userGroup
+			],
+			'session' => Session::all()
+		]);
+	}
+	
+	/**
+	* Update Group
+	*
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
+	public function postUpdateGroup(Request $request)
+	{
+		$userGroup = UserGroup::findOrFail(Crypt::decrypt($request->encryptId));
+		$userGroup->name        = ucwords($request->group_name);
+		$userGroup->description = $request->group_desc;
+		$userGroup->save();
+		
+		Log::info('Update user group: ', [
+			'table'	=> [
+				'name' => 'users_groups',
+				'data' => $userGroup->toArray(),
+			],
+			'session' => Session::all()
+		]);
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('users.successEditUserGroup')
+		]);
+	}
 }

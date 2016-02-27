@@ -42,4 +42,7 @@ return [
 	'temporary_password' => 'Your account is in temporary password. <br> I have sent you an email to active your account',
 	'invalid_status'	 => "Invalid user status <br> Please contact the administrator",
 	'invalid'	 		 => "Invalid username and password",
+	
+	/* === User Group === */
+	'successEditUserGroup' => "Group has modified! <br> <br> Great, this group is being modified.",
 ];

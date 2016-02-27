@@ -32,4 +32,7 @@
 		</div>
 	</div>
 </div>
+
+<!-- add Extend Expiry view -->
+{!! $editUserGroupView !!}
 @endsection

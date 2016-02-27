@@ -418,7 +418,7 @@ class UsersController extends Controller
 	}
 	
 	/**
-	* Terminate User accounts.
+	* Update User Profile
 	*
 	* @param  \Illuminate\Http\Request  $request
 	* @return \Illuminate\Http\Response
