@@ -82,7 +82,7 @@ class UsersController extends Controller
 			abort(404);
 		}
 		
-        $users = User::select([
+		$select = [
 			'id',
 			'avatar',
 			'username', 
@@ -90,8 +90,18 @@ class UsersController extends Controller
 			'email',
 			'is_login',
 			'status',
-		]);
-			
+		];
+		
+		/* === get order of name from request === */
+		$orderByInput = $request->input('order')[0];
+		
+		/* === condition to remove conflict of sort === */
+		if ($orderByInput['column'] == 0) {
+			$users = User::select($select)->orderBy('username', $orderByInput['dir']);
+		} else {
+			$users = User::select($select);
+		}
+		
 		return Datatables::of($users)
 				->editColumn('avatar',  function ($user) {
 					return view('users/datatables.avatar', [
