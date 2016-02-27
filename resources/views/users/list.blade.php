@@ -29,7 +29,7 @@
 							<th>Avatar</th>
 							<th>Username</th>
 							<th>Full Name</th>
-							<th>Email</th>
+							<th>Groups</th>
 							<th>Login State</th>
 							<th>Status</th>
 							<th>Action</th>

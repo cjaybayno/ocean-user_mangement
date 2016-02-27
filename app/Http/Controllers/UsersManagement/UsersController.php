@@ -83,11 +83,11 @@ class UsersController extends Controller
 		}
 		
 		$select = [
-			'id',
+			'users.id as id',
 			'avatar',
 			'username', 
-			'name', 
-			'email',
+			'users.name as name', 
+			'user_groups.name as group_name',
 			'is_login',
 			'status',
 		];
@@ -97,9 +97,12 @@ class UsersController extends Controller
 		
 		/* === condition to remove conflict of sort === */
 		if ($orderByInput['column'] == 0) {
-			$users = User::select($select)->orderBy('username', $orderByInput['dir']);
+			$users = DB::table('users')
+						->leftJoin('user_groups', 'user_groups.id', '=', 'users.group_access_id')
+						->orderBy('username', $orderByInput['dir'])
+						->select($select);
 		} else {
-			$users = User::select($select);
+			$users = DB::table('users')->select($select);
 		}
 		
 		return Datatables::of($users)
