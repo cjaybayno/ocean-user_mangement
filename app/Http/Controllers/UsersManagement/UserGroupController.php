@@ -34,6 +34,7 @@ class UserGroupController extends Controller
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
+				'/assets/gentellela-alela/js/parsley/parsley.min.js',
 				'/assets/modules/users/users-groups-list.js' 
 			],
 			'stylesheets' => [

@@ -58,35 +58,38 @@
 	
 	function clickConfirmEdit() {
 		var modalID = '#edit-users-group-modal';
+		var formID  = '#edit-user-group-form';
 		$(modalID+' #confirm-btn').on('click', function () {
-			loadingBar(modalID+' .load-bar', 'Edit In process...');
-			$(modalID+' .action-input').attr('disabled', true);
-			$(modalID+' .action-btn').hide();
-			ajaxCsrfToken();
-			$.ajax({
-				url: url+"/user/groups/update-group",
-				type: "post",
-				data: { 
-					encryptId : $(modalID+' #encryptId').val(),
-					group_name : $(modalID+' #group_name').val(),
-					group_desc : $(modalID+' #group_desc').val()
-				},
-				dataType: 'json',
-				complete: function() {
-					loadingBarClose(modalID+' .load-bar');
-				},
-				error: function(result) {
-					$(modalID+' .action-btn').show();
-					$(modalID+' .action-input').removeAttr('disabled');
-					notifier('danger',modalID+' .load-bar-notif', oops);
-				},
-				success: function(result) {
-					$(modalID+' .close-btn-done').show();
-					$(modalID+' .action-input').attr('disabled', true);
-					notifier('success', modalID+' .load-bar-notif', result.message);
-				}
-			});
-			
+			$(formID).parsley().validate();
+			if ($(formID).parsley().isValid()) {
+				loadingBar(modalID+' .load-bar', 'Edit In process...');
+				$(modalID+' .action-input').attr('disabled', true);
+				$(modalID+' .action-btn').hide();
+				ajaxCsrfToken();
+				$.ajax({
+					url: url+"/user/groups/update-group",
+					type: "post",
+					data: { 
+						encryptId : $(modalID+' #encryptId').val(),
+						group_name : $(modalID+' #group_name').val(),
+						group_desc : $(modalID+' #group_desc').val()
+					},
+					dataType: 'json',
+					complete: function() {
+						loadingBarClose(modalID+' .load-bar');
+					},
+					error: function(result) {
+						$(modalID+' .action-btn').show();
+						$(modalID+' .action-input').removeAttr('disabled');
+						notifier('danger',modalID+' .load-bar-notif', oops);
+					},
+					success: function(result) {
+						$(modalID+' .close-btn-done').show();
+						$(modalID+' .action-input').attr('disabled', true);
+						notifier('success', modalID+' .load-bar-notif', result.message);
+					}
+				});
+			}
 		});
 	}
 	
