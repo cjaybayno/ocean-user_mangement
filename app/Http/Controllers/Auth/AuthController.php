@@ -67,12 +67,9 @@ class AuthController extends Controller
      */
 	public function auth(Request $request)
 	{
-		$credentials = [
-			'username' => $request->username,
-			'password' => $request->password,
-		];
+		Log::info('Login Attempt: ',['username' => $request->username]);
 		
-		if (Auth::validate($credentials)) {
+		if (Auth::validate($request->only('username', 'password'))) {
 			$user = User::select([
 				'id', 
 				'status', 
@@ -84,23 +81,26 @@ class AuthController extends Controller
 			switch ($user->status) {
 				
 				case Config::get('users.status.active') : 
-					if ($this->checkExpiry($user->expired_at) === false) {
+					if ($this->checkIsLogin($user->id)) {
+						$notif = trans('users.currently_login');
+					} elseif ($this->checkExpiry($user->expired_at)) {
+						$notif = $this->tagAsExpired($user->id);
+					} else {
 						/* === auth success === */
 						Auth::login($user);
 						
 						/* === update user is_login to 1 === */
 						User::where('id', $user->id)->update(['is_login' => 1]);
 						
-						Log::info('Login : ', [
+						Log::info('Login Result: ', [
 							'username' => $request->username, 
 							'result'   => 'login success',
 							'session'  => Session::all()
 						]);
 						
 						return redirect()->intended($this->redirectTo);
-					} else {
-						$notif = $this->tagAsExpired($user->id);
 					}
+					
 					break;
 				
 				case Config::get('users.status.disabled') :
@@ -127,7 +127,7 @@ class AuthController extends Controller
 			$notif = trans('users.invalid');
 		}
 		
-		Log::info('Login : ',['username' => $request->username, 'result' => $notif]);
+		Log::info('Login Result: ',['username' => $request->username, 'result' => $notif]);
 		
 		return redirect('login')->with([
 			'notif' => $notif,
@@ -139,7 +139,7 @@ class AuthController extends Controller
      * Check user expiry
      * 
      * @param  date $expiryDate
-     * @return boolean
+     * @return bool
      */
 	private function checkExpiry($expiryDate)
 	{
@@ -154,6 +154,18 @@ class AuthController extends Controller
 		
 		return false;
 	}
+	
+	/**
+     * Check user if is currently log in
+     * 
+     * @param  int $id
+     * @return bool
+     */
+	private function checkIsLogin($id)
+	{
+		return User::find($id)->is_login;
+	}
+	
 	
 	/**
      * Tag user as expired
@@ -171,6 +183,7 @@ class AuthController extends Controller
 			'table'	=> [
 				'name' => 'users',
 				'data' => [
+					'id' 	 =>  $id,
 					'status' => Config::get('users.status.expired')
 				]
 			],
