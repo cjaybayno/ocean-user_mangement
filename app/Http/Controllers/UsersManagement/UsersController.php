@@ -95,14 +95,16 @@ class UsersController extends Controller
 		/* === get order of name from request === */
 		$orderByInput = $request->input('order')[0];
 		
-		/* === condition to remove conflict of sort === */
+		/* === condition to remove conflict of SORTING === */
 		if ($orderByInput['column'] == 0) {
 			$users = DB::table('users')
 						->leftJoin('user_groups', 'user_groups.id', '=', 'users.group_access_id')
 						->orderBy('username', $orderByInput['dir'])
 						->select($select);
 		} else {
-			$users = DB::table('users')->select($select);
+			$users = DB::table('users')
+						->leftJoin('user_groups', 'user_groups.id', '=', 'users.group_access_id')
+						->select($select);
 		}
 		
 		return Datatables::of($users)
