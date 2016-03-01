@@ -229,6 +229,14 @@
 							<input type="hidden" name="userId" id="userId" value="{{ $user->id or '' }}">
 						@endif
 						
+						<div class="form-group">
+							<label class="control-label col-md-4">Remarks</label>
+							<div class="col-md-8 form-group has-feedback">
+								<textarea name="remarks" id="remarks" class="form-control" rows="3">{{ $user->remarks or '' }}</textarea>
+							</div>
+						</div>
+					
+						
 					</div>
 					<!-- right side form -->
 					<div class="col-sm-6">
@@ -271,8 +279,6 @@
 							</div>
 						</div>
 						
-						<br/>
-						
 						@if ($viewType === 'create' OR $viewType === 'view')
 							<div class="form-group">
 								<label class="control-label col-md-3">Status</label>
@@ -296,22 +302,30 @@
 							</div>
 							
 							<div class="form-group">
+								<label class="control-label col-md-3">Role</label>
+								<div class="col-md-7 form-group has-feedback">
+									<?php $role = (isset($user->role)) ? $user->role : null ?>
+									{!! Form::select('role', Config::get('users.inverted_role'), $role, ['class' => 'form-control select2', 'id' => 'role']) !!}
+								</div>
+							</div>
+							
+							<div class="form-group" id="entity-input">
+								<label class="control-label col-md-3">Entity</label>
+								<div class="col-md-7 form-group has-feedback">
+									<?php $entityId = (isset($user->entity_id)) ? $user->entity_id : null ?>
+									{!! Form::select('entity', $entities, $entityId, ['class' => 'form-control select2', 'id' => 'entity', 'required']) !!}
+								</div>
+							</div>
+							
+							<div class="form-group">
 								<label class="control-label col-md-3">Group Access</label>
 								<div class="col-md-7 form-group has-feedback">
-									<?php  $group_access_id = ($viewType === 'view') ? $user->group_access_id : null ?> 
-									{!! Form::select('group_access', $userGroup, $group_access_id, ['class' => 'form-control select2', 'id' => 'group_access']) !!}
+									<?php  $groupAccessId    = (isset($user->group_access_id)) ? $user->group_access_id : null ?> 
+									<?php  $groupAccesSelect = ($viewType === 'create') ? ['' => '(select entity first)'] : $userGroup ?>
+									{!! Form::select('group_access', $groupAccesSelect, $groupAccessId, ['class' => 'form-control select2', 'id' => 'group_access', 'required']) !!}
 								</div>
 							</div>
 						@endif
-						
-						<div class="form-group">
-							<label class="control-label col-md-3">Remarks</label>
-							<div class="col-md-7 form-group has-feedback">
-								<textarea name="remarks" id="remarks" class="form-control" rows="3">{{ $user->remarks or '' }}</textarea>
-							</div>
-						</div>
-					
-						<br/>
 						
 						@if ($viewType !== 'view')
 						<div class="form-group">
@@ -328,7 +342,7 @@
 							@endif
 						</div>
 						@endif
-						
+					
 					</div>
 						
 					</div>

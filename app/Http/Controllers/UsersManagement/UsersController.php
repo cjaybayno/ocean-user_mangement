@@ -162,7 +162,8 @@ class UsersController extends Controller
         return view('users.form')->with([
 			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
-			'userGroup'    => $this->userRepo->userGroup(),
+			'userGroup'    => $this->userRepo->groups(),
+			'entities'     => $this->userRepo->entities(),
 			'viewType'	   => 'create'
 		]);
     }
@@ -195,8 +196,15 @@ class UsersController extends Controller
 		$user->contact_number	= $request->contact_number;
 		$user->email	 		= $request->email;
 		$user->status			= ($request->status) ? Config::get('users.status.active') : Config::get('users.status.disabled');
+		$user->role				= $request->role;
 		$user->group_access_id  = $request->group_access;
 		$user->remarks 		    = $request->remarks;
+		
+		/* === if user is client, include entity_id === */
+		if ($request->role == Config::get('users.role.client')) {
+			$user->entity_id = $request->entity;
+		}
+		
 		$user->save();
 		
 		Log::info('Create new user: ', [
@@ -272,6 +280,8 @@ class UsersController extends Controller
 			'email',
 			'status',
 			'is_login',
+			'role',
+			'entity_id',
 			'group_access_id',
 			'remarks',
 			'created_at'
@@ -317,7 +327,8 @@ class UsersController extends Controller
 			$this->menuKey    => $this->menuValue,
 			'assets'	      => $assets,
 			'user'		      => $user,
-			'userGroup'		  => $this->userRepo->userGroup(),
+			'userGroup'		  => $this->userRepo->groups($user->entity_id),
+			'entities'		  => $this->userRepo->entities(),
 			'viewType'	      => 'view',
 			'isCurrentUser'	  => ((Auth::user()->id === $user->id) ? true : false)
 		])
@@ -328,7 +339,7 @@ class UsersController extends Controller
 		])
 		->nest('changeGroup', 'users.changeGroup', [
 			'userGroupId' => $user->group_access_id,
-			'userGroup'   => $this->userRepo->userGroup(),
+			'userGroup'   => $this->userRepo->groups($user->entity_id),
 		])
 		->nest('terminate', 'users.terminate')
 		->nest('changePassword', 'users.password.change')
@@ -652,5 +663,21 @@ class UsersController extends Controller
 			'success' => true,
 			'message' => trans('users.successResetPassword')
 		]);
+	}
+	
+	/**
+	* Get Group Access
+	*
+	* @param  int  $entityId
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
+	public function getGetGroupAccess(Request $request, $entityId = '')
+	{
+		if (! $request->ajax()) {
+			abort(404);
+		}
+		
+		return response()->json($this->userRepo->groups($entityId));
 	}
 }

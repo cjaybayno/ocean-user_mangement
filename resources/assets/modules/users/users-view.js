@@ -11,6 +11,7 @@
 	function initialPages($) {
 		$('.select2').select2();
 		disabledInput();
+		entityHandler();
 		expiryDateRange('#expiry');
 		extendEXpiryDatePicker('#extend_expiry');
 		clickConfirmExtend();
@@ -26,6 +27,17 @@
 		var formID = '#user-register-form';
 		$(formID+' input, '+formID+' textarea').attr('readonly', true);
 		$(formID+' #is_login, '+formID+' select').attr('disabled', true);
+	}
+	
+	function entityHandler() {
+		var entityInputSelector = $('#entity-input');
+		if ($('#role').val() == 0) {
+			// role is admin, hide entity input
+			entityInputSelector.hide();
+		} else {
+			// role is client, show entity input
+			entityInputSelector.show();
+		}
 	}
 	
 	function expiryDateRange(selector) {

@@ -3,28 +3,62 @@
 namespace App\Repository;
 
 use App\UserGroup;
+use App\Entity;
 
 class UserManagement
 {
 	/**
      * Display Users Group in key/value pair 
-     *
+     * 
+     * @ param int $entityId
      * @return array
      */
-	public function UserGroup()
+	public function groups($entityId  = '')
 	{
-		/* === get all province/city === */
-		$userGroupRaw = UserGroup::orderBy('name')
-			->get()
-			->keyBy('id');
+		if (! empty($entityId)) {
+			$userGroupRaw = UserGroup::orderBy('name')
+				->where('entity_id', $entityId)
+				->get()
+				->keyBy('id');
+		} else {
+			$userGroupRaw = UserGroup::orderBy('name')
+				->whereNull('entity_id')
+				->get()
+				->keyBy('id');
+		}
 		
-		/* === format province/city to [province/city => province/city] === */
 		$userGroup = collect($userGroupRaw)
 			->map(function($userGroupRaw) {
 				return $userGroupRaw->name;
 			})
 			->toArray();
-			
+		
+		if (empty($entityId)) {
+			$userGroup[''] = 'Select Groups';
+		}
+		
 		return $userGroup;
+	}
+	
+	/**
+     * Display Entity in key/value pair 
+     *
+     * @return array
+     */
+	public function entities()
+	{
+		$entityRaw = Entity::orderBy('code')
+			->get()
+			->keyBy('id');
+		
+		$entity = collect($entityRaw)
+			->map(function($entityRaw) {
+				return $entityRaw->code;
+			})
+			->toArray();
+			
+		$entity[''] = 'Select Entity';
+			
+		return $entity;
 	}
 }

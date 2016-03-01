@@ -2,6 +2,8 @@
  *  Initialize Pages
  * ======================================================================== */
 	var formNAme = '#user-register-form';
+	
+	var groupAccessDefaultValue = [{ id: ' ', text: '(select entity first)' }];
  
 	$(initialPages);
 
@@ -14,7 +16,10 @@
 		$('.select2').select2();
 		datePicker('#expiry');
 		fileInput('#avatar');
+		selectRole();
+		selectEntity();
 		formSubmit();
+		
 	}
 	
 	
@@ -93,6 +98,70 @@
 		});
 		
 		$('.clear-btn').click(function() { $(formNAme).parsley().reset() });
+	}
+	
+	function selectRole() {
+		$('#role').change(function() {
+			var groupAccessSelector = $('#group_access');
+			var entitySelector      = $('#entity');
+			var entityInputSelector = $('#entity-input');
+			var entityId = $('#entity').val();
+			groupAccessSelector.empty().attr('disabled', true);
+			
+			if ($('#role').val() == 0) {
+				// role is admin, hide entity input
+				entityInputSelector.hide();
+				// remove required validation to entity
+				entitySelector.removeAttr('required');
+				// get group access for admin
+				$.ajax({
+					url: url+'/users/get-group-access',
+					dataType: 'json',
+					success: function(result) {
+						groupAccessSelector.select2({data: selec2DataFormat(result)}).removeAttr('disabled');
+					}
+				});
+			} else {
+				// role is client, show entity input
+				entityInputSelector.show();
+				// remove required validation to entity
+				entitySelector.attr('required', true);
+				if (entityId != '') {
+					// get group access for this entity
+					$.ajax({
+					url: url+'/users/get-group-access/'+entityId,
+					dataType: 'json',
+					success: function(result) {
+						groupAccessSelector.select2({data: selec2DataFormat(result)}).removeAttr('disabled');
+					}
+				});
+				} else {
+					groupAccessSelector.select2({data: groupAccessDefaultValue}).removeAttr('disabled');
+				}
+				
+			}
+		});
+	}
+	
+	function selectEntity() {
+		$('#entity').change(function() {
+			var groupAccessSelector = $('#group_access');
+			var entityId = $('#entity').val();
+			var urlRequest = '';
+			groupAccessSelector.empty().attr('disabled', true);
+			
+			if (entityId != '') {
+				$.ajax({
+					url: url+'/users/get-group-access/'+entityId ,
+					dataType: 'json',
+					success: function(result) {
+						groupAccessSelector.select2({data: selec2DataFormat(result)}).removeAttr('disabled');
+					}
+				});
+			} else {
+				groupAccessSelector.select2({data: groupAccessDefaultValue}).removeAttr('disabled');
+			}
+		});
 	}
 	
 	function formData() {

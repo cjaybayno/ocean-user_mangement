@@ -140,3 +140,12 @@ function addBtn(url) {
 		</a>'
 	);
 }
+
+/* === Data formatter for select2 plugins === */
+function selec2DataFormat(array) {
+	var selectData = [];
+	$.each(array, function(key, value) {
+		selectData.push({'id': key, 'text': value});
+	});
+	return selectData;
+}
