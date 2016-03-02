@@ -72,7 +72,9 @@ class AuthController extends Controller
 		if (Auth::validate($request->only('username', 'password'))) {
 			$user = User::select([
 				'id', 
-				'status', 
+				'status',
+				'entity_id',
+				'group_access_id',
 				'expired_at'
 			])
 			->where('username', $request->username)
@@ -88,6 +90,13 @@ class AuthController extends Controller
 					} else {
 						/* === auth success === */
 						Auth::login($user);
+						
+						/* === add session data === */
+						session([
+							'user_id'   => $user->id,
+							'entity_id' => $user->entity_id,
+							'group_id'  => $user->group_access_id,
+						]);
 						
 						/* === update user is_login to 1 === */
 						User::where('id', $user->id)->update(['is_login' => 1]);
