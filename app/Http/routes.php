@@ -22,28 +22,22 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
-
 Route::group(['middleware' => 'web'], function () {
 	
 	//Authentication Route
 	Route::get('login', 'Auth\AuthController@getLogin');
 	Route::post('login', 'Auth\AuthController@auth');
 	Route::get('logout', 'Auth\AuthController@logout');
-	Route::get('test/{expiryDate}', 'Auth\AuthController@checkExpiry');
   
 	Route::group(['middleware' => 'auth'], function () {
 		
-		Route::get('home', function () {
+		Route::get('dashboard', function () {
 			return view('home');
 		});
 		
 		Route::get('/', function () {
 			return view('home');
 		});
-		
 		
 		//users route
 		Route::controller('users', 'UsersManagement\UsersController', [

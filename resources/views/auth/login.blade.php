@@ -42,8 +42,8 @@
 						<br />
 						
 						<div>
-							<h1><i class="fa fa-paw" style="font-size: 26px;"></i> Gentelella Alela!</h1>
-							<p>©2015 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+							<h1><i class="fa fa-anchor" style="font-size: 26px;"></i> OCEAN LOAN</h1>
+							<p>©2015 All Rights Reserved. Ocean Loan! Privacy and Terms</p>
 						</div>
 					</div>
 				</form>
