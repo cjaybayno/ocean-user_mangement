@@ -9,7 +9,9 @@
  
 	/* ==== function to init this page === */
 	function initialPages($) {
+		$('.select2').select2();
 		dataTables();
+		clickConfirmAdd();
 		clickConfirmEdit();
 		clickModalCloseBtnDone();
 	}
@@ -20,7 +22,8 @@
 			columns : [
 				{"searchable" : false},
 				{"searchable" : true},
-				null,
+				{"searchable" : false},
+				null
 			],
 			oLanguage : {
 				"sSearch": "Search Group Name"
@@ -73,6 +76,43 @@
 						encryptId : $(modalID+' #encryptId').val(),
 						group_name : $(modalID+' #group_name').val(),
 						group_desc : $(modalID+' #group_desc').val()
+					},
+					dataType: 'json',
+					complete: function() {
+						loadingBarClose(modalID+' .load-bar');
+					},
+					error: function(result) {
+						$(modalID+' .action-btn').show();
+						$(modalID+' .action-input').removeAttr('disabled');
+						notifier('danger',modalID+' .load-bar-notif', oops);
+					},
+					success: function(result) {
+						$(modalID+' .close-btn-done').show();
+						$(modalID+' .action-input').attr('disabled', true);
+						notifier('success', modalID+' .load-bar-notif', result.message);
+					}
+				});
+			}
+		});
+	}	
+	
+	function clickConfirmAdd() {
+		var modalID = '#add-users-group-modal';
+		var formID  = '#add-user-group-form';
+		$(modalID+' #confirm-btn').on('click', function () {
+			$(formID).parsley().validate();
+			if ($(formID).parsley().isValid()) {
+				loadingBar(modalID+' .load-bar', 'Saving In process...');
+				$(modalID+' .action-input').attr('disabled', true);
+				$(modalID+' .action-btn').hide();
+				ajaxCsrfToken();
+				$.ajax({
+					url: url+"/user/groups/store-group",
+					type: "post",
+					data: { 
+						group_name   : $(modalID+' #group_name').val(),
+						group_entity : $(modalID+' #group_entity').val(),
+						group_desc   : $(modalID+' #group_desc').val(),
 					},
 					dataType: 'json',
 					complete: function() {

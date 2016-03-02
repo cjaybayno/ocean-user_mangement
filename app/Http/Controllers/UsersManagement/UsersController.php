@@ -13,7 +13,6 @@ use Session;
 use Datatables;
 
 use App\User;
-use App\UserGroup;
 use App\Repository\UserManagement;
 use App\Http\Controllers\Controller;
 

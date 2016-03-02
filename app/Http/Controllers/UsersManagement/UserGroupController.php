@@ -4,6 +4,7 @@ namespace App\Http\Controllers\UsersManagement;
 
 use Illuminate\Http\Request;
 
+use DB;
 use Log;
 use Crypt;
 use Session;
@@ -11,6 +12,7 @@ use Datatables;
 
 use App\UserGroup;
 use App\Http\Requests;
+use App\Repository\UserManagement;
 use App\Http\Controllers\Controller;
 
 class UserGroupController extends Controller
@@ -21,7 +23,24 @@ class UserGroupController extends Controller
 	public $menuKey   = 'userGroupActiveMenu';
 	public $menuValue = 'current-page';
 	
-	 /**
+	/**
+     * The user repository implementation.
+     */
+	protected $userRepo;
+	
+	/**
+     * Create a new instance.
+     *
+     * @param  UserManagement  $UserRepository
+     * @return void
+     */
+	public function __construct(UserManagement $UserRepository)
+	{
+		$this->userRepo = $UserRepository;
+	}
+	
+	
+	/**
      * Display a listing of the user groups
      *
      * @return \Illuminate\Http\Response
@@ -34,22 +53,30 @@ class UserGroupController extends Controller
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
+				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
 				'/assets/modules/users/users-groups-list.js' 
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
 				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
+				'/assets/gentellela-alela/css/select/select2.min.css',
 			]
 		];
 		
 		Log::info('View user groups: ', ['session' => Session::all()]);
 		
+		$entities = $this->userRepo->entities();
+		$entities[0] = 'No Entity';
+		
         return view('users/groups.list')->with([
 			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets
 		])
-		->nest('editUserGroupView', 'users/groups.edit');
+		->nest('editUserGroupView', 'users/groups.edit')
+		->nest('addUserGroupView',  'users/groups.add', [
+			'entities' => $entities,
+		]);
     }
 	
 	/**
@@ -63,13 +90,30 @@ class UserGroupController extends Controller
 			abort(404);
 		}
 		
-		/* === get order of name from request === */
-		$orderBy = $request->input('order')[0]['dir'];
+		$select = [
+			'user_groups.id',
+			'user_groups.name',
+			'entities.code',
+			'user_groups.description',
+		];
 		
-		$userGroup = UserGroup::select(['id', 'name', 'description'])->orderBy('name', $orderBy);
+		/* === get order of name from request === */
+		$orderByInput = $request->input('order')[0];
+		
+		/* === condition to remove conflict of SORTING === */
+		if ($orderByInput['column'] == 0) {
+			$userGroup = DB::table('user_groups')
+					->leftJoin('entities', 'entities.id', '=', 'user_groups.entity_id')
+					->orderBy('name', $orderByInput['dir']) 
+					->select($select);
+		} else {
+			$userGroup = DB::table('user_groups')
+					->leftJoin('entities', 'entities.id', '=', 'user_groups.entity_id')
+					->select($select);
+		}
 		
 		return Datatables::of($userGroup)
-				->editColumn('action', function ($userGroup) {
+				->addColumn('action', function ($userGroup) {
 					return view('users/groups/datatables.action', [
 								'encryptID' => Crypt::encrypt($userGroup->id)
 							])->render();
@@ -104,6 +148,39 @@ class UserGroupController extends Controller
 				'data' => $userGroup
 			],
 			'session' => Session::all()
+		]);
+	}
+	
+	/**
+	* Store Group
+	*
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
+	public function postStoreGroup(Request $request)
+	{
+		$userGroup = new UserGroup;
+		$userGroup->name        = ucwords($request->group_name);
+		$userGroup->description = $request->group_desc;
+		
+		/* === if has entity selected === */
+		if (! empty($request->group_entity) OR $request->group_entity != 0) {
+			$userGroup->entity_id = $request->group_entity;
+		}
+		
+		$userGroup->save();
+		
+		Log::info('Create user group: ', [
+			'table'	=> [
+				'name' => 'users_groups',
+				'data' => $userGroup->toArray(),
+			],
+			'session' => Session::all()
+		]);
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('users.successAddUserGroup')
 		]);
 	}
 	

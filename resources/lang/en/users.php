@@ -46,4 +46,5 @@ return [
 	
 	/* === User Group === */
 	'successEditUserGroup' => "Group has modified! <br> <br> Great, this group is being modified.",
+	'successAddUserGroup'  => "Group has been save! <br> <br> Great, you have new groups.",
 ];

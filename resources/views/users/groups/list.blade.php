@@ -9,7 +9,7 @@
 				<h2>User Groups List </h2>
 				<div class="pull-right">
 					<div class="btn-group">
-						<a href="#">
+						<a href="#add-users-group-modal" data-toggle="modal">
 							<button type="button" class="btn btn-block btn-sm btn-primary"><i class="glyphicon glyphicon-plus"></i> Add Groups</button>
 						</a>
 					</div>
@@ -21,6 +21,7 @@
                     <thead>
 						 <tr class="headings">
 							<th>Groups Name</th>
+							<th>Entity</th>
 							<th>Description</th>
 							<th>Action</th>
 						</tr>
@@ -33,6 +34,9 @@
 	</div>
 </div>
 
-<!-- add Extend Expiry view -->
+<!--  Edit User Groups view -->
 {!! $editUserGroupView !!}
+
+<!-- Add User Groups view -->
+{!! $addUserGroupView !!}
 @endsection
