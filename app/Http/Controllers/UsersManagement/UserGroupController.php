@@ -91,10 +91,10 @@ class UserGroupController extends Controller
 		}
 		
 		$select = [
-			'user_groups.id',
 			'user_groups.name',
 			'entities.code',
 			'user_groups.description',
+			'user_groups.id',
 		];
 		
 		/* === get order of name from request === */

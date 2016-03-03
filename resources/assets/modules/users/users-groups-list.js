@@ -20,8 +20,8 @@
 	function dataTables() {
 		$('#user-group-list').DataTable({
 			columns : [
-				{"searchable" : false},
 				{"searchable" : true},
+				{"searchable" : false},
 				{"searchable" : false},
 				null
 			],

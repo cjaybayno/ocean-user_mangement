@@ -82,13 +82,13 @@ class UsersController extends Controller
 		}
 		
 		$select = [
-			'users.id as id',
 			'avatar',
 			'username', 
 			'users.name as name', 
 			'user_groups.name as group_name',
 			'is_login',
 			'status',
+			'users.id as id',
 		];
 		
 		/* === get order of name from request === */
