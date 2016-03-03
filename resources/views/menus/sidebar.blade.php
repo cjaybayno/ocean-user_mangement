@@ -19,8 +19,12 @@
 					<li><a href="index.html">Consolidation</a></li>
 				</ul>
 			</li>
-			<li><a><i class="fa fa-money"></i> Payments </a></li>
-			<li><a><i class="fa fa-briefcase"></i> Products </a></li>
+			<li><a><i class="fa fa-money"></i> Payment </a></li>
+			<li class="{{ $loanProductsActiveMenu or '' }}">
+				<a href="{{ URL::route('loan.products') }}">
+					<i class="fa fa-briefcase"></i> Products
+				</a>
+			</li>
 	</div>
 	<div class="menu_section">
 		<h3>User Management</h3>

@@ -29,6 +29,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::post('login', 'Auth\AuthController@auth');
 	Route::get('logout', 'Auth\AuthController@logout');
   
+	// Authenticated route group
 	Route::group(['middleware' => 'auth'], function () {
 		
 		Route::get('dashboard', function () {
@@ -39,7 +40,17 @@ Route::group(['middleware' => 'web'], function () {
 			return view('home');
 		});
 		
-		//users route
+		// Loans route group
+		Route::group(['prefix' => 'loan'], function () {
+			//loan products route
+			Route::controller('products', 'Loans\LoanProductsController', [
+				'getIndex'  => 'loan.products',
+				'getCreate' => 'loan.products.create',
+			]);
+		});
+		
+		
+		// Users route
 		Route::controller('users', 'UsersManagement\UsersController', [
 			'getIndex'          => 'users',
 			'getRegister'       => 'users.register',
@@ -49,14 +60,12 @@ Route::group(['middleware' => 'web'], function () {
 			'postUpdateProfile' => 'users.UpdateProfile',
 		]);
 		
+		// Users route gruop
 		Route::group(['prefix' => 'user'], function () {
-			//users route
+			// users/groups route
 			Route::controller('groups', 'UsersManagement\UserGroupController', [
-				'getIndex'          => 'user.groups',
+				'getIndex' => 'user.groups',
 			]);
-		});
-		
-		
-		
+		});	
 	});
 });
