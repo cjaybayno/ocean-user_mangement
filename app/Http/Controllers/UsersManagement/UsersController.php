@@ -64,7 +64,7 @@ class UsersController extends Controller
 		
 		Log::info('View users list: ', ['session' => Session::all()]);
 		
-        return view('users.list')->with([
+        return view('modules/users.list')->with([
 			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets
 		]);
@@ -108,23 +108,23 @@ class UsersController extends Controller
 		
 		return Datatables::of($users)
 				->editColumn('avatar',  function ($user) {
-					return view('users/datatables.avatar', [
+					return view('modules/users/datatables.avatar', [
 								'avatar' => $user->avatar
 							])->render();
 				})
 				->addColumn('is_login', function ($user) {
-					return view('users/datatables.isLogin', [
+					return view('modules/users/datatables.isLogin', [
 								'is_login' => $user->is_login
 							])->render();
 				})
 				->editColumn('status', function ($user) {
-					return view('users/datatables.status', [
+					return view('modules/users/datatables.status', [
 								'user'   => $user, 
 								'status' => Config::get('users.status')]
 							)->render();
 				})
 				->addColumn('action', function ($user) {
-					return view('users/datatables.action', [
+					return view('modules/users/datatables.action', [
 								'encryptID' => Crypt::encrypt($user->id)
 							])->render();
 				})
@@ -158,7 +158,7 @@ class UsersController extends Controller
 		
 		Log::info('View user registration: ', ['session' => Session::all()]);
 		
-        return view('users.form')->with([
+        return view('modules/users.form')->with([
 			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
 			'userGroup'    => $this->userRepo->groups(),
@@ -322,7 +322,7 @@ class UsersController extends Controller
 		]);
 		 
 		
-		return view('users.form')->with([
+		return view('modules/users.form')->with([
 			$this->menuKey    => $this->menuValue,
 			'assets'	      => $assets,
 			'user'		      => $user,
@@ -331,18 +331,18 @@ class UsersController extends Controller
 			'viewType'	      => 'view',
 			'isCurrentUser'	  => ((Auth::user()->id === $user->id) ? true : false)
 		])
-		->nest('extendExpiry', 'users.extendExpiry')
-		->nest('changeStatus', 'users.changeStatus', [
+		->nest('extendExpiry', 'modules/users.extendExpiry')
+		->nest('changeStatus', 'modules/users.changeStatus', [
 			'userStatus'      => $user->status,
 			'statusSelection' => $this->statusSelection($user->status),
 		])
-		->nest('changeGroup', 'users.changeGroup', [
+		->nest('changeGroup', 'modules/users.changeGroup', [
 			'userGroupId' => $user->group_access_id,
 			'userGroup'   => $this->userRepo->groups($user->entity_id),
 		])
-		->nest('terminate', 'users.terminate')
-		->nest('changePassword', 'users.password.change')
-		->nest('changeReset', 'users.password.reset')
+		->nest('terminate', 'modules/users.terminate')
+		->nest('changePassword', 'modules/users.password.change')
+		->nest('changeReset', 'modules/users.password.reset')
 		;
 	}
 	
@@ -421,7 +421,7 @@ class UsersController extends Controller
 			'session' => Session::all()
 		]);
 		
-		return view('users.form')->with([
+		return view('modules/users.form')->with([
 			$this->menuKey => $this->menuValue,
 			'assets'	   => $assets,
 			'user'		   => $user,

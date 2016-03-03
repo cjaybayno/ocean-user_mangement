@@ -44,7 +44,7 @@ class LoanProductsController extends Controller
 		Log::info('View loan products: ', ['session' => session()->all()]);
 		
 			
-        return view('loans/products.list')->with([
+        return view('modules/loans/products.list')->with([
 			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets
 		]);
@@ -90,7 +90,7 @@ class LoanProductsController extends Controller
 				->editColumn('term', '{{ $term }} months')
 				->editColumn('interest', '{{ $interest }}%')
 				->addColumn('action', function ($loanProducts) {
-					return view('loans/products/datatables.action', [
+					return view('modules/loans/products/datatables.action', [
 								'encryptID' => Crypt::encrypt($loanProducts->id)
 							])->render();
 				})
@@ -120,7 +120,7 @@ class LoanProductsController extends Controller
 		
 		return 'create products';
 		
-        // return view('loans/products.form')->with([
+        // return view('modules/loans/products.form')->with([
 			// $this->menuKey => $this->menuValue,
 			// 'assets' 	   => $assets,
 			// 'entities'     => 'test',

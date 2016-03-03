@@ -69,12 +69,12 @@ class UserGroupController extends Controller
 		$entities = $this->userRepo->entities();
 		$entities[0] = 'No Entity';
 		
-        return view('users/groups.list')->with([
+        return view('modules/users/groups.list')->with([
 			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets
 		])
-		->nest('editUserGroupView', 'users/groups.edit')
-		->nest('addUserGroupView',  'users/groups.add', [
+		->nest('editUserGroupView', 'modules/users/groups.edit')
+		->nest('addUserGroupView',  'modules/users/groups.add', [
 			'entities' => $entities,
 		]);
     }
@@ -114,7 +114,7 @@ class UserGroupController extends Controller
 		
 		return Datatables::of($userGroup)
 				->addColumn('action', function ($userGroup) {
-					return view('users/groups/datatables.action', [
+					return view('modules/users/groups/datatables.action', [
 								'encryptID' => Crypt::encrypt($userGroup->id)
 							])->render();
 				})

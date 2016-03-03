@@ -16,11 +16,11 @@ class AppServiceProvider extends ServiceProvider
         // View composer for authenticated user profile info ...
         view()->composer([
 				'home',
-				'users.list',
-				'users.create',
-				'users.form',
-				'users/groups.list',
-				'loans/products.list',
+				'modules/users.list',
+				'modules/users.create',
+				'modules/users.form',
+				'modules/users/groups.list',
+				'modules/loans/products.list',
 			], 
 			'App\Http\ViewComposers\AuthUserProfileComposer'
 		);
