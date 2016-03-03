@@ -83,12 +83,22 @@ function ajaxCsrfToken() {
 
 /* === add two Zero === */
 function addTwoZero(num) {
-	return num.toFixed(2);
+	if (num) {
+		var num = parseFloat(num).toFixed(2);
+		if (num != 'NaN') {
+			return num;
+		}
+	}
 }
 
 /* === add comma every 3 digit === */
 function digits(num){ 
-    return num.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); 
+	if (num) {
+		var num = num.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+		if (num != 'NaN') {
+			return num;
+		}
+	}
 }
 
 /* === Date Format === */
@@ -122,21 +132,21 @@ function notifier(alertNotif, selector, message) {
 }
 
 /* === add Edit button in === */
-function editBtn(url) {
+function editBtn(url, btnNAme) {
 	$('#edit-btn').empty().html(
 		'<a href="'+url+'">\
 			<button class="btn btn-block btn-sm btn-info pull-right">\
-				<i class="fa fa-edit"></i> Edit\
+				<i class="fa fa-edit"></i> '+btnNAme+'\
 			</button>\
 		</a>'
 	);
 }
 
 /* === add Edit button === */
-function addBtn(url) {
+function addBtn(url, btnNAme) {
 	$('#add-btn').empty().html(
 		'<a href="'+url+'">\
-			<button type="button" class="btn btn-block btn-sm btn-primary"><i class="fa fa-plus-circle"></i> New user</button>\
+			<button type="button" class="btn btn-block btn-sm btn-primary"><i class="fa fa-plus-circle"></i> '+btnNAme+' </button>\
 		</a>'
 	);
 }

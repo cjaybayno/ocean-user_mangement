@@ -35,7 +35,6 @@
 @section('addScripts')
 	<script> 
 		var itemImages 	= '<img src="{!! !empty($user->avatar) ? $user->avatar : url('resources/assets/gentellela-alela/images/user.png') !!}" style="height:120px; width:136px"/>' 
-		var oops 	 	= "{{ trans('users.oops') }}";
 	</script>
 	
 	@if ($viewType === 'edit' OR $viewType === 'view')

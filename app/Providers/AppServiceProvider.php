@@ -17,10 +17,10 @@ class AppServiceProvider extends ServiceProvider
         view()->composer([
 				'home',
 				'modules/users.list',
-				'modules/users.create',
 				'modules/users.form',
 				'modules/users/groups.list',
 				'modules/loans/products.list',
+				'modules/loans/products.form',
 			], 
 			'App\Http\ViewComposers\AuthUserProfileComposer'
 		);

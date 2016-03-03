@@ -89,8 +89,8 @@
 						$('input, textarea').attr('readonly', true);
 						$('#status, select').attr('disabled', true);
 						notifier('success','#user-creation-result', result.message);
-						editBtn(url+'/users/register');
-						addBtn(url+'/users/register');
+						editBtn(url+'/users/register', 'New User');
+						addBtn(url+'/users/register', 'Edit');
 					}
 				});
 			}

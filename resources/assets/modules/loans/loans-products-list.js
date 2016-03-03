@@ -17,8 +17,8 @@
 		$('#loan-products-list').DataTable({
 			columns : [
 				{"searchable" : false},
-				{"searchable" : false},
 				{"searchable" : true},
+				{"searchable" : false},
 				{"searchable" : false},
 				{"searchable" : false},
 				{"searchable" : false},

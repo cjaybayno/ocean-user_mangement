@@ -8,7 +8,10 @@ use DB;
 use Log;
 use Crypt;
 use Datatables;
+
+use App\LoanProduct;
 use App\Http\Requests;
+use App\Repository\LoanManagement;
 use App\Http\Controllers\Controller;
 
 class LoanProductsController extends Controller
@@ -19,6 +22,21 @@ class LoanProductsController extends Controller
 	public $menuKey   = 'loanProductsActiveMenu';
 	public $menuValue = 'current-page';
 	
+	/**
+     * The loan repository implementation.
+     */
+	protected $loanRepo;
+	
+	/**
+     * Create a new instance.
+     *
+     * @param  LoanManagement  $LoanRepository
+     * @return void
+     */
+	public function __construct(LoanManagement $LoanRepository)
+	{
+		$this->loanRepo = $LoanRepository;
+	}
 	
 	/**
      * Display a listing of the loan products
@@ -62,28 +80,28 @@ class LoanProductsController extends Controller
 		}
 		
 		$select = [
-			'loan_products.id',
 			'code',
 			'name',
 			'principal',
 			'term',
 			'interest',
+			'loan_products.id',
 		];
 		
 		/* === get order of name from request === */
 		$orderByInput = $request->input('order')[0];
 		
 		/* === condition to remove conflict of SORTING === */
-		if ($orderByInput['column'] == 0) {
+		// if ($orderByInput['column'] == 0) {
+			// $loanProducts = DB::table('loan_products')
+					// ->leftJoin('entities', 'entities.id', '=', 'loan_products.entity_id')
+					// ->orderBy('term', $orderByInput['dir']) 
+					// ->select($select);
+		// } else {
 			$loanProducts = DB::table('loan_products')
 					->leftJoin('entities', 'entities.id', '=', 'loan_products.entity_id')
-					->orderBy('code', $orderByInput['dir']) 
 					->select($select);
-		} else {
-			$loanProducts = DB::table('loan_products')
-					->leftJoin('entities', 'entities.id', '=', 'loan_products.entity_id')
-					->select($select);
-		}
+		//}
 		
 		return Datatables::of($loanProducts)
 				->editColumn('principal', '{{ number_format($principal, 2) }}')
@@ -109,7 +127,7 @@ class LoanProductsController extends Controller
 			'scripts' => [
 				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
-				'/assets/modules/users/users-register-form.js',
+				'/assets/modules/loans/loans-products-create-form.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css'
@@ -117,14 +135,45 @@ class LoanProductsController extends Controller
 		];
 		
 		Log::info('View loan products create: ', ['session' => session()->all()]);
-		
-		return 'create products';
-		
-        // return view('modules/loans/products.form')->with([
-			// $this->menuKey => $this->menuValue,
-			// 'assets' 	   => $assets,
-			// 'entities'     => 'test',
-			// 'viewType'	   => 'create'
-		// ]);
+	
+        return view('modules/loans/products.form')->with([
+			$this->menuKey => $this->menuValue,
+			'assets' 	   => $assets,
+			'entities'     => $this->loanRepo->entities(),
+			'viewType'	   => 'create'
+		]);
     }
+	
+	/**
+     * Store a newly created loan products.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postStore(Request $request)
+    {
+		$loanProduct = new LoanProduct;
+		$loanProduct->name 	    = ucwords($request->product_name);
+		$loanProduct->principal = $request->principal_amount;
+		$loanProduct->term   	= $request->term;
+		$loanProduct->interest  = $request->interest_rate;
+		$loanProduct->entity_id = $request->entity;
+		$loanProduct->remarks   = $request->remarks;
+		$loanProduct->save();
+		
+		Log::info('Create new loan product: ', [
+			'table'	=> [
+				'name' => 'loan_products',
+				'data' => $loanProduct->toArray()
+			],
+			'session' => session()->all()
+		]);
+		 
+		return response()->json([
+			'success' => true,
+			'message' => trans('loans.successLoanProductCreation')
+		]);
+	}
 }
+
+
