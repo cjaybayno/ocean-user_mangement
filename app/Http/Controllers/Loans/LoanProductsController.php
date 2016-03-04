@@ -88,20 +88,10 @@ class LoanProductsController extends Controller
 			'loan_products.id',
 		];
 		
-		/* === get order of name from request === */
-		$orderByInput = $request->input('order')[0];
+		$loanProducts = DB::table('loan_products')
+				->leftJoin('entities', 'entities.id', '=', 'loan_products.entity_id')
+				->select($select);
 		
-		/* === condition to remove conflict of SORTING === */
-		// if ($orderByInput['column'] == 0) {
-			// $loanProducts = DB::table('loan_products')
-					// ->leftJoin('entities', 'entities.id', '=', 'loan_products.entity_id')
-					// ->orderBy('term', $orderByInput['dir']) 
-					// ->select($select);
-		// } else {
-			$loanProducts = DB::table('loan_products')
-					->leftJoin('entities', 'entities.id', '=', 'loan_products.entity_id')
-					->select($select);
-		//}
 		
 		return Datatables::of($loanProducts)
 				->editColumn('principal', '{{ number_format($principal, 2) }}')

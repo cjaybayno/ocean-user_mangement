@@ -97,20 +97,10 @@ class UserGroupController extends Controller
 			'user_groups.id',
 		];
 		
-		/* === get order of name from request === */
-		$orderByInput = $request->input('order')[0];
 		
-		/* === condition to remove conflict of SORTING === */
-		if ($orderByInput['column'] == 0) {
-			$userGroup = DB::table('user_groups')
-					->leftJoin('entities', 'entities.id', '=', 'user_groups.entity_id')
-					->orderBy('name', $orderByInput['dir']) 
-					->select($select);
-		} else {
-			$userGroup = DB::table('user_groups')
-					->leftJoin('entities', 'entities.id', '=', 'user_groups.entity_id')
-					->select($select);
-		}
+		$userGroup = DB::table('user_groups')
+				->leftJoin('entities', 'entities.id', '=', 'user_groups.entity_id')
+				->select($select);
 		
 		return Datatables::of($userGroup)
 				->addColumn('action', function ($userGroup) {
