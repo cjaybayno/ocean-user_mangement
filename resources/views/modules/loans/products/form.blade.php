@@ -14,8 +14,12 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-				@if ($viewType === 'create') 
+				@if ($viewType === 'create')
 					<h2>Create Products</h2>
+				@elseif ($viewType === 'view')
+					<h2>Loan Product</h2>
+				@elseif ($viewType === 'edit')
+					<h2>Edit Loan Product</h2>
 				@endif 
 				<div class="pull-right">
 					@if ($viewType === 'create') 
@@ -33,10 +37,11 @@
 			<div class="x_content">
 				<form id="loan-products-create-form" class="form-horizontal form-label-left">
 					<div id="loan-products-creation-result" class="col-sm-12"></div>
-					
+					@if ($viewType != 'create')
+						<input type="hidden" name="encrypt_id" id="encrypt_id" value="{{ $encryptId }}">
+					@endif
 					<!-- left side form -->
 					<div class="col-sm-6">
-					
 						<div class="col-md-offset-3">
 							<div class="form-group col-md-10">
 								<label class="control-label">Products Name<span class="required"> *</span></label><br>
@@ -50,7 +55,6 @@
 								</div>
 							</div>
 						</div>
-						
 						<div class="col-md-offset-3">
 							<div class="form-group col-md-10">
 								<label class="control-label">Principal Amount<span class="required"> *</span></label><br>
@@ -62,7 +66,6 @@
 								</div>
 							</div>
 						</div>
-						
 						<div class="col-md-offset-3">
 							<div class="form-group col-md-10">
 								<label class="control-label">Term<span class="required"> *</span></label><br>
@@ -76,12 +79,10 @@
 								</div>
 							</div>
 						</div>
-						
 					</div>
 					
 					<!-- right side form -->
 					<div class="col-sm-6">
-					
 						<div class="form-group col-md-7">
 							<label class="control-label">Interest Rate %<span class="required"> *</span></label><br>
 							<div class="form-group has-feedback">
@@ -92,27 +93,32 @@
 									value="{{ $loanProduct->interest or '' }}">
 							</div>
 						</div>
-						
 						<div class="form-group col-md-7">
 							<label class="control-label">Entity<span class="required"> *</span></label><br>
 							<div class="form-group has-feedback">
-								{!! Form::select('entity', $entities, null, ['class' => 'form-control select2', 'id' => 'entity', 'required']) !!}
+								<?php $loanProductEntity = (isset($loanProduct->entity_id)) ? $loanProduct->entity_id : null  ?>
+								{!! Form::select('entity', $entities, $loanProductEntity, ['class' => 'form-control select2', 'id' => 'entity', 'required']) !!}
 							</div>
 						</div>
-						
 						<div class="form-group col-md-7">
 							<label class="control-label">Remarks<span class="required"></span></label><br>
-							<textarea name="remarks" id="remarks" class="form-control" rows="3"></textarea>
+							<textarea name="remarks" id="remarks" class="form-control" rows="3">{{ $loanProduct->remarks }}</textarea>
 						</div>
-					
 					</div>
 					
+					@if ($viewType != 'view')
 					<div class="form-group">
 						<div class="col-md-offset-2">
 							<button type="submit" class="btn btn-default clear-btn">Clear</button>
 							<button type="submit" id="form-submit" class="btn btn-success">Submit</button>
+							@if ($viewType === 'edit')
+								<a href="{{ URL::route('loan.products.show', $encryptId) }}">
+									<div class="btn btn-danger cancel-edit-btn">Cancel</div>
+								</a>
+							@endif
 						</div>
 					</div>
+					@endif
 					
 				</form>
 			</div>

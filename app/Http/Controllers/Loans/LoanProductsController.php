@@ -124,7 +124,7 @@ class LoanProductsController extends Controller
 			]
 		];
 		
-		Log::info('View loan products create: ', ['session' => session()->all()]);
+		Log::info('View loan product create: ', ['session' => session()->all()]);
 	
         return view('modules/loans/products.form')->with([
 			$this->menuKey => $this->menuValue,
@@ -164,6 +164,104 @@ class LoanProductsController extends Controller
 			'message' => trans('loans.successLoanProductCreation')
 		]);
 	}
+	
+	/**
+     * Show specific loan products
+     * 
+     * @param string $encryptID
+     * @return \Illuminate\Http\Response
+     */
+    public function getShow($encryptID)
+    {
+		$assets = [
+			'scripts' => [
+				'/assets/gentellela-alela/js/select/select2.full.js',
+				'/assets/gentellela-alela/js/parsley/parsley.min.js',
+				'/assets/modules/loans/loans-products-view-form.js',
+			],
+			'stylesheets' => [
+				'/assets/gentellela-alela/css/select/select2.min.css'
+			]
+		];
+		
+		$loanProduct = LoanProduct::findOrFail(Crypt::decrypt($encryptID));
+		
+		Log::info('View loan product show: ', ['session' => session()->all()]);
+	
+        return view('modules/loans/products.form')->with([
+			$this->menuKey => $this->menuValue,
+			'assets' 	   => $assets,
+			'entities'     => $this->loanRepo->entities(),
+			'viewType'	   => 'view',
+			'loanProduct'  => $loanProduct,
+			'encryptId'    => $encryptID,
+		]);
+    }
+	
+	/**
+     * Show edit form of specific loan products
+     * 
+     * @param string $encryptID
+     * @return \Illuminate\Http\Response
+     */
+    public function getEdit($encryptID)
+    {
+		$assets = [
+			'scripts' => [
+				'/assets/gentellela-alela/js/select/select2.full.js',
+				'/assets/gentellela-alela/js/parsley/parsley.min.js',
+				'/assets/modules/loans/loans-products-edit-form.js',
+			],
+			'stylesheets' => [
+				'/assets/gentellela-alela/css/select/select2.min.css'
+			]
+		];
+		
+		$loanProduct = LoanProduct::findOrFail(Crypt::decrypt($encryptID));
+		
+		Log::info('View loan product show: ', ['session' => session()->all()]);
+	
+        return view('modules/loans/products.form')->with([
+			$this->menuKey => $this->menuValue,
+			'assets' 	   => $assets,
+			'entities'     => $this->loanRepo->entities(),
+			'viewType'	   => 'edit',
+			'loanProduct'  => $loanProduct,
+			'encryptId'    => $encryptID
+		]);
+    }
+	
+	/**
+     * Update a specific loan products.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postUpdate(Request $request)
+    {
+		$loanProduct = LoanProduct::findOrFail(Crypt::decrypt($request->encrypt_id));
+		$loanProduct->name 	    = ucwords($request->product_name);
+		$loanProduct->principal = $request->principal_amount;
+		$loanProduct->term   	= $request->term;
+		$loanProduct->interest  = $request->interest_rate;
+		$loanProduct->remarks   = $request->remarks;
+		$loanProduct->save();
+		
+		Log::info('Update loan product: ', [
+			'table'	=> [
+				'name' => 'loan_products',
+				'data' => $loanProduct->toArray()
+			],
+			'session' => session()->all()
+		]);
+		 
+		return response()->json([
+			'success' => true,
+			'message' => trans('loans.successLoanProductCreation')
+		]);
+	}
+	
+	
 }
 
 

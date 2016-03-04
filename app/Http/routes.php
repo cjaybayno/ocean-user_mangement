@@ -46,6 +46,8 @@ Route::group(['middleware' => 'web'], function () {
 			Route::controller('products', 'Loans\LoanProductsController', [
 				'getIndex'  => 'loan.products',
 				'getCreate' => 'loan.products.create',
+				'getShow'   => 'loan.products.show',
+				'getEdit'   => 'loan.products.edit',
 			]);
 		});
 		

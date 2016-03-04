@@ -1,6 +1,8 @@
 <center>
-	<a href="#">
+	<a href="{{ URL::route('loan.products.show', $encryptID)  }}">
 		<button class="btn btn-xs btn-primary"><span class="fa fa-folder"></span> View</button>
 	</a>
-	<button class="btn btn-xs btn-info"><span class="fa fa-pencil"></span> Edit</button>
+	<a href="{{ URL::route('loan.products.edit', $encryptID)  }}">
+		<button class="btn btn-xs btn-info"><span class="fa fa-pencil"></span> Edit</button>
+	</a>
 </center>
