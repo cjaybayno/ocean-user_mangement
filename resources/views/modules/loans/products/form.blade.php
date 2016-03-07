@@ -1,14 +1,5 @@
 @extends('layouts.gentelella')
 @section('title', 'Loan Products')
-
-@section('addStylesheets')
-	
-@endsection
-
-@section('addScripts')
-	
-@endsection
-
 @section('content')
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
@@ -25,6 +16,12 @@
 					@if ($viewType === 'create') 
 						<div id="add-btn"  class="btn-group"></div> &nbsp
 						<div id="edit-btn" class="btn-group"></div> &nbsp
+					@elseif ($viewType === 'view')
+						<div class="btn-group">
+							<a href="{{ URL::route('loan.products.edit', $encryptId) }}">
+								<button class="btn btn-block btn-sm btn-info pull-right"><i class="fa fa-edit"></i> Edit</button>
+							</a>
+						</div> &nbsp
 					@endif
 					<div class="btn-group">
 						<a href="{{ URL::route('loan.products') }}">
@@ -102,14 +99,16 @@
 						</div>
 						<div class="form-group col-md-7">
 							<label class="control-label">Remarks<span class="required"></span></label><br>
-							<textarea name="remarks" id="remarks" class="form-control" rows="3">{{ $loanProduct->remarks }}</textarea>
+							<textarea name="remarks" id="remarks" class="form-control" rows="3">{{ $loanProduct->remarks or ''}}</textarea>
 						</div>
 					</div>
 					
 					@if ($viewType != 'view')
 					<div class="form-group">
 						<div class="col-md-offset-2">
-							<button type="submit" class="btn btn-default clear-btn">Clear</button>
+							@if ($viewType !== 'edit')
+							 <button type="submit" class="btn btn-default clear-btn">Clear</button>
+							@endif
 							<button type="submit" id="form-submit" class="btn btn-success">Submit</button>
 							@if ($viewType === 'edit')
 								<a href="{{ URL::route('loan.products.show', $encryptId) }}">

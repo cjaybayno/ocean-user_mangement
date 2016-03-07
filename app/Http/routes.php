@@ -42,7 +42,10 @@ Route::group(['middleware' => 'web'], function () {
 		
 		// Loans route group
 		Route::group(['prefix' => 'loan'], function () {
-			//loan products route
+			// loan application route
+			Route::get('application', 'Loans\LoanApplicationController@getApplication');
+			
+			// loan products route
 			Route::controller('products', 'Loans\LoanProductsController', [
 				'getIndex'  => 'loan.products',
 				'getCreate' => 'loan.products.create',
@@ -50,8 +53,7 @@ Route::group(['middleware' => 'web'], function () {
 				'getEdit'   => 'loan.products.edit',
 			]);
 		});
-		
-		
+				
 		// Users route
 		Route::controller('users', 'UsersManagement\UsersController', [
 			'getIndex'          => 'users',

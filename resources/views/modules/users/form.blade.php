@@ -109,7 +109,6 @@
 						<div id="view-btn" class="btn-group"></div> &nbsp
 						<div id="edit-btn"  class="btn-group"></div> &nbsp
 					@endif 
-					
 					<div class="btn-group">
 						<a href="{{ URL::route('users') }}">
 							<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-th-list"></i> Show List</button>
