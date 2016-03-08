@@ -47,10 +47,12 @@ class LoanApplicationController extends Controller
     {
 		$assets = [
 			'scripts' => [
+				'/assets/gentellela-alela/js/moment.min2.js',
+				'/assets/gentellela-alela/js/datepicker/daterangepicker.js',
 				'/assets/gentellela-alela/js/icheck/icheck.min.js',
 				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
-				'/assets/modules/loans/loans-products-create-form.js',
+				'/assets/modules/loans/loans-application-form.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/icheck/flat/green.css',
@@ -63,6 +65,7 @@ class LoanApplicationController extends Controller
         return view('modules/loans/application.form')->with([
 			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
+			'loanTypes'	   => $this->loanRepo->loanProducts(),
 			'viewType'	   => 'create'
 		]);
     }

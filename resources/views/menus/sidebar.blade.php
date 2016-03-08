@@ -13,9 +13,9 @@
 					</li>
 				</ul>
 			</li>
-			<li><a><i class="fa fa-credit-card"></i> Loan <span class="fa fa-chevron-down"></span></a>
+			<li class="{{ $loanActiveMenu or '' }}"><a><i class="fa fa-credit-card"></i> Loan <span class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu" style="display: none">
-					<li><a href="index.html">Application</a></li>
+					<li><a href="{{ URL::route('loan.application') }}">Application</a></li>
 					<li><a href="index.html">Consolidation</a></li>
 				</ul>
 			</li>

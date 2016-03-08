@@ -43,7 +43,7 @@ Route::group(['middleware' => 'web'], function () {
 		// Loans route group
 		Route::group(['prefix' => 'loan'], function () {
 			// loan application route
-			Route::get('application', 'Loans\LoanApplicationController@getApplication');
+			Route::get('application', 'Loans\LoanApplicationController@getApplication')->name('loan.application');
 			
 			// loan products route
 			Route::controller('products', 'Loans\LoanProductsController', [

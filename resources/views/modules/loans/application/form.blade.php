@@ -5,18 +5,24 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>Apply Loan Forms</h2>
+				<h2>Application Form</h2>
 				<div class="pull-right">
 					
 				</div>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
+				<p class="well well-sm">Fill-out the following information to create an application/renewal per member</p>
 				<form id="loan-application-create-form" class="form-horizontal form-label-left">
 					<div id="loan-application-creation-result" class="col-sm-12"></div>
-					<p>Fill-out the following information to create an application/renewal per member</p>
 					
-					</br>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Applied Date<span class="required"></span></label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input type="text" name="applied_date" id="applied_date" required="required" class="form-control col-md-7 col-xs-12" readonly style="cursor:pointer;" title="click to select date">
+						</div>
+					</div>
+					
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Member ID <span class="required">*</span></label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
@@ -27,9 +33,9 @@
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Member Name<span class="required">*</span></label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Member Name</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="member_name" id="member_name" required="required" class="form-control col-md-7 col-xs-12" readonly>
+							<input type="text" name="member_name" id="member_name" class="form-control col-md-7 col-xs-12" readonly>
 						</div>
 					</div>
 					
@@ -43,8 +49,14 @@
 						</div>
 					</div>
 					
-					</br>
-					<p>Enter Loan Details</p>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Loan Type</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							{!! Form::select('loan_type', $loanTypes, null, ['class' => 'form-control select2', 'id' => 'loan_type', 'required']) !!}
+						</div>
+					</div>
+					
+					<p class="text-muted well well-sm no-shadow">Enter Loan Details</p>
 					
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Loan Amount <span class="required">*</span></label>
@@ -53,8 +65,7 @@
 						</div>
 					</div>
 					
-					</br>
-					<p>Deductions</p>
+					<p class="text-muted well well-sm no-shadow">Deductions</p>
 					
 					<div class="form-group">
 						<p class="control-label col-md-3 col-sm-3 col-xs-12">Advance Interest</p>
@@ -115,6 +126,12 @@
 						</div>
 					</div>
 					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<button type="submit" id="form-submit" class="btn btn-success"><i class="fa fa-upload"></i> Apply Now</button>
+						</div>
+					</div>
 					
 				</form>
 			</div>
