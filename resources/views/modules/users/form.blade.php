@@ -159,7 +159,7 @@
 								@if($viewType === 'create')
 									<input type="text" name="username" class="form-control has-feedback-left" id="username" placeholder="Username"
 										data-parsley-remote 
-										data-parsley-remote-options='{ 
+										data-parsley-remote-options='{
 											"type": "POST", 
 											"dataType": "jsonp", 
 											"data": { 

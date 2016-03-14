@@ -48,6 +48,11 @@
 	
 	
 	function formValidation() {
+		/* === validate member id === */
+		window.Parsley.addAsyncValidator('validateMemberId', function (xhr) {
+			return xhr.status !== 404;
+		}, url+'/loan/application-validate-member-id');
+		
 		$(formNAme).parsley().validate();
 		
 		return $(formNAme).parsley().isValid();

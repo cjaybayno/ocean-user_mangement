@@ -9,6 +9,7 @@ use Log;
 use Crypt;
 use Datatables;
 
+use App\Member;
 use App\LoanProduct;
 use App\Http\Requests;
 use App\Repository\LoanManagement;
@@ -43,7 +44,7 @@ class LoanApplicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getApplication()
+    public function applicationForm()
     {
 		$assets = [
 			'scripts' => [
@@ -69,5 +70,15 @@ class LoanApplicationController extends Controller
 			'viewType'	   => 'create'
 		]);
     }
+	
+	/**
+     * Show the form for appliyng a loans
+     *
+     * @return \Illuminate\Http\Response
+     */
+	public function ValidateMemberId(Request $request) 
+	{
+		Member::findOrFail($request->member_id);
+	}
 	
 }

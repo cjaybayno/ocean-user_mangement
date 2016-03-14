@@ -27,8 +27,19 @@
 						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Member ID <span class="required">*</span></label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="text" name="member_id" id="member_id" required="required" class="form-control col-md-7 col-xs-12"
+								data-parsley-type='digits'
+								data-parsley-remote 
+								data-parsley-remote-options='{
+									"type": "POST", 
+									"dataType": "jsonp", 
+									"data": { 
+										"_token": "{!! csrf_token() !!}" 
+									} 
+								}' 
+								data-parsley-remote-validator='validateMemberId' 
+								data-parsley-remote-message="{{ trans('loans.validateMemberId') }}"
 								required
-								data-parsley-required-message= "{{ trans('users.required') }}">
+								data-parsley-required-message= "{{ trans('loans.required') }}">
 						</div>
 					</div>
 					
@@ -43,8 +54,8 @@
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Application Type<span class="required"> *</span></label>
 						<div class="form-group has-feedback">
 							 <div class="radio">
-								<label><input type="radio" class="flat" name="application_type"> New Application </label>
-								<label><input type="radio" class="flat" name="application_type"> Renewal </label>
+								<label><input type="radio" class="flat" name="application_type" > New Application </label>
+								<label><input type="radio" class="flat" name="application_type" > Renewal </label>
 							</div>
 						</div>
 					</div>
@@ -61,7 +72,10 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Loan Amount <span class="required">*</span></label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="loan_amount" id="loan_amount" required="required" class="form-control col-md-7 col-xs-12">
+							<input type="text" name="loan_amount" id="loan_amount" class="form-control col-md-7 col-xs-12"
+								required 
+								data-parsley-required-message= "{{ trans('loans.required') }}"
+							 >
 						</div>
 					</div>
 					
@@ -129,7 +143,7 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<button type="submit" id="form-submit" class="btn btn-success"><i class="fa fa-upload"></i> Apply Now</button>
+							<button type="submit" id="form-submit" class="btn btn-success"><i class="fa fa-upload"></i> Apply</button>
 						</div>
 					</div>
 					
