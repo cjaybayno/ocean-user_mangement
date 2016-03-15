@@ -54,8 +54,8 @@
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Application Type<span class="required"> *</span></label>
 						<div class="form-group has-feedback">
 							 <div class="radio">
-								<label><input type="radio" class="flat" name="application_type" > New Application </label>
-								<label><input type="radio" class="flat" name="application_type" > Renewal </label>
+								<label><input type="radio" class="flat" name="application_type" checked> New Application </label>
+								<label><input type="radio" class="flat" name="application_type"> Renewal </label>
 							</div>
 						</div>
 					</div>
@@ -63,7 +63,7 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Loan Type</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							{!! Form::select('loan_type', $loanTypes, null, ['class' => 'form-control select2', 'id' => 'loan_type', 'required']) !!}
+							{!! Form::select('loan_type', $loanTypes, null, ['class' => 'form-control select2', 'id' => 'loan_type', 'required', 'data-parsley-required-message="This field is required."']) !!}
 						</div>
 					</div>
 					
@@ -72,9 +72,11 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Loan Amount <span class="required">*</span></label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="loan_amount" id="loan_amount" class="form-control col-md-7 col-xs-12"
+							<input type="text" name="loan_amount" id="loan_amount" class="form-control col-md-7 col-xs-12" placeholder ="0.00"
 								required 
 								data-parsley-required-message= "{{ trans('loans.required') }}"
+								data-parsley-pattern="{{ config('loans.amountRegex') }}"
+								data-parsley-pattern-message="{{ trans('loans.amount') }}"
 							 >
 						</div>
 					</div>
@@ -98,9 +100,12 @@
 					<div class="form-group">
 						<p class="control-label col-md-3 col-sm-3 col-xs-12">Capital Build-Up <span class="required">*</span></p>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="capital_buil_up" id="capital_buil_up" class="form-control col-md-7 col-xs-12"
+							<input type="text" name="capital_buil_up" id="capital_buil_up" class="form-control col-md-7 col-xs-12" placeholder ="0.00"
 								required
-								data-parsley-required-message= "{{ trans('users.required') }}">
+								data-parsley-required-message= "{{ trans('users.required') }}"
+								data-parsley-pattern="{{ config('loans.amountRegex') }}"
+								data-parsley-pattern-message="{{ trans('loans.amount') }}"
+								>
 						</div>
 					</div>
 					

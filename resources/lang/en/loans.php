@@ -12,4 +12,6 @@ return [
 	'required'		  	 => "This field is required.",
 	'passwordConfirm'    => "Password not match.",
 	'validateMemberId' 	 => 'Member ID not exist',
+	'amount'		     => 'This must be valid amount',
+	'percentage'		 => 'This must be valid percentage',
 ];

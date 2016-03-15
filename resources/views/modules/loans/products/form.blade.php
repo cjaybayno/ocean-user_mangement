@@ -59,6 +59,8 @@
 									<input type="text" name="principal_amount" class="form-control" id="principal_amount" placeholder ="0.00"
 									required 
 									data-parsley-required-message= "{{ trans('users.required') }}"
+									data-parsley-pattern="{{ config('loans.amountRegex') }}"
+									data-parsley-pattern-message="{{ trans('loans.amount') }}"
 									value="{{ $loanProduct->principal or '' }}">
 								</div>
 							</div>
@@ -86,7 +88,8 @@
 								<input type="text" name="interest_rate" class="form-control" id="interest_rate" placeholder="percentage %"
 								required 
 									data-parsley-required-message= "{{ trans('users.required') }}"
-									data-parsley-pattern="\d+(\.\d{1,2})?"
+									data-parsley-pattern="{{ config('loans.amountRegex') }}"
+									data-parsley-pattern-message="{{ trans('loans.percentage') }}"
 									value="{{ $loanProduct->interest or '' }}">
 							</div>
 						</div>
@@ -94,7 +97,7 @@
 							<label class="control-label">Entity<span class="required"> *</span></label><br>
 							<div class="form-group has-feedback">
 								<?php $loanProductEntity = (isset($loanProduct->entity_id)) ? $loanProduct->entity_id : null  ?>
-								{!! Form::select('entity', $entities, $loanProductEntity, ['class' => 'form-control select2', 'id' => 'entity', 'required']) !!}
+								{!! Form::select('entity', $entities, $loanProductEntity, ['class' => 'form-control select2', 'id' => 'entity', 'required', 'data-parsley-required-message="This field is required"']) !!}
 							</div>
 						</div>
 						<div class="form-group col-md-7">
