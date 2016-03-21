@@ -11,7 +11,10 @@ return [
 	'min'  			  	 => "This must be at least :min characters",
 	'required'		  	 => "This field is required.",
 	'passwordConfirm'    => "Password not match.",
-	'validateMemberId' 	 => 'Member ID not exist',
 	'amount'		     => 'This must be valid amount',
 	'percentage'		 => 'This must be valid percentage',
+	
+	'validateMemberId' 	 		 => 'Member ID not exist',
+	'validateLoanAmount' 		 => 'Loan amount exceed',
+	'ValidateCurrentApplication' => 'This Member has current application for this Loan Type',
 ];

@@ -115,6 +115,7 @@ class UserGroupController extends Controller
 	/**
 	* Return details of specific Group.
 	*
+	* @param  \Illuminate\Http\Request  $request
 	* @param  string  encrptyID
 	* @return \Illuminate\Http\Response
 	*/
