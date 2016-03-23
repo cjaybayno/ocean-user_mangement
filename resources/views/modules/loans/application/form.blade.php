@@ -56,8 +56,8 @@
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Application Type<span class="required"> *</span></label>
 						<div class="form-group has-feedback">
 							 <div class="radio">
-								<label><input type="radio" class="flat" name="application_type" value="new" checked> New Application </label>
-								<label><input type="radio" class="flat" name="application_type" value="renewal"> Renewal </label>
+								<label><input type="radio" class="flat" name="application_type" value="{{config('loans.applicationType.new')}}" checked> New Application </label>
+								<label><input type="radio" class="flat" name="application_type" value="{{config('loans.applicationType.renewal')}}"> Renewal </label>
 							</div>
 						</div>
 					</div>

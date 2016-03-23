@@ -184,7 +184,7 @@
 	
 	function formSubmit() {
 		$('#form-submit').on('click', function () {
-			//if(formValidation()) {
+			if(formValidation()) {
 				loadingModal('show','Saving ....');
 				ajaxCsrfToken();
 				$.ajax({
@@ -205,7 +205,7 @@
 						notifier('success','#loan-application-creation-result', result.message);
 					}
 				});
-			//}
+			}
 			return false;
 		});
 		$('.clear-btn').click(function() { $(formNAme).parsley().reset() });

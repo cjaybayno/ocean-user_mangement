@@ -9,10 +9,10 @@ use Log;
 use Session;
 use Datatables;
 
-use App\Loan;
 use App\Member;
 use App\LoanProduct;
 use App\Http\Requests;
+use App\LoanApplication;
 use App\Repository\LoanManagement;
 use App\Http\Controllers\Controller;
 
@@ -115,14 +115,14 @@ class LoanApplicationController extends Controller
 	}
 	
 	/**
-     * Validate member id value
+     * Validate current application
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
 	public function getValidateCurrentApplication(Request $request) 
 	{
-		$loanCount = Loan::where([
+		$loanCount = LoanApplication::where([
 			'member_id' 	  => $request->member_id,
 			'loan_product_id' => $request->loan_type,
 		])->count();
@@ -235,37 +235,37 @@ class LoanApplicationController extends Controller
      */
 	public function postStore(Request $request) 
 	{
-		// $loan = new Loan;
-		// $loan->member_id 		= $request->member_name;
-		// $loan->application_type = $request->application_type;
-		// $loan->loan_product_id  = $request->loan_type;
-		// $loan->amount           = $request->loan_amount;
-		// $loan->advance_interest = $request->advance_interest;
-		// $loan->processing_fee 	= $request->processing_fee;
-		// $loan->capital_build_up = $request->capital_build_up;
-		// $loan->total_deduction  = $request->total_deduction;
-		// $loan->net_proceeds	    = $request->net_proceeds;
-		// $loan->net_proceeds	    = $request->net_proceeds;
-		// $loan->amortization	    = $request->monthly_amortization;
-		// $loan->applied_date	    = date('y-m-d', strtotime($request->applied_date));
+		$loan = new LoanApplication;
+		$loan->member_id 		= $request->member_name;
+		$loan->application_type = $request->application_type;
+		$loan->loan_product_id  = $request->loan_type;
+		$loan->amount           = $request->loan_amount;
+		$loan->advance_interest = $request->advance_interest;
+		$loan->processing_fee 	= $request->processing_fee;
+		$loan->capital_build_up = $request->capital_build_up;
+		$loan->total_deduction  = $request->total_deduction;
+		$loan->net_proceeds	    = $request->net_proceeds;
+		$loan->net_proceeds	    = $request->net_proceeds;
+		$loan->amortization	    = $request->monthly_amortization;
+		$loan->applied_date	    = date('y-m-d', strtotime($request->applied_date));
 		
-		// if (! empty($request->outstanding_balance)) {
-			// $loan->outstanding_balance = $request->outstanding_balance;
-		// }
+		if (! empty($request->outstanding_balance)) {
+			$loan->outstanding_balance = $request->outstanding_balance;
+		}
 		
-		// if (! empty($request->rebate)) {
-			// $loan->rebate = $request->rebate;
-		// }
+		if (! empty($request->rebate)) {
+			$loan->rebate = $request->rebate;
+		}
 		
-		// $loan->save();
+		$loan->save();
 		
-		// Log::info('Create application : ', [
-			// 'table'	=> [
-				// 'name' => 'loans',
-				// 'data' => $loan->toArray()
-			// ],
-			// 'session' => Session::all()
-		// ]);
+		Log::info('Create application : ', [
+			'table'	=> [
+				'name' => 'loans',
+				'data' => $loan->toArray()
+			],
+			'session' => Session::all()
+		]);
 		
 		return response()->json([
 			'success' => true,

@@ -12,17 +12,14 @@ return [
     */
 
 	'status' => [
-	
 		'disabled'			  => 0,
 		'active'   			  => 1,
 		'expired'  			  => 2,
 		'terminated'  		  => 3,
 		'temporary_password'  => 4,
-		
 	],
 	
 	'inverted_status' => [
-	
 		0 => 'Disabled',			 
 		1 => 'Active',   		
 		2 => 'Expired',  		
@@ -40,13 +37,11 @@ return [
     */
 
 	'role' => [
-	
 		'client' => 1,
 		'admin'  => 0,
 	],
 	
 	'inverted_role' => [
-	
 		1 => 'Client',
 		0 => 'Admin',
 	],

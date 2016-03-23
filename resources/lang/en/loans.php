@@ -27,5 +27,5 @@ return [
 	'validateLoanAmount' 		 => 'Loan amount exceed',
 	'ValidateCurrentApplication' => 'This Member has current application for this Loan Type',
 	
-	'successLoanApplication' => 'Success Application',
+	'successLoanApplication' => 'Success Application!, Greate we have our new application',
 ];
