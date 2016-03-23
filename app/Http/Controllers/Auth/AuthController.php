@@ -72,6 +72,7 @@ class AuthController extends Controller
 		if (Auth::validate($request->only('username', 'password'))) {
 			$user = User::select([
 				'id', 
+				'role',
 				'status',
 				'entity_id',
 				'group_access_id',
@@ -93,6 +94,7 @@ class AuthController extends Controller
 						
 						/* === add session data === */
 						session([
+							'role' 		=> $user->role,
 							'user_id'   => $user->id,
 							'entity_id' => $user->entity_id,
 							'group_id'  => $user->group_access_id,
