@@ -26,6 +26,7 @@
 				</a>
 			</li>
 	</div>
+	@can('adminRole')
 	<div class="menu_section">
 		<h3>User Management</h3>
 		<ul class="nav side-menu">
@@ -34,6 +35,7 @@
 			<li><a href="#"><i class="fa fa-key"></i><span>Access</span></a></li>
 		</ul>
 	</div>
+	@endcan
 
 </div>
 <!-- /sidebar menu -->
