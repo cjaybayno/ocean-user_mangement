@@ -65,13 +65,17 @@
 	}
 	
 	function onKeyupMemberIdHandler() {
-		$('#member_id').keyup(function() {
+		$('#member_last_name').keyup(function() {
+			memberNameSelector = $("#member_name");
+			memberNameSelector.empty().removeAttr('disabled');
 			if ($(this).val() != '') {
 				$.ajax({
-					url: url+'/loan/application/get-member-name/'+$(this).val(),
+					url: url+'/loan/application/get-member-in-last-name',
+					data: {last_name : $(this).val()},
 					dataType: 'json',
 					success: function(result) {
-						$("#member_name").val(result.member_name);
+						memberNameSelector.select2({data: selec2DataFormat(result)});
+						$(formNAme).parsley().reset();
 					}
 				});
 			}
@@ -92,6 +96,7 @@
 			if (! loanTypeSelector.parsley().isValid()) {
 				$(formNAme).parsley().reset();
 			}
+			calculateAdvanceInterest()
 		});
 	}
 	
@@ -161,32 +166,56 @@
 			},
 			success: function(netProceeds) {
 				$("#net_proceeds").val(addTwoZero(netProceeds));
+				getMonthlyAmortization();
+			}
+		});
+	}
+	
+	function getMonthlyAmortization() {
+		$.ajax({
+			url: url+'/loan/application/get-amortization',
+			dataType: 'json',
+			data: { loan_product_id : $("#loan_type").val() },
+			success: function(amortization) {
+				$("#monthly_amortization").val(addTwoZero(amortization));
 			}
 		});
 	}
 	
 	function formSubmit() {
 		$('#form-submit').on('click', function () {
-			if(formValidation()) {
-				alert('submit');
-			}
+			//if(formValidation()) {
+				loadingModal('show','Saving ....');
+				ajaxCsrfToken();
+				$.ajax({
+					url: url+'/loan/application/store',
+					type: "post",
+					data: $('input, select').serialize(),
+					dataType: 'json',
+					complete: function() {
+						loadingModal('close');
+					},
+					error: function(result) {
+						notifier('danger','#loan-application-creation-result', oops);
+					},
+					success: function(result) {
+						$('form .btn-submit-field').hide();
+						$('input, textarea').attr('readonly', true);
+						$('.flat, select').attr('disabled', true);
+						notifier('success','#loan-application-creation-result', result.message);
+					}
+				});
+			//}
 			return false;
 		});
 		$('.clear-btn').click(function() { $(formNAme).parsley().reset() });
 	}
 	
 	function formValidation() {
-		validateMemberId();
 		validateLoanAmount();
 		validateCurrentApplication();
 		$(formNAme).parsley().validate();
 		return $(formNAme).parsley().isValid();
-	}
-	
-	function validateMemberId() {
-		window.Parsley.addAsyncValidator('validateMemberId', function (xhr) {
-			return xhr.status !== 404;
-		}, url+'/loan/application/validate-member-id');
 	}
 	
 	function validateLoanAmount() {

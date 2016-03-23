@@ -2,6 +2,15 @@
 
 return [
 
+	/*
+    |--------------------------------------------------------------------------
+    | Loan Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines for loan module
+    |
+    */
+
 	/* === Loan Products === */
 	'successLoanProductCreation' => 'Success Creation! <br> Great, We have a new product.',
 	
@@ -17,4 +26,6 @@ return [
 	'validateMemberId' 	 		 => 'Member ID not exist',
 	'validateLoanAmount' 		 => 'Loan amount exceed',
 	'ValidateCurrentApplication' => 'This Member has current application for this Loan Type',
+	
+	'successLoanApplication' => 'Success Application',
 ];

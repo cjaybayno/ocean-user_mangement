@@ -124,11 +124,9 @@ function errorLabel(message) {
 /* === show success message === */
 function notifier(alertNotif, selector, message) {
 	$(selector).empty().html(''+
-		'<div class="col-xs-12">'+
-			'<div class="alert alert-'+alertNotif+'">'+
-				'<i><center>'+message+'</center></i>'+
-			'</div>'+
-		'</div><br><br>');
+		'<div class="alert alert-'+alertNotif+'" role="alert">'+
+			'<center>'+message+'</center>'+
+		'<div>');
 }
 
 /* === add Edit button in === */

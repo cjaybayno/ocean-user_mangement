@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use DB;
 use Log;
-use Crypt;
+use Session;
 use Datatables;
 
 use App\Loan;
@@ -38,6 +38,10 @@ class LoanApplicationController extends Controller
 	public function __construct(LoanManagement $LoanRepository)
 	{
 		$this->loanRepo = $LoanRepository;
+		
+		$this->middleware('ajax.request', ['except' => [
+            'getForm',
+        ]]);
 	}
 	
 	/**
@@ -73,14 +77,16 @@ class LoanApplicationController extends Controller
     }
 	
 	/**
-     * Validate member id value
+     * Get Member Last Name
 	 *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-	public function getValidateMemberId(Request $request) 
+	public function getGetMemberInLastName(Request $request)
 	{
-		Member::findOrFail($request->member_id);
+		$memberNames = $this->loanRepo->getMemberInLastName($request->last_name);
+		
+		return (! empty($memberNames)) ? $memberNames : [' ' => 'No Found Name'];
 	}
 	
 	/**
@@ -198,5 +204,72 @@ class LoanApplicationController extends Controller
 		/* ===  (Advance Interest) + (Processing Fee) + (Capital Build-Up) === */
 		$totalDeduction = ($request->advance_interest + $request->processing_fee + $request->capital_build_up);
 		return response()->json($totalDeduction);
+	}
+	
+	/**
+     * Get Amortization
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function getGetAmortization(Request $request) 
+	{
+		$loanProduct = LoanProduct::select('amortization')->find($request->loan_product_id);
+		
+		if (empty($loanProduct['amortization'])) {
+			/* === calculate amortization === */
+			$amortization = 'compute';
+		} else {
+			/* === get in db === */
+			$amortization = $loanProduct['amortization'];
+		}
+		
+		return response()->json($amortization);
+	}
+	
+	/**
+     * Store Application
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function postStore(Request $request) 
+	{
+		// $loan = new Loan;
+		// $loan->member_id 		= $request->member_name;
+		// $loan->application_type = $request->application_type;
+		// $loan->loan_product_id  = $request->loan_type;
+		// $loan->amount           = $request->loan_amount;
+		// $loan->advance_interest = $request->advance_interest;
+		// $loan->processing_fee 	= $request->processing_fee;
+		// $loan->capital_build_up = $request->capital_build_up;
+		// $loan->total_deduction  = $request->total_deduction;
+		// $loan->net_proceeds	    = $request->net_proceeds;
+		// $loan->net_proceeds	    = $request->net_proceeds;
+		// $loan->amortization	    = $request->monthly_amortization;
+		// $loan->applied_date	    = date('y-m-d', strtotime($request->applied_date));
+		
+		// if (! empty($request->outstanding_balance)) {
+			// $loan->outstanding_balance = $request->outstanding_balance;
+		// }
+		
+		// if (! empty($request->rebate)) {
+			// $loan->rebate = $request->rebate;
+		// }
+		
+		// $loan->save();
+		
+		// Log::info('Create application : ', [
+			// 'table'	=> [
+				// 'name' => 'loans',
+				// 'data' => $loan->toArray()
+			// ],
+			// 'session' => Session::all()
+		// ]);
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('loans.successLoanApplication'),
+		]);
 	}
 }

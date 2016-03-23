@@ -20,34 +20,35 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<p class="well well-sm">Fill-out the following information to create an application/renewal per member</p>
+				<div id="loan-application-creation-result"></div>
+				
 				<form id="loan-application-create-form" class="form-horizontal form-label-left">
-					<div id="loan-application-creation-result" class="col-sm-12"></div>
+					<p class="well well-sm">Fill-out the following information to create an application/renewal per member</p>
 					
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Applied Date<span class="required"></span></label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Applied Date</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="text" name="applied_date" id="applied_date" required="required" class="form-control col-md-7 col-xs-12" readonly style="cursor:pointer;" title="click to select date">
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Member ID <span class="required">*</span></label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Search Member Last Name </span></label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="member_id" id="member_id" required="required" class="form-control col-md-7 col-xs-12"
-								data-parsley-type='digits'
-								data-parsley-remote
-								data-parsley-remote-validator='validateMemberId' 
-								data-parsley-remote-message="{{ trans('loans.validateMemberId') }}"
-								required
-								data-parsley-required-message= "{{ trans('loans.required') }}">
+							<input type="text" name="member_last_name" id="member_last_name" class="form-control col-md-7 col-xs-12" data-parsley-type='alphanum'>
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Member Name</label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Member Full Name<span class="required">*</span></label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="member_name" id="member_name" class="form-control col-md-7 col-xs-12" readonly>
+							{!! Form::select('member_name', ['' => '(search member last name first)'], null, [
+								'class' => 'form-control select2', 
+								'id'    => 'member_name', 
+								'required',
+								'data-parsley-required-message="This field is required."',
+								'disabled'
+							]) !!}
 						</div>
 					</div>
 					
@@ -78,7 +79,7 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Loan Amount <span class="required">*</span></label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="loan_amount" id="loan_amount" class="form-control col-md-7 col-xs-12" placeholder ="(note: select loan type first)"
+							<input type="text" name="loan_amount" id="loan_amount" class="form-control col-md-7 col-xs-12" placeholder ="(select loan type first)"
 								required
 								data-parsley-required-message= "{{ trans('loans.required') }}"
 								data-parsley-pattern="{{ config('loans.amountRegex') }}"
@@ -146,13 +147,13 @@
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Monthly Ammortizaton</label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Monthly Amortizaton</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="monthly_ammortizaton" id="monthly_ammortizaton" class="form-control col-md-7 col-xs-12" readonly>
+							<input type="text" name="monthly_amortization" id="monthly_amortization" class="form-control col-md-7 col-xs-12" readonly>
 						</div>
 					</div>
 					
-					<div class="form-group">
+					<div class="form-group btn-submit-field">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<button type="submit" id="form-submit" class="btn btn-success"><i class="fa fa-upload"></i> Apply</button> (double click to send)

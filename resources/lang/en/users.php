@@ -2,6 +2,15 @@
 
 return [
 
+	/*
+    |--------------------------------------------------------------------------
+    | Users Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are used for user management for various
+    |
+    */
+
 	/* === Validation === */
 	'digit'  		  	 => "This must be digits.",
 	'email'  		  	 => "This must be a valid email address.",

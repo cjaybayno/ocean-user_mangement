@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity;
 use App\LoanProduct;
+use App\Member;
 
 class LoanManagement
 {
@@ -52,5 +53,26 @@ class LoanManagement
 		$loanProducts[''] = 'Select Loan Type';
 			
 		return $loanProducts;
+	}
+	
+	/**
+     * Display Loan Products in key/value pair 
+     *
+     * @return array
+     */
+	public function getMemberInLastName($lastName)
+	{
+		$memberRaw = Member::orderBy('first_name')
+			->where('last_name', 'LIKE', $lastName.'%')
+			->get()
+			->keyBy('id');
+		
+		$members = collect($memberRaw)
+			->map(function($memberRaw) {
+				return $memberRaw->first_name.' '.$memberRaw->middle_name.'. '.$memberRaw->last_name;
+			})
+			->toArray();
+		
+		return $members;
 	}
 }

@@ -134,7 +134,7 @@
 		var url = "{{ url('') }}";
 		
 		// opps message
-		var oops = "{{ trans('users.oops') }}";
+		var oops = "{{ trans('general.oops') }}";
 		
 	</script>
 	
