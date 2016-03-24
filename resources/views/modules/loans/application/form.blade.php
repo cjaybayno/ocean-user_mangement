@@ -15,7 +15,11 @@
 			<div class="x_title">
 				<h2>Application Form</h2>
 				<div class="pull-right">
-					
+					<div class="btn-group">
+						<a href="{{ URL::route('loan.application.current') }}">
+							<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-th-list"></i> Show Current Application</button>
+						</a>
+					</div>
 				</div>
 				<div class="clearfix"></div>
 			</div>

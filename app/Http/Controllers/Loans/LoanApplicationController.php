@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use DB;
 use Log;
+use Crypt;
 use Session;
 use Datatables;
 
@@ -41,6 +42,8 @@ class LoanApplicationController extends Controller
 		
 		$this->middleware('ajax.request', ['except' => [
             'getForm',
+            'getCurrent',
+            'getShow',
         ]]);
 	}
 	
@@ -73,6 +76,90 @@ class LoanApplicationController extends Controller
 			'assets' 	   => $assets,
 			'loanTypes'	   => $this->loanRepo->loanProducts(),
 			'viewType'	   => 'create'
+		]);
+    }
+	
+	/**
+     * Show list of current application
+     *
+     * @return \Illuminate\Http\Response
+     */
+	public function getCurrent()
+	{
+		$assets = [
+			'scripts' => [
+				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
+				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
+				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
+				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
+				'/assets/modules/loans/loans-application-current.js' 
+			],
+			'stylesheets' => [
+				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
+				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
+			]
+		];
+		
+		Log::info('View loan application current: ', ['session' => session()->all()]);
+		
+        return view('modules/loans/application.current')->with([
+			$this->menuKey => $this->menuValue,
+			'assets' 	   => $assets
+		]);
+	}
+	
+	/**
+     * Return loan products list for paginated.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPaginate(Request $request)
+    {
+		$loanApplications = DB::table('view_loan_applications')
+		->where('entity_id', session('entity_id'))
+		->select([
+			'member_name',
+			'loan_product_name',
+			'application_type',
+			'amount',
+			'total_deduction',
+			'net_proceeds',
+			'applied_date',
+			'id',
+			'member_id',
+		]);
+			
+		return Datatables::of($loanApplications)
+				->editColumn('amount', 			'{{ number_format($amount, 2) }}')
+				->editColumn('total_deduction', '{{ number_format($total_deduction, 2) }}')
+				->editColumn('net_proceeds', 	'{{ number_format($net_proceeds, 2) }}')
+				->editColumn('applied_date', 	'{{ date("m/d/Y", strtotime($applied_date)) }}')
+				->addColumn('action', function ($loanApplications) {
+					return view('modules/loans/application/datatables.action', [
+								'encryptID' => Crypt::encrypt($loanApplications->id)
+							])->render();
+				})
+				->removeColumn('id')
+				->removeColumn('member_id')
+				->make();
+    }
+	
+	/**
+     * Show specific loan member application
+     *
+     * @param  string  encrptyId
+     * @return \Illuminate\Http\Response
+     */
+    public function getShow($encrptyId)
+    {
+		$loaApplication = DB::table('view_loan_applications')->find(Crypt::decrypt($encrptyId));
+				
+		Log::info('View loan application show: ', ['session' => session()->all()]);
+	
+        return view('modules/loans/application.show')->with([
+			$this->menuKey => $this->menuValue,
+			'loanTypes'	   => $this->loanRepo->loanProducts(),
+			'application'  => $loaApplication,
 		]);
     }
 	
@@ -268,7 +355,7 @@ class LoanApplicationController extends Controller
 				'name' => 'loans',
 				'data' => $loan->toArray()
 			],
-			'session' => Session::all()
+			'session' => session()->all()
 		]);
 		
 		return response()->json([
