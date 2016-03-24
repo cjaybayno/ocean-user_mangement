@@ -251,6 +251,7 @@ class LoanApplicationController extends Controller
 		$loan->net_proceeds	    = $request->net_proceeds;
 		$loan->amortization	    = $request->monthly_amortization;
 		$loan->applied_date	    = date('y-m-d', strtotime($request->applied_date));
+		$loan->entity_id	    = session('entity_id');
 		
 		if (! empty($request->outstanding_balance)) {
 			$loan->outstanding_balance = $request->outstanding_balance;
