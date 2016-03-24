@@ -235,7 +235,7 @@ class UsersController extends Controller
 		/* === move image to user image path === */
 		$avatarFile->move(public_path(Config::get('users.avatar_path')), $fileName);
 		
-		return url('public/images/users/'.$fileName);
+		return 'public/images/users/'.$fileName;
 	}
 	
 	/**
