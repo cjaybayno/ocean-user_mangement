@@ -40,7 +40,7 @@ class LoanManagement
 	public function loanProducts()
 	{
 		$loanProductRaw = LoanProduct::orderBy('name')
-			->where('entity_id', 1)
+			->where('entity_id', session('entity_id'))
 			->get()
 			->keyBy('id');
 		
