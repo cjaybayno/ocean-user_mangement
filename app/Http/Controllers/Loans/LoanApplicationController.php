@@ -153,27 +153,11 @@ class LoanApplicationController extends Controller
      */
 	public function getCalAdvanceInterest(Request $request) 
 	{
-		/* === get loan product params === */
-		$loanProduct   = LoanProduct::select('params')->find($request->loan_product_id);	
-		$productParams = json_decode($loanProduct['params'], true);
-		
-		/* === initialize interest and terms === */
-		$interest = 0;
-		$term     = 0;
-		
-		/* === check if has advance interest === */
-		if (isset($productParams['advance_interest'])) {
-			$advanceInterestParam = $productParams['advance_interest'];
-			/* === check if term level is present and in first level === */
-			if (isset($advanceInterestParam['term_level']) AND $advanceInterestParam['term_level'] == 1) {
-				/* === get interest and term === */
-				$interest = (int) $advanceInterestParam['interest'] / 100;
-				$term     = (int) $advanceInterestParam['term'];
-			}
-		}
+		/* === get advance interest parameters === */
+		$advanceInterestParam = $this->loanRepo->getAdvanceInterest($request->loan_product_id);
 		
 		/* === compute advance interest and send === */
-		return response()->json($request->loan_amount * $interest * $term);
+		return response()->json($request->loan_amount * $advanceInterestParam['interest'] * $advanceInterestParam['term']);
 	}
 	
 	/**

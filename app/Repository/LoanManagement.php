@@ -75,4 +75,38 @@ class LoanManagement
 		
 		return $members;
 	}
+	
+	/**
+     * Get Advance interest params
+     *
+     * @param int  loanProductId
+     * @return array
+     */
+	public function getAdvanceInterest($loanProductId)
+	{
+		/* === get loan product params === */
+		$loanProduct   = LoanProduct::select('params')->find($loanProductId);	
+		$productParams = json_decode($loanProduct['params'], true);
+		
+		/* === initialize interest and terms === */
+		$responseAdvanceInterest = [
+			'interest' => 0,
+			'term'	   => 0,
+		];
+		
+		/* === check if has advance interest === */
+		if (isset($productParams['advance_interest'])) {
+			$advanceInterestParam = $productParams['advance_interest'];
+			/* === check if term level is present and in first level === */
+			if (isset($advanceInterestParam['term_level']) AND $advanceInterestParam['term_level'] == 1) {
+				/* === get interest and term === */
+				$responseAdvanceInterest = [
+					'interest' => (int) $advanceInterestParam['interest'] / 100,
+					'term'	   => (int) $advanceInterestParam['term'],
+				];
+			}
+		}
+		
+		return $responseAdvanceInterest;
+	}
 }
