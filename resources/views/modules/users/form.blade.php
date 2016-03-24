@@ -34,7 +34,7 @@
 
 @section('addScripts')
 	<script> 
-		var itemImages 	= '<img src="{!! !empty($user->avatar) ? $user->avatar : url('resources/assets/gentellela-alela/images/user.png') !!}" style="height:120px; width:136px"/>' 
+		var itemImages 	= '<img src="{!! !empty($user->avatar) ? asset($user->avatar) : url('resources/assets/gentellela-alela/images/user.png') !!}" style="height:120px; width:136px"/>' 
 	</script>
 	
 	@if ($viewType === 'edit' OR $viewType === 'view')
@@ -147,7 +147,7 @@
 								@if ($viewType !== 'view')
 									<input type="file" id="avatar" name="avatar"  class="file-loading">
 								@else
-									<img src="{!! !empty($user->avatar) ? $user->avatar : url('resources/assets/gentellela-alela/images/user.png') !!}" style="height:110px; max-width:200px" class="img-thumbnail" >
+									<img src="{!! !empty($user->avatar) ? asset($user->avatar) : url('resources/assets/gentellela-alela/images/user.png') !!}" style="height:110px; max-width:200px" class="img-thumbnail" >
 								@endif
 							</div>
 						  </div>

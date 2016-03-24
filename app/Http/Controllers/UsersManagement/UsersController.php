@@ -189,7 +189,7 @@ class UsersController extends Controller
     public function postStore(Request $request)
     {
 		$user = new User;
-		$user->avatar			= ($request->hasFile('avatar')) ? $this->uploadAvatar($request->file('avatar')) : 'NULL';
+		$user->avatar			= $this->uploadAvatar($request->file('avatar'));
 		$user->username  		= $request->username;
 		$user->password			= bcrypt($request->password);
 		$user->expired_at		= date('y-m-d', strtotime($request->daterangepicker_end));
@@ -230,12 +230,16 @@ class UsersController extends Controller
 	*/
 	private function uploadAvatar($avatarFile)
 	{
-		$fileName = time().'.'.$avatarFile->getClientOriginalExtension();
+		if (! empty($avatarFile)) {
+			$fileName = time().'.'.$avatarFile->getClientOriginalExtension();
 			
-		/* === move image to user image path === */
-		$avatarFile->move(public_path(Config::get('users.avatar_path')), $fileName);
-		
-		return 'public/images/users/'.$fileName;
+			/* === move image to user image path === */
+			$avatarFile->move(public_path(Config::get('users.avatar_path')), $fileName);
+			
+			return 'public/images/users/'.$fileName;
+		} else {
+			return 'resources/assets/gentellela-alela/images/user.png';
+		}
 	}
 	
 	/**
