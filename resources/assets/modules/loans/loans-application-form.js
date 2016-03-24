@@ -116,7 +116,10 @@
 		$.ajax({
 			url: url+'/loan/application/cal-advance-interest',
 			dataType: 'json',
-			data: {loan_amount : $("#loan_amount").val()},
+			data: {
+				loan_amount 	: $("#loan_amount").val(),
+				loan_product_id : $("#loan_type").val()
+			},
 			success: function(advanceInterest) {
 				$("#advance_interest").val(addTwoZero(advanceInterest));
 				calculateProcessingFee();
