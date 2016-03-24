@@ -13,18 +13,27 @@
 					</li>
 				</ul>
 			</li>
-			<li class="{{ $loanActiveMenu or '' }}"><a><i class="fa fa-credit-card"></i> Loan <span class="fa fa-chevron-down"></span></a>
+			<li class="{{ $loanActiveMenu or '' }}"><a><i class="fa fa-credit-card"></i>Application<span class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu" style="display: none">
-					<li><a href="{{ URL::route('loan.application') }}">Application</a></li>
-					<li><a href="index.html">Consolidation</a></li>
+					<li><a href="index.html">Current Applications</a></li>
+					<li><a href="{{ URL::route('loan.application') }}">Form Application</a></li>
 				</ul>
 			</li>
+			</li>
+			<li><a><i class="fa fa-cubes"></i> Consolidation</a></li>
 			<li><a><i class="fa fa-money"></i> Payment </a></li>
 			<li class="{{ $loanProductsActiveMenu or '' }}">
 				<a href="{{ URL::route('loan.products') }}">
 					<i class="fa fa-briefcase"></i> Products
 				</a>
 			</li>
+	</div>
+	<div class="menu_section">
+		<h3>BackOffice</h3>
+		<ul class="nav side-menu">
+			<li><a><i class="fa fa-file-text-o"></i> Balance Sheet</a></li>
+			<li><a><i class="fa fa-file-text"></i> Income Statement</a></li>
+		</ul>
 	</div>
 	@can('adminRole')
 	<div class="menu_section">
