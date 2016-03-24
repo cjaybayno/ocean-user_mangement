@@ -42,7 +42,7 @@ class LoanApplicationController extends Controller
 		
 		$this->middleware('ajax.request', ['except' => [
             'getForm',
-            'getCurrent',
+            'getIndex',
             'getShow',
         ]]);
 	}
@@ -84,7 +84,7 @@ class LoanApplicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-	public function getCurrent()
+	public function getIndex()
 	{
 		$assets = [
 			'scripts' => [

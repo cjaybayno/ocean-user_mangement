@@ -21,7 +21,12 @@
 			</li>
 			</li>
 			<li><a><i class="fa fa-cubes"></i> Consolidation</a></li>
-			<li><a><i class="fa fa-money"></i> Payment </a></li>
+			<li class="{{ $loanPaymentsActiveMenu or '' }}"><a><i class="fa fa-money"></i> Payment <span class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu" style="display: none">
+					<li><a href="#">List of Payments</a></li>
+					<li><a href="{{URL::route('loan.payments.form')}}">Make Payments</a></li>
+				</ul>
+			</li>
 			<li class="{{ $loanProductsActiveMenu or '' }}">
 				<a href="{{ URL::route('loan.products') }}">
 					<i class="fa fa-briefcase"></i> Products
