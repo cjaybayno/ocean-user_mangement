@@ -317,6 +317,21 @@ class LoanApplicationController extends Controller
 		return response()->json($amortization);
 	}
 	
+	/** 
+	 * Get New Application Outstanding Balance
+     *
+     * @param  int  $loanProductId
+     * @param  int  $amortization
+     * @return \Illuminate\Http\Response
+     */
+	protected function getNewApplicationOutstandingBalance($loanProductId, $amortization)
+	{
+		$loanProduct = LoanProduct::select('term')->find($loanProductId);
+		
+		/* === loan product term * amortization === */
+		return $loanProduct['term'] * $amortization;
+	}
+	
 	/**
      * Store Application
      *
@@ -340,12 +355,18 @@ class LoanApplicationController extends Controller
 		$loan->applied_date	    = date('y-m-d', strtotime($request->applied_date));
 		$loan->entity_id	    = session('entity_id');
 		
-		if (! empty($request->outstanding_balance)) {
-			$loan->outstanding_balance = $request->outstanding_balance;
-		}
-		
-		if (! empty($request->rebate)) {
-			$loan->rebate = $request->rebate;
+		switch ($request->application_type) {
+			case config('loans.applicationType.new') :
+					$loan->outstanding_balance = $this->getNewApplicationOutstandingBalance(
+						$request->loan_type,
+						$request->monthly_amortization
+					);
+				break;
+				
+			case config('loans.applicationType.new') :
+					$loan->rebate = $request->rebate;
+					$loan->outstanding_balance = $request->outstanding_balance;
+				break;
 		}
 		
 		$loan->save();
