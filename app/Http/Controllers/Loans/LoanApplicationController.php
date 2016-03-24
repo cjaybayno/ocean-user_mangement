@@ -39,9 +39,9 @@ class LoanApplicationController extends Controller
 	{
 		$this->loanRepo = $LoanRepository;
 		
-		// $this->middleware('ajax.request', ['except' => [
-            // 'getForm',
-        // ]]);
+		$this->middleware('ajax.request', ['except' => [
+            'getForm',
+        ]]);
 	}
 	
 	/**
