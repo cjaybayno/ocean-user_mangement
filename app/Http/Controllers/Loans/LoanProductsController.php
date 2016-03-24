@@ -90,6 +90,7 @@ class LoanProductsController extends Controller
 		
 		$loanProducts = DB::table('loan_products')
 				->leftJoin('entities', 'entities.id', '=', 'loan_products.entity_id')
+				->where('entity_id', session('entity_id'))
 				->select($select);
 		
 		
