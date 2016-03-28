@@ -15,6 +15,7 @@
 		$('.select2').select2();
 		onChangeLoanTypeHandler();
 		dataTables();
+		formSubmit();
 	}
 	
 	function disabledEnterKey() {
@@ -57,7 +58,71 @@
 				url: url+'/loan/payments/paginate',
 				data : function (d) {
 					d.loan_product_id = $("#loan_type").val();
+				},
+				complete : function (result) {
+					var resultCount = table.rows().data().length;
+					var payBtnSelector = $(".btn-submit-field");
+					if (resultCount > 0) {
+						payBtnSelector.show();
+					} else {
+						payBtnSelector.hide();
+					}
 				}
 			}
 		});
+	}
+	
+	function formSubmit() {
+		$('#form-submit').on('click', function () {	
+			if(formValidation()) {
+				loadingModal('show','Processing Payment....');
+				ajaxCsrfToken();
+				$.ajax({
+					url: url+'/loan/payments/store',
+					type: "post",
+					data: {data: paymentFormData() },	
+					dataType: 'json',
+					complete: function() {
+						loadingModal('close');
+					},
+					error: function(result) {
+						notifier('danger','#loan-payments-make-result', oops);
+					},
+					success: function(result) {
+						console.log(result);
+						$('form .btn-submit-field').hide();
+						$('input, textarea').attr('readonly', true);
+						$('.flat, select').attr('disabled', true);
+						notifier('success','#loan-payments-make-result', result.message);
+					}
+				});
+			}
+			return false;
+		});
+		$('.clear-btn').click(function() { $(formNAme).parsley().reset() });
+	}
+	
+	function formValidation() {
+		window.Parsley.addAsyncValidator('validateOR', function (xhr) {
+				return xhr.status !== 404;
+			}, 	url+'/loan/payments/validate-or');
+		
+		$(formNAme).parsley().validate();
+		return $(formNAme).parsley().isValid();
+	}
+
+	function paymentFormData() {
+		var datableRowCount   = table.rows().data().length;
+		var paymentIdSelector = $(".payment_id");
+		var data = [];
+		for(var i = 0; i < datableRowCount; i++) {
+			var rowData = {
+				payment_id     : paymentIdSelector.eq(i).val(),
+				payment_amount : paymentIdSelector.eq(i).closest('tr').find('#payment_amount').val(),
+				payment_or     : paymentIdSelector.eq(i).closest('tr').find('#payment_or').val(),
+			}
+			data.push(rowData);
+		}
+		
+		return data;
 	}

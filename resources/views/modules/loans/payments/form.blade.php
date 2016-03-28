@@ -35,12 +35,19 @@
 								<th>Member Name</th>
 								<th>Payment Amount</th>
 								<th>OR No.</th>
-								<th>Action</th>
+								<th> </th>
 							</tr>
 						</thead>
 						<tbody>
 						</tbody>
 					</table>
+					
+					<div class="form-group btn-submit-field" style="display:none">
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<button type="submit" id="form-submit" class="btn btn-info"><i class="fa fa-dollar"></i> Paid</button>
+						</div>
+					</div>
+					
 				</form>
 
 			</div>
