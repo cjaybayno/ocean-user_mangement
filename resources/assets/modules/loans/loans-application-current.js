@@ -16,8 +16,8 @@
 	function dataTables() {
 		$('#loan-application-current').DataTable({
 			columns : [
-				{"searchable" : true},
 				{"searchable" : false},
+				{"searchable" : true},
 				{"searchable" : false},
 				{"searchable" : false},
 				{"searchable" : false},

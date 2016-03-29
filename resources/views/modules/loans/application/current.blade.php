@@ -20,13 +20,13 @@
 				<table id="loan-application-current"  class="table table-striped responsive-utilities jambo_table" cellspacing="0" width="100%">
                     <thead>
 						 <tr class="headings">
+							<th>Date</th>
 							<th>Member Name</th>
 							<th>Loan Products</th>
 							<th>Application Type</th>
 							<th>Amount</th>
-							<th>Deduction</th>
 							<th>Net Proceeds</th>
-							<th>Date</th>
+							<th>Balance</th>
 							<th> </th>
 						</tr>
                     </thead>

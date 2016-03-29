@@ -119,22 +119,22 @@ class LoanApplicationController extends Controller
 		->where('entity_id', session('entity_id'))
 		->where('fully_paid', false)
 		->select([
+			'applied_date',
 			'member_name',
 			'loan_product_name',
 			'application_type',
 			'amount',
-			'total_deduction',
 			'net_proceeds',
-			'applied_date',
+			'outstanding_balance',
 			'id',
 			'member_id',
 		]);
 			
 		return Datatables::of($loanApplications)
-				->editColumn('amount', 			'{{ number_format($amount, 2) }}')
-				->editColumn('total_deduction', '{{ number_format($total_deduction, 2) }}')
-				->editColumn('net_proceeds', 	'{{ number_format($net_proceeds, 2) }}')
-				->editColumn('applied_date', 	'{{ date("m/d/Y", strtotime($applied_date)) }}')
+				->editColumn('applied_date', 	    '{{ date("m/d/Y", strtotime($applied_date)) }}')
+				->editColumn('amount', 			    '{{ number_format($amount, 2) }}')
+				->editColumn('net_proceeds', 	    '{{ number_format($net_proceeds, 2) }}')
+				->editColumn('outstanding_balance', '{{ number_format($outstanding_balance, 2) }}')
 				->addColumn('action', function ($loanApplications) {
 					return view('modules/loans/application/datatables.action', [
 								'encryptID' => Crypt::encrypt($loanApplications->id)
