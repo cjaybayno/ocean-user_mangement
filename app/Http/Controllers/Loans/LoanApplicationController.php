@@ -117,6 +117,7 @@ class LoanApplicationController extends Controller
     {
 		$loanApplications = DB::table('view_loan_applications')
 		->where('entity_id', session('entity_id'))
+		->where('fully_paid', false)
 		->select([
 			'member_name',
 			'loan_product_name',

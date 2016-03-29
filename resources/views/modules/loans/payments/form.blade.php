@@ -1,6 +1,12 @@
 @extends('layouts.gentelella')
 @section('title', 'Loan Payments')
 
+@section('addScripts')
+<script> 
+	var ValidatePaymentOrSameFieldMessage = "{{ trans('loans.validatePaymentORSameField')}}"; 
+</script>
+@endsection
+
 @section('content')
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">

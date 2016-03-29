@@ -1,7 +1,9 @@
 <div class="form-group">
 	<div class="col-md-6 col-sm-6 col-xs-12">
 		<input type="text" name="payment_or" id="payment_or" class="payment_or form-control col-md-7 col-xs-12"
-			required
+			required	
+			minlength="4"
+			data-parsley-not-equal=".payment_or"
 			data-parsley-required-message= "{{ trans('loans.paymentRequired') }}"
 			data-parsley-remote
 			data-parsley-remote-validator="validateOR"

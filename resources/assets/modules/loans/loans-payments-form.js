@@ -15,6 +15,7 @@
 		$('.select2').select2();
 		onChangeLoanTypeHandler();
 		dataTables();
+		validateOr();
 		formSubmit();
 	}
 	
@@ -103,13 +104,35 @@
 	}
 	
 	function formValidation() {
-		window.Parsley.addAsyncValidator('validateOR', function (xhr) {
-				return xhr.status !== 404;
-			}, 	url+'/loan/payments/validate-or');
-		
 		$(formNAme).parsley().validate();
 		return $(formNAme).parsley().isValid();
 	}
+	
+	function validateOr() {
+		window.Parsley.addAsyncValidator('validateOR', function (xhr) {
+			return xhr.status !== 404;
+		}, 	url+'/loan/payments/validate-or');
+		
+		window.Parsley
+			.addValidator('notEqual', {
+				requirementType: 'string',
+				validateString: function(value, requirement) {
+					var datableRowCount = table.rows().data().length;
+					var counter = 0;
+					for(var i = 0; i < datableRowCount; i++) {
+						if (value == $(requirement).eq(i).val()) {
+							counter++;
+						}
+					}
+					
+					if (counter >= 2) return false;
+				},
+				messages: {
+					en: ValidatePaymentOrSameFieldMessage
+				}
+		  });
+	}
+	
 
 	function paymentFormData() {
 		var datableRowCount   = table.rows().data().length;

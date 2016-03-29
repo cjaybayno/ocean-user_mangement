@@ -91,17 +91,24 @@ class LoanPaymentsController extends Controller
 		->where('entity_id', session('entity_id'))
 		->where('fully_paid', false)
 		->where('loan_product_id', $request->loan_product_id)
-		->select(['member_name', 'id']);
+		->select([
+			'member_name', 
+			'id',
+			'outstanding_balance',
+			'amortization',
+		]);
 			
 		return Datatables::of($loanApplications)
 				->addColumn('paymentAmountInput', function ($loanApplications) {
 					return view('modules/loans/payments/datatables.paymentAmountInput', [
-								'encryptID' => Crypt::encrypt($loanApplications->id)
+								'encryptID' => Crypt::encrypt($loanApplications->id),
+								'minAmount' => $loanApplications->amortization,
+								'maxAmount' => $loanApplications->outstanding_balance,
 							])->render();
 				})
 				->addColumn('paymentORInput',  function ($loanApplications) {
 					return view('modules/loans/payments/datatables.paymentORInput', [
-								'encryptID' => Crypt::encrypt($loanApplications->id)
+								'encryptID' => Crypt::encrypt($loanApplications->id),
 							])->render();
 				})
 				->addColumn('paymentAction', function ($loanApplications) {
@@ -110,6 +117,8 @@ class LoanPaymentsController extends Controller
 							])->render();
 				})
 				->removeColumn('id')
+				->removeColumn('outstanding_balance')
+				->removeColumn('amortization')
 				->make();
 	}
 	
@@ -134,40 +143,48 @@ class LoanPaymentsController extends Controller
      */
     public function postStore(Request $request)
     {
+		/* === loop all data for payement ===*/
 		foreach ($request->data as $loan) {
-			if (! empty($loan['payment_amount']) AND ! empty($loan['payment_or'])) {
-				$loanApplicationId = Crypt::decrypt($loan['payment_id']);
-				$loanPayment = new LoanPayment;
-				$loanPayment->loan_application_id = $loanApplicationId;
-				$loanPayment->amount 			  = $loan['payment_amount'];
-				$loanPayment->or_number 		  = strtoupper($loan['payment_or']);
-				$loanPayment->entity_id 		  = session('entity_id');
-				$loanPayment->save();
+			/* === decrypt application id === */
+			$loanApplicationId = Crypt::decrypt($loan['payment_id']);
+			
+			$loanPayment = new LoanPayment;
+			$loanPayment->loan_application_id = $loanApplicationId;
+			$loanPayment->amount 			  = $loan['payment_amount'];
+			$loanPayment->or_number 		  = strtoupper($loan['payment_or']);
+			$loanPayment->entity_id 		  = session('entity_id');
+			$loanPayment->save();
+			
+			Log::info('Make Payment : ', [
+				'table'	=> [
+					'name' => 'loan_payments',
+					'data' => $loanPayment->toArray()
+				],
+				'session' => session()->all()
+			]);
+			
+			/* === if payment success === */
+			if ($loanPayment->id) {
+				$loanApplication = LoanApplication::find($loanApplicationId);
+				/* === outstanding balance - payment_amount === */
+				$loanApplication->outstanding_balance = $loanApplication->outstanding_balance - $loan['payment_amount'];
+				/* === add 1 to num_made_payments === */
+				$loanApplication->num_made_payments   = $loanApplication->num_made_payments + 1;
 				
-				Log::info('Make Payments : ', [
+				/* === check if fully paid === */
+				if ($loanApplication->outstanding_balance <= 0) {
+					$loanApplication->fully_paid = true;
+				}
+				
+				$loanApplication->save();
+				
+				Log::info('Update Outstanding balance : ', [
 					'table'	=> [
-						'name' => 'loan_payments',
-						'data' => $loanPayment->toArray()
+						'name' => 'loan_application',
+						'data' => $loanApplication->toArray()
 					],
 					'session' => session()->all()
 				]);
-				
-				if ($loanPayment->id) {
-					$loanApplication = LoanApplication::find($loanApplicationId);
-					/* === outstanding balance - payment_amount === */
-					$loanApplication->outstanding_balance = $loanApplication->outstanding_balance - $loan['payment_amount'];
-					/* === add 1 to num_made_payments === */
-					$loanApplication->num_made_payments   = $loanApplication->num_made_payments + 1;
-					$loanApplication->save();
-					
-					Log::info('Update Outstanding balance : ', [
-						'table'	=> [
-							'name' => 'loan_application',
-							'data' => $loanApplication->toArray()
-						],
-						'session' => session()->all()
-					]);
-				}
 			}
 		}
 		

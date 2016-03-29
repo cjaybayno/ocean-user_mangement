@@ -32,5 +32,7 @@ return [
 	/* === Loan Payment === */
 	'successLoanPayment' => 'Success made of payment!',
 	'validatePaymentOR'  => 'This OR already process',
-	'paymentRequired'    => 'required'
+	'paymentRequired'    => 'Required',
+	'paymentAmount'		 => 'This amount is lower than amortization OR higher than outstanding balance.',
+	'validatePaymentORSameField' => 'This OR is already used to other fields',
 ];

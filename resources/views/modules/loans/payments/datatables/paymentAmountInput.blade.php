@@ -7,12 +7,15 @@
 			data-parsley-required-message= "{{ trans('loans.paymentRequired') }}"
 			data-parsley-pattern="{{ config('loans.amountRegex') }}" 
 			data-parsley-pattern-message="{{ trans('loans.amount') }}"
+			
+			type="range"
+			data-parsley-range="[{{ $minAmount }}, {{ $maxAmount }}]"
 		> 
 	</div>
 </div>
 
 <script>
-	$(".payment_amount").blur(function(){
+	$(".payment_amount").blur(function() {
 		$(this).val(addTwoZero($(this).val()));
 	});
 </script>
