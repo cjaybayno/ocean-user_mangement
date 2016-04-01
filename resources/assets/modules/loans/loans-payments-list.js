@@ -11,20 +11,17 @@
 	function initialPages($) {
 		dataTables();
 	}
-	
+	 
 	/* === dataTables === */
 	function dataTables() {
-		$('#loan-application-current').DataTable({
+		$('#loan-payment-list').DataTable({
 			order : [[ 0, "desc" ]],
 			columns : [
 				{"searchable" : false},
-				{"searchable" : true},
+				{"searchable" : true}, 
 				{"searchable" : false},
 				{"searchable" : false},
 				{"searchable" : false},
-				{"searchable" : false},
-				{"searchable" : false},
-				{"searchable" : false, "orderable" : false},
 			],
 			oLanguage : {
 				"sSearch": "Member "
@@ -32,6 +29,6 @@
 			responsive: true,
 			processing: true,
 			serverSide: true,
-			ajax: url+'/loan/application/paginate',
+			ajax: url+'/loan/payments/paginate-payment-list',
 		});
 	}

@@ -56,7 +56,7 @@
 			processing: true,
 			serverSide: true,
 			ajax: {
-				url: url+'/loan/payments/paginate',
+				url: url+'/loan/payments/paginate-payment-form',
 				data : function (d) {
 					d.loan_product_id = $("#loan_type").val();
 				},

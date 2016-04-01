@@ -20,6 +20,24 @@
 				<form id="loan-application-create-form" class="form-horizontal form-label-left">
 					<p class="well well-sm">Loan summary information </p>
 					
+					<div class="form-group" id="outstanding_balance_field">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Outstanding Balance</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input type="text" name="outstanding_balance" id="outstanding_balance" class="form-control col-md-7 col-xs-12"
+							value="{{ number_format($application->outstanding_balance, 2)}}" readonly>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Number of Payments Made</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input type="text" name="num_made_payments" id="num_made_payments" class="form-control col-md-7 col-xs-12" 
+							value="{{ $application->num_made_payments }}" readonly>
+						</div>
+					</div>
+					
+					
+					<br>
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Applied Date</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
@@ -46,7 +64,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Loan Amount <span class="required">*</span></label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Loan Amount </label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="text" name="loan_amount" id="loan_amount" class="form-control col-md-7 col-xs-12" 
 							value="{{ number_format($application->amount, 2) }}" readonly>
@@ -77,14 +95,6 @@
 						</div>
 					</div>
 					
-					<div class="form-group" id="outstanding_balance_field">
-						<p class="control-label col-md-3 col-sm-3 col-xs-12">Outstanding Balance</p>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="outstanding_balance" id="outstanding_balance" class="form-control col-md-7 col-xs-12"
-							value="{{ number_format($application->outstanding_balance, 2)}}" readonly>
-						</div>
-					</div>
-					
 					<div class="form-group" id="rebate_field">
 						<p class="control-label col-md-3 col-sm-3 col-xs-12">Rebate</p>
 						<div class="col-md-6 col-sm-6 col-xs-12">
@@ -101,7 +111,6 @@
 						</div>
 					</div>
 					
-					</br>
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Net Proceeds</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">

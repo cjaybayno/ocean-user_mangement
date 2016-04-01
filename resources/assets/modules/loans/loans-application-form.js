@@ -206,6 +206,7 @@
 						$('input, textarea').attr('readonly', true);
 						$('.flat, select').attr('disabled', true);
 						notifier('success','#loan-application-creation-result', result.message);
+						addBtn('', '');
 					}
 				});
 			}
@@ -239,7 +240,7 @@
 	}
 	
 	function validateCurrentApplication() {
-		if ($('input[name=application_type]:checked').val() == 'new') {
+		if ($('input[name=application_type]:checked').val() == 'NEW') {
 			var loanTypeSelector = $("#loan_type");
 			loanTypeSelector.attr('data-parsley-remote', '');
 			loanTypeSelector.attr('data-parsley-remote-validator', 'validateCurrentApplication');
@@ -250,7 +251,7 @@
 			}, url+'/loan/application/validate-current-application', {
 					"dataType" : "jsonp", 
 					"data": 
-						{ "member_id": $('#member_id').val() }
+						{ "member_id": $('#member_name').val() }
 				}
 			);
 		}

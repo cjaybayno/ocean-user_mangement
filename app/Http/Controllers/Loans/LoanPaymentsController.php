@@ -41,9 +41,61 @@ class LoanPaymentsController extends Controller
 		
 		$this->middleware('ajax.request', ['except' => [
             'getForm',
+            'getIndex',
         ]]);
 	}
 	
+	
+	/**
+     * Show list of payments made
+     *
+     * @return \Illuminate\Http\Response
+     */
+	public function getIndex()
+	{
+		$assets = [
+			'scripts' => [
+				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
+				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
+				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
+				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
+				'/assets/modules/loans/loans-payments-list.js' 
+			],
+			'stylesheets' => [
+				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
+				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
+			]
+		];
+		
+		Log::info('View loan payments made list: ', ['session' => session()->all()]);
+		
+        return view('modules/loans/payments.list')->with([
+			$this->menuKey => $this->menuValue,
+			'assets' 	   => $assets
+		]);
+	}
+	
+	/**
+     * Return payments list paginated.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPaginatePaymentList(Request $request)
+    {
+		$loanApplications = DB::table('view_loan_payments')
+		->where('entity_id', session('entity_id'))
+		->select([
+			'date', 
+			'member_name',
+			'loan_product_name',
+			'amount',
+			'or_number',
+		]);
+			
+		return Datatables::of($loanApplications)
+				->editColumn('date', '{{ date("m/d/Y", strtotime($date)) }}')
+				->make();
+	}
 	
 	/**
      * Display a listing of the loan payments
@@ -81,11 +133,11 @@ class LoanPaymentsController extends Controller
     }
 	
 	/**
-     * Return loan members list for paginated.
+     * Return payments form paginated.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getPaginate(Request $request)
+    public function getPaginatePaymentForm(Request $request)
     {
 		$loanApplications = DB::table('view_loan_applications')
 		->where('entity_id', session('entity_id'))

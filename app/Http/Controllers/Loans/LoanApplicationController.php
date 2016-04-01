@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use DB;
 use Log;
 use Crypt;
-use Session;
 use Datatables;
 
 use App\Member;

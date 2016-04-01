@@ -56,7 +56,7 @@ class LoanManagement
 	}
 	
 	/**
-     * Display Loan Products in key/value pair 
+     * Get in last name key/value pair
      *
      * @return array
      */

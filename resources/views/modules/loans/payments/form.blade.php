@@ -14,8 +14,9 @@
 			<div class="x_title">
 				<h2 id="header-title">Payments Form</h2>
 				<div class="pull-right">
+					<div id="add-btn" class="btn-group"></div>
 					<div class="btn-group">
-						<a href="#">
+						<a href="{{ URL::route('loan.payments.list')}}">
 							<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-th-list"></i> Show List of Payments</button>
 						</a>
 					</div>
@@ -24,7 +25,6 @@
 			</div>
 			<div class="x_content">
 				<div id="loan-payments-make-result"></div>
-				
 				<form id="loan-payments-make-form" class="form-horizontal form-label-left">
 					<div class="form-group">
 						<div class="col-md-4 col-sm-4 col-xs-12">
@@ -47,15 +47,12 @@
 						<tbody>
 						</tbody>
 					</table>
-					
 					<div class="form-group btn-submit-field" style="display:none">
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<button type="submit" id="form-submit" class="btn btn-info"><i class="fa fa-dollar"></i> Paid</button>
 						</div>
 					</div>
-					
 				</form>
-
 			</div>
 		</div>
 	</div>
