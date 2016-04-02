@@ -5,10 +5,10 @@
 		<h3>Loans</h3>
 		<ul class="nav side-menu">
 			<li><a><i class="fa fa-dashboard"></i> Dashboard </a></li>
-			<li><a><i class="fa fa-users"></i> Member <span class="fa fa-chevron-down"></span></a>
+			<li class="{{ $memberActiveMenu or '' }}"><a><i class="fa fa-users"></i> Member <span class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu" style="display: none">
-					<li><a href="index2.html">List</a>
-					<li><a href="index.html">Register</a></li>
+					<li><a href="{{ URL::route('members') }}">List</a>
+					<li><a href="{{ URL::route('members.register') }}">Register</a></li>
 					<li><a href="index.html">Batch Registration</a></li>
 					</li>
 				</ul>

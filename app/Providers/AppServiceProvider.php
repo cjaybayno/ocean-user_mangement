@@ -26,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
 				'modules/loans/application.show',
 				'modules/loans/payments.form',
 				'modules/loans/payments.list',
+				'modules/members.list',
+				'modules/members.register',
+				'modules/members.show',
+				'modules/members.edit',
 			], 
 			'App\Http\ViewComposers\AuthUserProfileComposer'
 		);

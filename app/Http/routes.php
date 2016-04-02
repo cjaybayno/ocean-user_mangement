@@ -63,6 +63,14 @@ Route::group(['middleware' => 'web'], function () {
 				'getEdit'   => 'loan.products.edit',
 			]);
 		});
+		
+		// member route
+		Route::controller('members', 'Members\MembersController', [
+			'getIndex'	  => 'members',
+			'getRegister' => 'members.register',
+			'getShow' 	  => 'members.show',
+			'getEdit' 	  => 'members.edit',
+		]);
 				
 		// Users route
 		Route::controller('users', 'UsersManagement\UsersController', [

@@ -69,7 +69,7 @@ class LoanManagement
 		
 		$members = collect($memberRaw)
 			->map(function($memberRaw) {
-				return $memberRaw->first_name.' '.$memberRaw->middle_name.'. '.$memberRaw->last_name;
+				return $memberRaw->first_name.' '.$memberRaw->middle_name.' '.$memberRaw->last_name;
 			})
 			->toArray();
 		
