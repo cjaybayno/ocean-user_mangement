@@ -87,7 +87,8 @@ class MembersController extends Controller
 			'contact_number',
 			'email_address',
 			'id',
-		]);
+		])
+		->where('entity_id', session('entity_id'));
 			
 		return Datatables::of($members)
 				->addColumn('action', function ($members) {
@@ -224,6 +225,7 @@ class MembersController extends Controller
 		$member->province_city_address	= $request->province_city;
 		$member->province_city_address	= $request->province_city;
 		$member->zipcode_address		= $request->zipcode;
+		$member->entity_id				= session('entity_id');
 		$member->save();
 		
 		Log::info('Register member : ', [
