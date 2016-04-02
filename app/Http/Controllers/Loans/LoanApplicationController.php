@@ -171,9 +171,7 @@ class LoanApplicationController extends Controller
      */
 	public function getGetMemberInLastName(Request $request)
 	{
-		$memberNames = $this->loanRepo->getMemberInLastName($request->last_name);
-		
-		return (! empty($memberNames)) ? $memberNames : [' ' => 'No Found Name'];
+		return $this->loanRepo->getMemberInLastName($request->last_name);
 	}
 	
 	/**

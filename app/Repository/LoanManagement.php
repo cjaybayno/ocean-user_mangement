@@ -72,8 +72,14 @@ class LoanManagement
 				return $memberRaw->first_name.' '.$memberRaw->middle_name.' '.$memberRaw->last_name;
 			})
 			->toArray();
+			
+		if (! empty($members)) {
+			$defaultValue = ['Select Member Name'];
+		} else {
+			$defaultValue = ['No Found Name'];
+		}
 		
-		return $members;
+		return array_merge($defaultValue, $members);
 	}
 	
 	/**
