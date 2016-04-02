@@ -64,6 +64,7 @@ class LoanManagement
 	{
 		$memberRaw = Member::orderBy('first_name')
 			->where('last_name', 'LIKE', $lastName.'%')
+			->where('entity_id', session('entity_id'))
 			->get()
 			->keyBy('id');
 		
