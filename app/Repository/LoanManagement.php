@@ -74,13 +74,7 @@ class LoanManagement
 			})
 			->toArray();
 			
-		if (! empty($members)) {
-			$defaultValue = ['Select Member Name'];
-		} else {
-			$defaultValue = ['No Found Name'];
-		}
-		
-		return array_merge($defaultValue, $members);
+		return $members; 
 	}
 	
 	/**

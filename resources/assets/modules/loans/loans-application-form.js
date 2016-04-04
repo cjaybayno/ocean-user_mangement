@@ -74,7 +74,8 @@
 					data: {last_name : $(this).val()},
 					dataType: 'json',
 					success: function(result) {
-						memberNameSelector.select2({data: selec2DataFormat(result)});
+						var formatDAta = selec2DataFormat(result, 'Select Member Name', '#member_name');
+						memberNameSelector.select2({data: formatDAta});
 						$(formNAme).parsley().reset();
 					}
 				});

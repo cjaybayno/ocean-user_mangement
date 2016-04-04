@@ -150,10 +150,22 @@ function addBtn(url, btnNAme) {
 }
 
 /* === Data formatter for select2 plugins === */
-function selec2DataFormat(array) {
+function selec2DataFormat(data, defaultValue, selector) {
 	var selectData = [];
-	$.each(array, function(key, value) {
-		selectData.push({'id': key, 'text': value});
-	});
+	if ($.isEmptyObject(data)) {
+		selectData.push({'id': ' ', 'text': 'No Data Selection'});
+		if (typeof selector !== 'undefined') {
+			$(selector).empty();
+		}
+	} else {
+		if (typeof defaultValue !== 'undefined') {
+			selectData.push({'id': ' ', 'text': defaultValue});
+		}
+		
+		$.each(data, function(key, value) {
+			selectData.push({'id': key, 'text': value});
+		});
+	}
+	
 	return selectData;
 }
