@@ -218,10 +218,15 @@ class LoanPaymentsController extends Controller
 			/* === if payment success === */
 			if ($loanPayment->id) {
 				$loanApplication = LoanApplication::find($loanApplicationId);
+				
+				/* === add 1 to num_made_payments === */
+				$loanApplication->num_made_payments = $loanApplication->num_made_payments + 1;
+				
+				/* === add payment amount total_made_payments === */
+				$loanApplication->total_made_payments = $loanApplication->total_made_payments + $loan['payment_amount'];
+				
 				/* === outstanding balance - payment_amount === */
 				$loanApplication->outstanding_balance = $loanApplication->outstanding_balance - $loan['payment_amount'];
-				/* === add 1 to num_made_payments === */
-				$loanApplication->num_made_payments   = $loanApplication->num_made_payments + 1;
 				
 				/* === check if fully paid === */
 				if ($loanApplication->outstanding_balance <= 0) {
