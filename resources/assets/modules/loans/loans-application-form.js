@@ -15,11 +15,14 @@
 		datePicker('#applied_date');
 		onBlurAppliedDigits('#loan_amount');
 		onBlurAppliedDigits('#capital_build_up');
+		onBlurAppliedDigits('#outstanding_balance');
+		onBlurAppliedDigits('#monthly_amortization');
 		onKeyupMemberIdHandler();
 		onClickApplicationTypeHandler();
 		onChangeLoanTypeHandler();
 		onBlurLoanAmountHandler();
 		onBlurCapitalBuiildUpHandler();
+		onBlurAmortizationHandler();
 		formSubmit();
 	}
 	
@@ -50,12 +53,10 @@
 	function onClickApplicationTypeHandler() {
 		$("input[name=application_type]").on('ifClicked', function(event) {
 			var appTypeValue = $(this).val();
-			if (appTypeValue == 'renewal') {
-				$("#outstanding_balance_field").show();
+			if (appTypeValue == applicationTypeValueRenewal) {
 				$("#rebate_field").show();
 			}
-			if (appTypeValue == 'new') {
-				$("#outstanding_balance_field").hide();
+			if (appTypeValue == applicationTypeValueNew) {
 				$("#rebate_field").hide();
 			}
 			if (! $("#loan_type").parsley().isValid()) {
@@ -97,7 +98,8 @@
 			if (! loanTypeSelector.parsley().isValid()) {
 				$(formNAme).parsley().reset();
 			}
-			calculateAdvanceInterest()
+			getPrincipalLoanAmount();
+			calculateAdvanceInterest();
 		});
 	}
 	
@@ -110,6 +112,33 @@
 	function onBlurCapitalBuiildUpHandler() {
 		$("#capital_build_up").blur(function() {
 			calculateTotalDeduction();
+		});
+	}
+	
+	function onBlurAmortizationHandler() {
+		$("#monthly_amortization").blur(function() {
+			$.ajax({
+				url: url+'/loan/application/cal-new-application-outstanding-balance',
+				dataType: 'json',
+				data: {
+					loan_product_id : $("#loan_type").val(),
+					amortization    : $("#monthly_amortization").val(),
+				},
+				success: function(outstandingBalance) {
+					$("#outstanding_balance").val(addTwoZero(outstandingBalance));
+				}
+			});
+		});
+	}
+	
+	function getPrincipalLoanAmount() {
+		$.ajax({
+			url: url+'/loan/application/get-principal-amount',
+			dataType: 'json',
+			data: { loan_product_id : $("#loan_type").val() },
+			success: function(principalAmount) {
+				$("#loan_amount").val(addTwoZero(principalAmount));
+			}
 		});
 	}
 	
@@ -170,6 +199,18 @@
 			},
 			success: function(netProceeds) {
 				$("#net_proceeds").val(addTwoZero(netProceeds));
+				calculateNewApplicationOutstandingBalance();
+			}
+		});
+	}
+	
+	function calculateNewApplicationOutstandingBalance() {
+		$.ajax({
+			url: url+'/loan/application/cal-new-application-outstanding-balance',
+			dataType: 'json',
+			data: { loan_product_id : $("#loan_type").val() },
+			success: function(outstandingBalance) {
+				$("#outstanding_balance").val(addTwoZero(outstandingBalance));
 				getMonthlyAmortization();
 			}
 		});
@@ -241,7 +282,7 @@
 	}
 	
 	function validateCurrentApplication() {
-		if ($('input[name=application_type]:checked').val() == 'NEW') {
+		if ($('input[name=application_type]:checked').val() == applicationTypeValueNew) {
 			var loanTypeSelector = $("#loan_type");
 			loanTypeSelector.attr('data-parsley-remote', '');
 			loanTypeSelector.attr('data-parsley-remote-validator', 'validateCurrentApplication');

@@ -3,8 +3,10 @@
 
 @section('addScripts')
 <script> 
-	var ValidateCurrentAppMessage = "{{ trans('loans.ValidateCurrentApplication')}}"; 
-	var ValidateLoanAmountMessage = "{{ trans('loans.validateLoanAmount') }}"; 
+	var ValidateCurrentAppMessage   = "{{ trans('loans.ValidateCurrentApplication')}}"; 
+	var ValidateLoanAmountMessage   = "{{ trans('loans.validateLoanAmount') }}";
+	var applicationTypeValueNew 	= "{{ config('loans.applicationType.new') }}";
+	var applicationTypeValueRenewal = "{{ config('loans.applicationType.renewal') }}";
 </script>
 @endsection
 
@@ -98,14 +100,14 @@
 					<div class="form-group">
 						<p class="control-label col-md-3 col-sm-3 col-xs-12">Advance Interest</p>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="advance_interest" id="advance_interest" class="form-control col-md-7 col-xs-12" readonly>
+							<input type="text" name="advance_interest" id="advance_interest" class="form-control col-md-7 col-xs-12"  placeholder ="0.00" readonly>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<p class="control-label col-md-3 col-sm-3 col-xs-12">Processing Fee</p>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="processing_fee" id="processing_fee" class="form-control col-md-7 col-xs-12" readonly>
+							<input type="text" name="processing_fee" id="processing_fee" class="form-control col-md-7 col-xs-12" placeholder ="0.00" readonly>
 						</div>
 					</div>
 					
@@ -121,24 +123,28 @@
 						</div>
 					</div>
 					
-					<div class="form-group" id="outstanding_balance_field" style="display:none">
+					<div class="form-group">
 						<p class="control-label col-md-3 col-sm-3 col-xs-12">Outstanding Balance</p>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="outstanding_balance" id="outstanding_balance" class="form-control col-md-7 col-xs-12" readonly>
+							<input type="text" name="outstanding_balance" id="outstanding_balance" class="form-control col-md-7 col-xs-12"  placeholder ="0.00"
+								required
+								data-parsley-required-message= "{{ trans('users.required') }}"
+								data-parsley-pattern="{{ config('loans.amountRegex') }}"
+								data-parsley-pattern-message="{{ trans('loans.amount') }}">
 						</div>
 					</div>
 					
 					<div class="form-group" id="rebate_field" style="display:none">
 						<p class="control-label col-md-3 col-sm-3 col-xs-12">Rebate</p>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="rebate" id="rebate" class="form-control col-md-7 col-xs-12" readonly>
+							<input type="text" name="rebate" id="rebate" class="form-control col-md-7 col-xs-12" placeholder ="0.00" readonly>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Total Deductions</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="total_deduction" id="total_deduction" class="form-control col-md-7 col-xs-12" readonly>
+							<input type="text" name="total_deduction" id="total_deduction" class="form-control col-md-7 col-xs-12" placeholder ="0.00" readonly>
 						</div>
 					</div>
 					
@@ -146,14 +152,18 @@
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Net Proceeds</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="net_proceeds" id="net_proceeds" class="form-control col-md-7 col-xs-12" readonly>
+							<input type="text" name="net_proceeds" id="net_proceeds" class="form-control col-md-7 col-xs-12" placeholder ="0.00" readonly>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Monthly Amortizaton</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="monthly_amortization" id="monthly_amortization" class="form-control col-md-7 col-xs-12" readonly>
+							<input type="text" name="monthly_amortization" id="monthly_amortization" class="form-control col-md-7 col-xs-12" placeholder ="0.00"
+								required
+								data-parsley-required-message= "{{ trans('users.required') }}"
+								data-parsley-pattern="{{ config('loans.amountRegex') }}"
+								data-parsley-pattern-message="{{ trans('loans.amount') }}">
 						</div>
 					</div>
 					

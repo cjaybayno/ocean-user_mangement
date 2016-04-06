@@ -231,6 +231,21 @@ class LoanApplicationController extends Controller
 	}
 	
 	/**
+     * Get Principal Amount
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function getGetPrincipalAmount(Request $request)
+	{
+		$loanProduct = LoanProduct::select('principal')->find($request->loan_product_id);
+		
+		$principalAmount = (! empty($loanProduct['principal'])) ? $loanProduct['principal'] : 0.00;
+		
+		return response()->json($principalAmount);
+	}
+	
+	/**
      * Calculate Advance Interest
      *
      * @param  \Illuminate\Http\Request  $request
@@ -318,16 +333,17 @@ class LoanApplicationController extends Controller
 	/** 
 	 * Get New Application Outstanding Balance
      *
-     * @param  int  $loanProductId
-     * @param  int  $amortization
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-	protected function getNewApplicationOutstandingBalance($loanProductId, $amortization)
-	{
-		$loanProduct = LoanProduct::select('term')->find($loanProductId);
+	public function getCalNewApplicationOutstandingBalance(Request $request)
+	{	
+		$loanProduct = LoanProduct::select('term', 'amortization')->find($request->loan_product_id);
+		
+		$mortization = ($request->amortization) ? $request->amortization : $loanProduct['amortization'];
 		
 		/* === loan product term * amortization === */
-		return $loanProduct['term'] * $amortization;
+		return response()->json($loanProduct['term'] * $mortization);
 	}
 	
 	/**
@@ -339,34 +355,20 @@ class LoanApplicationController extends Controller
 	public function postStore(Request $request) 
 	{
 		$loan = new LoanApplication;
-		$loan->member_id 		= $request->member_name;
-		$loan->application_type = $request->application_type;
-		$loan->loan_product_id  = $request->loan_type;
-		$loan->amount           = $request->loan_amount;
-		$loan->advance_interest = $request->advance_interest;
-		$loan->processing_fee 	= $request->processing_fee;
-		$loan->capital_build_up = $request->capital_build_up;
-		$loan->total_deduction  = $request->total_deduction;
-		$loan->net_proceeds	    = $request->net_proceeds;
-		$loan->net_proceeds	    = $request->net_proceeds;
-		$loan->amortization	    = $request->monthly_amortization;
-		$loan->applied_date	    = date('y-m-d', strtotime($request->applied_date));
-		$loan->entity_id	    = session('entity_id');
-		
-		switch ($request->application_type) {
-			case config('loans.applicationType.new') :
-					$loan->outstanding_balance = $this->getNewApplicationOutstandingBalance(
-						$request->loan_type,
-						$request->monthly_amortization
-					);
-				break;
-				
-			case config('loans.applicationType.new') :
-					$loan->rebate = $request->rebate;
-					$loan->outstanding_balance = $request->outstanding_balance;
-				break;
-		}
-		
+		$loan->member_id 			= $request->member_name;
+		$loan->application_type 	= $request->application_type;
+		$loan->loan_product_id  	= $request->loan_type;
+		$loan->amount           	= $request->loan_amount;
+		$loan->advance_interest 	= $request->advance_interest;
+		$loan->processing_fee 		= $request->processing_fee;
+		$loan->capital_build_up 	= $request->capital_build_up;
+		$loan->total_deduction  	= $request->total_deduction;
+		$loan->net_proceeds	    	= $request->net_proceeds;
+		$loan->outstanding_balance  = $request->outstanding_balance;
+		$loan->rebate 				= $request->rebate;
+		$loan->amortization	    	= $request->monthly_amortization;
+		$loan->applied_date	    	= date('y-m-d', strtotime($request->applied_date));
+		$loan->entity_id	    	= session('entity_id');
 		$loan->save();
 		
 		Log::info('Create application : ', [
