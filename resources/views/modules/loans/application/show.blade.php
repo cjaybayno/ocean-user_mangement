@@ -21,18 +21,26 @@
 					<p class="well well-sm">Loan summary information </p>
 					
 					<div class="form-group" id="outstanding_balance_field">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Outstanding Balance</label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">OUTSTANDING BALANCE</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="text" name="outstanding_balance" id="outstanding_balance" class="form-control col-md-7 col-xs-12"
 							value="{{ number_format($application->outstanding_balance, 2)}}" readonly>
 						</div>
 					</div>
-					
+					<br>
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Number of Payments Made</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="text" name="num_made_payments" id="num_made_payments" class="form-control col-md-7 col-xs-12" 
 							value="{{ $application->num_made_payments }}" readonly>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Total Payments</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input type="text" name="total_made_payments" id="total_made_payments" class="form-control col-md-7 col-xs-12" 
+							value="{{ number_format($application->total_made_payments, 2) }}" readonly>
 						</div>
 					</div>
 					

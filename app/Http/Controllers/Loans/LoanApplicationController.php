@@ -10,6 +10,7 @@ use Crypt;
 use Datatables;
 
 use App\Member;
+use App\Balance;
 use App\LoanProduct;
 use App\Http\Requests;
 use App\LoanApplication;
@@ -123,7 +124,7 @@ class LoanApplicationController extends Controller
 			'loan_product_name',
 			'application_type',
 			'amount',
-			'net_proceeds',
+			'total_made_payments',
 			'outstanding_balance',
 			'id',
 			'member_id',
@@ -132,7 +133,7 @@ class LoanApplicationController extends Controller
 		return Datatables::of($loanApplications)
 				->editColumn('applied_date', 	    '{{ date("m/d/Y", strtotime($applied_date)) }}')
 				->editColumn('amount', 			    '{{ number_format($amount, 2) }}')
-				->editColumn('net_proceeds', 	    '{{ number_format($net_proceeds, 2) }}')
+				->editColumn('total_made_payments', '{{ number_format($total_made_payments, 2) }}')
 				->editColumn('outstanding_balance', '{{ number_format($outstanding_balance, 2) }}')
 				->addColumn('action', function ($loanApplications) {
 					return view('modules/loans/application/datatables.action', [
@@ -371,6 +372,8 @@ class LoanApplicationController extends Controller
 		$loan->entity_id	    	= session('entity_id');
 		$loan->save();
 		
+		$this->saveCapitalBalance($loan->id, $request->capital_build_up);
+		
 		Log::info('Create application : ', [
 			'table'	=> [
 				'name' => 'loans',
@@ -382,6 +385,40 @@ class LoanApplicationController extends Controller
 		return response()->json([
 			'success' => true,
 			'message' => trans('loans.successLoanApplication'),
+		]);
+	}
+	
+	/**
+     * Save Capital Balance
+     *
+     * @param  int	$memberID
+     * @param  int	$capitalBuildUp
+     * @return void
+     */
+	protected function saveCapitalBalance($memberID, $capitalBuildUp)
+	{
+		$getBalance = Balance::select('id')->where('member_id', $memberID)->first();
+		 
+		if (empty($getBalance)) {
+			$logInfo = 'Create capital';
+			$balance = new Balance;
+			$balance->member_id = $memberID;
+			$balance->type 		= 'capital';
+		} else {
+			$logInfo = 'Update capital';
+			$balance = Balance::find($getBalance->id);
+		}
+		
+		$balance->current_balance   = $balance->current_balance   + $capitalBuildUp;
+		$balance->available_balance = $balance->available_balance + $capitalBuildUp;
+		$balance->save();
+		
+		Log::info($logInfo.' : ', [
+			'table'	=> [
+				'name' => 'balance',
+				'data' => $balance->toArray()
+			],
+			'session' => session()->all()
 		]);
 	}
 }

@@ -93,13 +93,21 @@
 									value="{{ $loanProduct->interest or '' }}">
 							</div>
 						</div>
+						
+						@if (session('role') == 0)
 						<div class="form-group col-md-7">
 							<label class="control-label">Entity<span class="required"> *</span></label><br>
 							<div class="form-group has-feedback">
-								<?php $loanProductEntity = (isset($loanProduct->entity_id)) ? $loanProduct->entity_id : null  ?>
-								{!! Form::select('entity', $entities, $loanProductEntity, ['class' => 'form-control select2', 'id' => 'entity', 'required', 'data-parsley-required-message="This field is required"']) !!}
+								<?php $loanProductEntity = (isset($loanProduct->entity_id)) ? $loanProduct->entity_id : (session('entity_id')) ? session('entity_id') : null ?>
+								{!! Form::select('entity', $entities, $loanProductEntity, [
+									'class'    => 'form-control select2', 
+									'id'       => 'entity', 
+									'required', 
+									'data-parsley-required-message="This field is required"']) !!}
 							</div>
 						</div>
+						@endif
+						
 						<div class="form-group col-md-7">
 							<label class="control-label">Remarks<span class="required"></span></label><br>
 							<textarea name="remarks" id="remarks" class="form-control" rows="3">{{ $loanProduct->remarks or ''}}</textarea>

@@ -93,7 +93,6 @@ class LoanProductsController extends Controller
 				->where('entity_id', session('entity_id'))
 				->select($select);
 		
-		
 		return Datatables::of($loanProducts)
 				->editColumn('principal', '{{ number_format($principal, 2) }}')
 				->editColumn('term', '{{ $term }} months')
@@ -148,7 +147,7 @@ class LoanProductsController extends Controller
 		$loanProduct->principal = $request->principal_amount;
 		$loanProduct->term   	= $request->term;
 		$loanProduct->interest  = $request->interest_rate;
-		$loanProduct->entity_id = $request->entity;
+		$loanProduct->entity_id = (session('role') == config('users.role.client')) ? session('entity_id') : $request->entity;
 		$loanProduct->remarks   = $request->remarks;
 		$loanProduct->save();
 		

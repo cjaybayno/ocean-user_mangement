@@ -25,7 +25,7 @@
 							<th>Loan Products</th>
 							<th>Application Type</th>
 							<th>Amount</th>
-							<th>Net Proceeds</th>
+							<th>Total Payments</th>
 							<th>Balance</th>
 							<th> </th>
 						</tr>
