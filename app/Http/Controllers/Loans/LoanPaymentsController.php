@@ -151,16 +151,16 @@ class LoanPaymentsController extends Controller
 			switch ($productType->type) {
 				case 'loan' :
 					$loanPayments = DB::table('view_loan_applications')
-					->where('entity_id', session('entity_id'))
-					->where('fully_paid', false)
-					->where('loan_product_id', $request->loan_product_id)
 					->select([
 						'member_name', 
 						'id',
 						'outstanding_balance',
 						'amortization',
-					]);
-						
+					])
+					->where('entity_id', session('entity_id'))
+					->where('fully_paid', false)
+					->where('loan_product_id', $request->loan_product_id);
+					
 					return Datatables::of($loanPayments)
 							->addColumn('paymentAmountInput', function ($loanPayments) {
 								return view('modules/loans/payments/datatables.paymentAmountInput', [
@@ -187,8 +187,8 @@ class LoanPaymentsController extends Controller
 				
 				case 'balance' :
 					$loanPayments = DB::table('view_members')
-					->where('entity_id', session('entity_id'))
-					->select('member_name', 'id');
+					->select('member_name', 'id')
+					->where('entity_id', session('entity_id'));
 						
 					return Datatables::of($loanPayments)
 							->addColumn('paymentAmountInput', function ($loanPayments) {
