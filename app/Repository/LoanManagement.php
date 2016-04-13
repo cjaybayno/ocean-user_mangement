@@ -1,14 +1,13 @@
 <?php
-
 namespace App\Repository;
 
 use App\Entity;
-use App\LoanProduct;
 use App\Member;
+use App\Parameter;
+use App\LoanProduct;
 
 class LoanManagement
 {
-
 	/**
      * Display Entity in key/value pair 
      *
@@ -31,7 +30,6 @@ class LoanManagement
 		return $entity;
 	}
 	
-	
 	/**
      * Display Loan Products in key/value pair 
      *
@@ -39,7 +37,8 @@ class LoanManagement
      */
 	public function loanProducts()
 	{
-		$loanProductRaw = LoanProduct::orderBy('name')
+		$loanProductRaw = LoanProduct::select(['id', 'name'])
+			->orderBy('name')
 			->where('entity_id', session('entity_id'))
 			->where('type', 'loan')
 			->get()
@@ -54,6 +53,31 @@ class LoanManagement
 		$loanProducts[''] = 'Select Loan Type';
 			
 		return $loanProducts;
+	}
+
+	/**
+     * Display balance Product in key/value pair 
+     *
+     * @return array
+     */
+	public function balanceProducts()
+	{
+		$balanceProductRaw = LoanProduct::select(['id', 'name'])
+			->orderBy('name')
+			->where('entity_id', session('entity_id'))
+			->where('type', 'balance')
+			->get()
+			->keyBy('id');
+		
+		$balanceProducts = collect($balanceProductRaw)
+			->map(function($balanceProductRaw) {
+				return $balanceProductRaw->name;
+			})
+			->toArray();
+			
+		$balanceProducts[''] = 'Select Balances Type';
+			
+		return $balanceProducts;
 	}
 	
 	/**

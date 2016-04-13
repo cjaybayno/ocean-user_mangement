@@ -125,10 +125,16 @@ class LoanPaymentsController extends Controller
 		
 		Log::info('View loan payments form: ', ['session' => session()->all()]);
 	
+		/* === get payment type === */
+		$payementType = $this->loanRepo->loanProducts() + $this->loanRepo->balanceProducts();
+	
+		/* === set default payment type === */
+		$payementType[''] = 'Select Payment Type';
+	
         return view('modules/loans/payments.form')->with([
 			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
-			'loanTypes'	   => $this->loanRepo->loanProducts(),
+			'loanTypes'	   => $payementType,
 		]);
     }
 	
@@ -138,40 +144,75 @@ class LoanPaymentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getPaginatePaymentForm(Request $request)
-    {
-		$loanApplications = DB::table('view_loan_applications')
-		->where('entity_id', session('entity_id'))
-		->where('fully_paid', false)
-		->where('loan_product_id', $request->loan_product_id)
-		->select([
-			'member_name', 
-			'id',
-			'outstanding_balance',
-			'amortization',
-		]);
-			
-		return Datatables::of($loanApplications)
-				->addColumn('paymentAmountInput', function ($loanApplications) {
-					return view('modules/loans/payments/datatables.paymentAmountInput', [
-								'encryptID' => Crypt::encrypt($loanApplications->id),
-								'minAmount' => $loanApplications->amortization,
-								'maxAmount' => $loanApplications->outstanding_balance,
-							])->render();
-				})
-				->addColumn('paymentORInput',  function ($loanApplications) {
-					return view('modules/loans/payments/datatables.paymentORInput', [
-								'encryptID' => Crypt::encrypt($loanApplications->id),
-							])->render();
-				})
-				->addColumn('paymentAction', function ($loanApplications) {
-					return view('modules/loans/payments/datatables.paymentAction', [
-								'encryptID' => Crypt::encrypt($loanApplications->id)
-							])->render();
-				})
-				->removeColumn('id')
-				->removeColumn('outstanding_balance')
-				->removeColumn('amortization')
-				->make();
+    {	
+		$productType = LoanProduct::select('type')->find($request->loan_product_id);
+		
+		if (isset($productType->type)) {
+			switch ($productType->type) {
+				case 'loan' :
+					$loanPayments = DB::table('view_loan_applications')
+					->where('entity_id', session('entity_id'))
+					->where('fully_paid', false)
+					->where('loan_product_id', $request->loan_product_id)
+					->select([
+						'member_name', 
+						'id',
+						'outstanding_balance',
+						'amortization',
+					]);
+						
+					return Datatables::of($loanPayments)
+							->addColumn('paymentAmountInput', function ($loanPayments) {
+								return view('modules/loans/payments/datatables.paymentAmountInput', [
+											'encryptID' => Crypt::encrypt($loanPayments->id),
+											'minAmount' => $loanPayments->amortization,
+											'maxAmount' => $loanPayments->outstanding_balance,
+										])->render();
+							})
+							->addColumn('paymentORInput',  function ($loanPayments) {
+								return view('modules/loans/payments/datatables.paymentORInput', [
+											'encryptID' => Crypt::encrypt($loanPayments->id),
+										])->render();
+							})
+							->addColumn('paymentAction', function ($loanPayments) {
+								return view('modules/loans/payments/datatables.paymentAction', [
+											'encryptID' => Crypt::encrypt($loanPayments->id)
+										])->render();
+							})
+							->removeColumn('id')
+							->removeColumn('outstanding_balance')
+							->removeColumn('amortization')
+							->make();
+					break;
+				
+				case 'balance' :
+					$loanPayments = DB::table('view_members')
+					->where('entity_id', session('entity_id'))
+					->select('member_name', 'id');
+						
+					return Datatables::of($loanPayments)
+							->addColumn('paymentAmountInput', function ($loanPayments) {
+								return view('modules/loans/payments/datatables.paymentAmountInput', [
+											'encryptID' => Crypt::encrypt($loanPayments->id),
+											'minAmount' => '1000',
+											'maxAmount' => '20000',
+										])->render();
+							})
+							->addColumn('paymentORInput',  function ($loanPayments) {
+								return view('modules/loans/payments/datatables.paymentORInput', [
+											'encryptID' => Crypt::encrypt($loanPayments->id),
+										])->render();
+							})
+							->addColumn('paymentAction', function ($loanPayments) {
+								return view('modules/loans/payments/datatables.paymentAction', [
+											'encryptID' => Crypt::encrypt($loanPayments->id)
+										])->render();
+							})
+							->removeColumn('id')
+							->make();
+					break;
+			}
+		}
 	}
 	
 	/**
