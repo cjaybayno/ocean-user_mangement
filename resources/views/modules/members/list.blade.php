@@ -20,9 +20,7 @@
 				<table id="member-list"  class="table table-striped responsive-utilities jambo_table" cellspacing="0" width="100%">
                     <thead>
 						 <tr class="headings">
-							<th>First Name</th>
-							<th>Middle Name</th>
-							<th>Last Name</th>
+							<th>Members Name</th>
 							<th>Contact Number</th>
 							<th>Email Address</th>
 							<th>Action</th>

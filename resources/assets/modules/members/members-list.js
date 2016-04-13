@@ -16,8 +16,6 @@
 	function dataTables() {
 		$('#member-list').DataTable({
 			columns : [
-				{"searchable" : true}, 
-				{"searchable" : true},
 				{"searchable" : true},
 				{"searchable" : false},
 				{"searchable" : false},

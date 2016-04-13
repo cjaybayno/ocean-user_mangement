@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Members;
 
 use Illuminate\Http\Request;
 
+use DB;
 use Log;
 use Crypt;
 use Datatables;
@@ -79,14 +80,13 @@ class MembersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getPaginate(Request $request)
-    {
-		$members = Member::select([
-			'first_name',
-			'middle_name',
-			'last_name',
+    {	
+		$members = DB::table('view_members')
+		->select([
+			'member_name', 
 			'contact_number',
 			'email_address',
-			'id',
+			'id'
 		])
 		->where('entity_id', session('entity_id'));
 			
