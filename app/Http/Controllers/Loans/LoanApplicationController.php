@@ -372,7 +372,7 @@ class LoanApplicationController extends Controller
 		$loan->entity_id	    	= session('entity_id');
 		$loan->save();
 		
-		$this->saveCapitalBalance($loan->id, $request->capital_build_up);
+		$this->saveCapitalBalance($loan->member_id, $request->capital_build_up);
 		
 		Log::info('Create application : ', [
 			'table'	=> [
