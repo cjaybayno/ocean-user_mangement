@@ -35,7 +35,7 @@
 						</div>
 					</div>
 					<br>
-					<table id="loan-payments-make-table"  class="table table-striped responsive-utilities jambo_table" cellspacing="0" width="100%">
+					<table id="loan-payments-make-table"  class="table table-striped responsive-utilities jambo_table" cellspacing="0" width="100%" style="display:none">
 						<thead>
 							 <tr class="headings">
 								<th>Member Name</th>

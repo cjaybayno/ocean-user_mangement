@@ -14,7 +14,6 @@
 		disabledEnterKey();
 		$('.select2').select2();
 		onChangeLoanTypeHandler();
-		dataTables();
 		validateOr();
 		formSubmit();
 	}
@@ -29,19 +28,31 @@
 	
 	function onChangeLoanTypeHandler() {
 		$("#loan_type").change(function() {
-			$.ajax({
-				url: url+'/loan/payments/get-loan-type-name',
-				data: {loan_product_id : $(this).val()},
-				dataType: 'json',
-				success: function(loanProductName) {
-					$("#header-title").empty().text(loanProductName);
-					 table.ajax.reload();
-				}
-			});
+			var paymentTableSelector = $("#loan-payments-make-table");
+			var payBtnSelector 		   = $(".btn-submit-field");
+			if ($(this).val() != '') {
+				paymentTableSelector.show(); 
+				dataTables();
+				$.ajax({
+					url: url+'/loan/payments/get-loan-type-name',
+					data: {loan_product_id : $(this).val()},
+					dataType: 'json',
+					success: function(loanProductName) {
+						$("#header-title").empty().text(loanProductName);
+						 table.ajax.reload();
+					}
+				});
+			} else {
+				paymentTableSelector.hide();
+				payBtnSelector.hide();
+				table.destroy();
+			}
+			
 		});
 	}
 	
 	function dataTables() {
+		$.fn.dataTableExt.sErrMode = 'throw';
 		table = $('#loan-payments-make-table').DataTable({
 			columns : [
 				{"searchable" : true},
@@ -55,6 +66,7 @@
 			responsive: true,
 			processing: true,
 			serverSide: true,
+			bRetrieve : true,
 			ajax: {
 				url: url+'/loan/payments/paginate-payment-form',
 				data : function (d) {
