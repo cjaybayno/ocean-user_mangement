@@ -4,6 +4,7 @@
 @section('addScripts')
 <script> 
 	var ValidateCurrentAppMessage   = "{{ trans('loans.ValidateCurrentApplication')}}"; 
+	var ValidateRenewalAppMessage   = "{{ trans('loans.ValidateRenewalApplication')}}"; 
 	var ValidateLoanAmountMessage   = "{{ trans('loans.validateLoanAmount') }}";
 	var applicationTypeValueNew 	= "{{ config('loans.applicationType.new') }}";
 	var applicationTypeValueRenewal = "{{ config('loans.applicationType.renewal') }}";
@@ -29,6 +30,8 @@
 				<div id="loan-application-creation-result"></div>
 				
 				<form id="loan-application-create-form" class="form-horizontal form-label-left">
+					<input type="text" name="renewal_application_id" id="renewal_application_id">
+
 					<p class="well well-sm">Fill-out the following information to create an application/renewal per member</p>
 					
 					<div class="form-group">

@@ -27,6 +27,7 @@ return [
 	'validateMemberId' 	 		 => 'Member ID not exist',
 	'validateLoanAmount' 		 => 'Loan amount exceed',
 	'ValidateCurrentApplication' => 'This Member has current application for this Loan Type',
+	'ValidateRenewalApplication' => 'This Member has not applied to this Loan Type',
 	'successLoanApplication'	 => 'Success Application!, Greate we have our new application',
 	
 	/* === Loan Payment === */

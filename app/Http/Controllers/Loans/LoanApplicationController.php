@@ -40,11 +40,11 @@ class LoanApplicationController extends Controller
 	{
 		$this->loanRepo = $LoanRepository;
 		
-		$this->middleware('ajax.request', ['except' => [
-            'getForm',
-            'getIndex',
-            'getShow',
-        ]]);
+		// $this->middleware('ajax.request', ['except' => [
+            // 'getForm',
+            // 'getIndex',
+            // 'getShow',
+        // ]]);
 	}
 	
 	/**
@@ -201,21 +201,29 @@ class LoanApplicationController extends Controller
 	}
 	
 	/**
-     * Validate current application
+     * Validate application type
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-	public function getValidateCurrentApplication(Request $request) 
+	public function getValidateApplicationType(Request $request)
 	{
-		$loanCount = LoanApplication::where([
+		$loanCount = LoanApplication::select('id')->where([
 			'member_id' 	  => $request->member_id,
 			'loan_product_id' => $request->loan_type,
 		])->count();
 		
-		/* === if has current application to this loan product, not allowed === */
-		if ($loanCount > 0) return abort(404);
+		if ($request->application_type == config('loans.applicationType.new')) {
+			/* === if has current application to this loan product, not allowed === */
+			if ($loanCount > 0) return abort(404);
+		}
+		
+		if ($request->application_type == config('loans.applicationType.renewal')) {
+			/* === if has current application to this loan product, allowed === */
+			if ($loanCount <= 0) return abort(404);
+		}
 	}
+	
 	
 	/**
      * Validate loam amount
@@ -229,6 +237,29 @@ class LoanApplicationController extends Controller
 		
 		/* === if loan_amount is higher than principal, not allowed === */
 		if ((int)$request->loan_amount > $loanProduct['principal']) return abort(404);
+	}
+	
+	/**
+     * Get Application Id (user for renewal)
+     *
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function getGetApplicationId(Request $request)
+	{
+		if ($request->application_type == config('loans.applicationType.renewal')) {
+			$loanApplication = LoanApplication::select('id')->where([
+				'member_id' 	  => $request->member_id,
+				'loan_product_id' => $request->loan_product_id,
+			]);
+			
+			if ($loanApplication->count() > 0) {
+				return response()->json($loanApplication->first()->id);
+			}
+		}
+		
+		return response()->json(0);
 	}
 	
 	/**
@@ -345,6 +376,19 @@ class LoanApplicationController extends Controller
 		
 		/* === loan product term * amortization === */
 		return response()->json($loanProduct['term'] * $mortization);
+	}
+	
+	/** 
+	 * Get Renewal Application Outstanding Balance
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function getCalRenewalApplicationOutstandingBalance(Request $request)
+	{	
+		$loanApplication = LoanApplication::select('outstanding_balance')->find($request->loan_application_id);
+				
+		return response()->json($loanApplication['outstanding_balance']);
 	}
 	
 	/**

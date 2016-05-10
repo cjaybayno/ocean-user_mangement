@@ -2,6 +2,7 @@
  *  Initialize Pages
  * ======================================================================== */
 	var formNAme = '#loan-application-create-form';
+	var applicationId;
 	$(initialPages);
 
 /* ========================================================================
@@ -62,6 +63,10 @@
 			if (! $("#loan_type").parsley().isValid()) {
 				$(formNAme).parsley().reset();
 			}
+			
+			var loanTypeSelector = $("#loan_type");
+			loanTypeSelector.attr('data-parsley-remote', '');
+			loanTypeSelector.attr('data-parsley-remote-validator', '');
 		});
 	}
 	
@@ -98,6 +103,7 @@
 			if (! loanTypeSelector.parsley().isValid()) {
 				$(formNAme).parsley().reset();
 			}
+			getApplicationId();
 			getPrincipalLoanAmount();
 			calculateAdvanceInterest();
 		});
@@ -128,6 +134,21 @@
 					$("#outstanding_balance").val(addTwoZero(outstandingBalance));
 				}
 			});
+		});
+	}
+	
+	function getApplicationId() {
+		$.ajax({
+			url: url+'/loan/application/get-application-id',
+			dataType: 'json',
+			data: { 
+					member_id		 : $('#member_name').val(),
+					application_type : $('input[name=application_type]:checked').val(),
+					loan_product_id  : $('#loan_type').val()
+			},
+			success: function(applicationId) {
+				$("#renewal_application_id").val(applicationId);
+			}
 		});
 	}
 	
@@ -199,7 +220,12 @@
 			},
 			success: function(netProceeds) {
 				$("#net_proceeds").val(addTwoZero(netProceeds));
-				calculateNewApplicationOutstandingBalance();
+				if ($('input[name=application_type]:checked').val() == applicationTypeValueNew) {
+					calculateNewApplicationOutstandingBalance();
+				}
+				if ($('input[name=application_type]:checked').val() == applicationTypeValueRenewal) {
+					calculateRenewalApplicationOutstandingBalance();
+				}
 			}
 		});
 	}
@@ -209,6 +235,18 @@
 			url: url+'/loan/application/cal-new-application-outstanding-balance',
 			dataType: 'json',
 			data: { loan_product_id : $("#loan_type").val() },
+			success: function(outstandingBalance) {
+				$("#outstanding_balance").val(addTwoZero(outstandingBalance));
+				getMonthlyAmortization();
+			}
+		});
+	}
+	
+	function calculateRenewalApplicationOutstandingBalance() {
+		$.ajax({
+			url: url+'/loan/application/cal-renewal-application-outstanding-balance',
+			dataType: 'json',
+			data: { loan_application_id : $("#renewal_application_id").val() },
 			success: function(outstandingBalance) {
 				$("#outstanding_balance").val(addTwoZero(outstandingBalance));
 				getMonthlyAmortization();
@@ -259,7 +297,7 @@
 	
 	function formValidation() {
 		validateLoanAmount();
-		validateCurrentApplication();
+		validateApplicationType();
 		$(formNAme).parsley().validate();
 		return $(formNAme).parsley().isValid();
 	}
@@ -281,20 +319,26 @@
 		}
 	}
 	
-	function validateCurrentApplication() {
+	function validateApplicationType() {
+		var validateApplicationTypeMessage;
 		if ($('input[name=application_type]:checked').val() == applicationTypeValueNew) {
-			var loanTypeSelector = $("#loan_type");
-			loanTypeSelector.attr('data-parsley-remote', '');
-			loanTypeSelector.attr('data-parsley-remote-validator', 'validateCurrentApplication');
-			loanTypeSelector.attr('data-parsley-remote-message', ValidateCurrentAppMessage);
-			/* === validate loan type current application === */
-			window.Parsley.addAsyncValidator('validateCurrentApplication', function (xhr) {
-				return xhr.status !== 404;
-			}, url+'/loan/application/validate-current-application', {
-					"dataType" : "jsonp", 
-					"data": 
-						{ "member_id": $('#member_name').val() }
-				}
-			);
+			validateApplicationTypeMessage = ValidateCurrentAppMessage;
 		}
+		if ($('input[name=application_type]:checked').val() == applicationTypeValueRenewal) {
+			validateApplicationTypeMessage = ValidateRenewalAppMessage;
+		}
+		var loanTypeSelector = $("#loan_type");
+		loanTypeSelector.attr('data-parsley-remote', '');
+		loanTypeSelector.attr('data-parsley-remote-validator', 'validateApplicationType');
+		loanTypeSelector.attr('data-parsley-remote-message', validateApplicationTypeMessage);
+		window.Parsley.addAsyncValidator('validateApplicationType', function (xhr) {
+			return xhr.status !== 404;
+			}, url+'/loan/application/validate-application-type', {
+				"dataType" : "jsonp", 
+				"data": {
+						"member_id"		  : $('#member_name').val(),
+						"application_type": $('input[name=application_type]:checked').val(),
+				}
+			}
+		);
 	}
