@@ -2,7 +2,7 @@
  *  Initialize Pages
  * ======================================================================== */
 	var formNAme = '#loan-application-create-form';
-	var applicationId;
+	var loanTypeCheckedValue = false;
 	$(initialPages);
 
 /* ========================================================================
@@ -87,6 +87,8 @@
 			loanTypeSelector.attr('data-parsley-remote', '');
 			loanTypeSelector.attr('data-parsley-remote-validator', '');
 			
+			loanTypeCheckedValue = $(this).val();
+			
 			if (loanTypeSelector.val() != '') {
 				autoCalculateProcess();
 			}
@@ -147,12 +149,18 @@
 	}
 	
 	function getApplicationId() {
+		if (loanTypeCheckedValue != false) {
+			applicationType = loanTypeCheckedValue;
+		} else {
+			applicationType = $('input[name=application_type]:checked').val();
+		}
+		
 		$.ajax({
 			url: url+'/loan/application/get-application-id',
 			dataType: 'json',
 			data: { 
 					member_id		 : $('#member_name').val(),
-					application_type : $('input[name=application_type]:checked').val(),
+					application_type : applicationType,
 					loan_product_id  : $('#loan_type').val()
 			},
 			success: function(applicationId) {
@@ -199,12 +207,23 @@
 			},
 			success: function(processingFee) {
 				$("#processing_fee").val(addTwoZero(processingFee));
-				if ($('input[name=application_type]:checked').val() == applicationTypeValueNew) {
-					calculateNewApplicationOutstandingBalance();
-				}
-				if ($('input[name=application_type]:checked').val() == applicationTypeValueRenewal) {
-					calculateRenewalApplicationOutstandingBalance();
-				}
+				calculateOutstandingBalance();
+			}
+		});
+	}
+	
+	function calculateOutstandingBalance() {
+		$.ajax({
+			url: url+'/loan/application/cal-outstanding-balance',
+			dataType: 'json',
+			data: { 
+				loan_product_id     : $("#loan_type").val(),
+				loan_application_id : $("#renewal_application_id").val(),
+				application_type    : $('input[name=application_type]:checked').val(),
+			},
+			success: function(outstandingBalance) {
+				$("#outstanding_balance").val(addTwoZero(outstandingBalance));
+				calculateTotalDeduction();
 			}
 		});
 	}

@@ -335,7 +335,7 @@ class LoanApplicationController extends Controller
      * @return \Illuminate\Http\Response
      */
 	public function getCalTotalDeduction(Request $request) 
-	{	
+	{
 		/* ===  (Advance Interest) + (Processing Fee) + (Capital Build-Up) === */
 		$totalDeduction = ($request->advance_interest + $request->processing_fee + $request->capital_build_up);
 		return response()->json($totalDeduction);
@@ -386,6 +386,28 @@ class LoanApplicationController extends Controller
 		$loanApplication = LoanApplication::select('outstanding_balance')->find($request->loan_application_id);
 				
 		return response()->json($loanApplication['outstanding_balance']);
+	}
+	
+	/** 
+	 * Get Outstanding Balance
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function getCalOutstandingBalance(Request $request)
+	{
+		if ($request->application_type == config('loans.applicationType.new')) {
+			/* === get balance from loan product principal amount  === */
+			$loanProduct = LoanProduct::select('principal')->find($request->loan_product_id);
+			return response()->json($loanProduct['principal']);
+			
+		}
+		
+		if ($request->application_type == config('loans.applicationType.renewal')) {
+			/* === get balance from current loan application === */
+			$loanApplication = LoanApplication::select('outstanding_balance')->find($request->loan_application_id);
+			return response()->json($loanApplication['outstanding_balance']);
+		}
 	}
 	
 	/**
