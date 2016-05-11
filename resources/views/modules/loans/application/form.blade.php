@@ -30,7 +30,7 @@
 				<div id="loan-application-creation-result"></div>
 				
 				<form id="loan-application-create-form" class="form-horizontal form-label-left">
-					<input type="text" name="renewal_application_id" id="renewal_application_id">
+					<input type="hidden" name="renewal_application_id" id="renewal_application_id">
 
 					<p class="well well-sm">Fill-out the following information to create an application/renewal per member</p>
 					
@@ -127,7 +127,7 @@
 					</div>
 					
 					<div class="form-group">
-						<p class="control-label col-md-3 col-sm-3 col-xs-12">Outstanding Balance</p>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Outstanding Balance</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="text" name="outstanding_balance" id="outstanding_balance" class="form-control col-md-7 col-xs-12"  placeholder ="0.00"
 								required

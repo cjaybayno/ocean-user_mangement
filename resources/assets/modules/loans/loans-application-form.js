@@ -51,25 +51,6 @@
 		});
 	}
 	
-	function onClickApplicationTypeHandler() {
-		$("input[name=application_type]").on('ifClicked', function(event) {
-			var appTypeValue = $(this).val();
-			if (appTypeValue == applicationTypeValueRenewal) {
-				$("#rebate_field").show();
-			}
-			if (appTypeValue == applicationTypeValueNew) {
-				$("#rebate_field").hide();
-			}
-			if (! $("#loan_type").parsley().isValid()) {
-				$(formNAme).parsley().reset();
-			}
-			
-			var loanTypeSelector = $("#loan_type");
-			loanTypeSelector.attr('data-parsley-remote', '');
-			loanTypeSelector.attr('data-parsley-remote-validator', '');
-		});
-	}
-	
 	function onKeyupMemberIdHandler() {
 		$('#member_last_name').keyup(function() {
 			memberNameSelector = $("#member_name");
@@ -89,8 +70,33 @@
 		});
 	}
 	
+	function onClickApplicationTypeHandler() {
+		$("input[name=application_type]").on('ifClicked', function(event) {
+			var appTypeValue = $(this).val();
+			if (appTypeValue == applicationTypeValueRenewal) {
+				$("#rebate_field").show();
+			}
+			if (appTypeValue == applicationTypeValueNew) {
+				$("#rebate_field").hide();
+			}
+			if (! $("#loan_type").parsley().isValid()) {
+				$(formNAme).parsley().reset();
+			}
+			
+			var loanTypeSelector = $("#loan_type");
+			loanTypeSelector.attr('data-parsley-remote', '');
+			loanTypeSelector.attr('data-parsley-remote-validator', '');
+			
+			if (loanTypeSelector.val() != '') {
+				autoCalculateProcess();
+			}
+			
+		});
+	}
+	
 	function onChangeLoanTypeHandler() {
 		$("#loan_type").change(function() {
+			$(formNAme).parsley().reset();
 			var loanTypeSelector = $("#loan_amount");
 			if ($(this).val() != '') {
 				loanTypeSelector.removeAttr('disabled');
@@ -103,9 +109,7 @@
 			if (! loanTypeSelector.parsley().isValid()) {
 				$(formNAme).parsley().reset();
 			}
-			getApplicationId();
-			getPrincipalLoanAmount();
-			calculateAdvanceInterest();
+			autoCalculateProcess();
 		});
 	}
 	
@@ -137,6 +141,11 @@
 		});
 	}
 	
+	function autoCalculateProcess() {
+		loadingModal('show','Please wait, auto compute in process....');
+		getApplicationId();
+	}
+	
 	function getApplicationId() {
 		$.ajax({
 			url: url+'/loan/application/get-application-id',
@@ -148,6 +157,7 @@
 			},
 			success: function(applicationId) {
 				$("#renewal_application_id").val(applicationId);
+				getPrincipalLoanAmount();
 			}
 		});
 	}
@@ -159,6 +169,7 @@
 			data: { loan_product_id : $("#loan_type").val() },
 			success: function(principalAmount) {
 				$("#loan_amount").val(addTwoZero(principalAmount));
+				calculateAdvanceInterest();
 			}
 		});
 	}
@@ -188,6 +199,35 @@
 			},
 			success: function(processingFee) {
 				$("#processing_fee").val(addTwoZero(processingFee));
+				if ($('input[name=application_type]:checked').val() == applicationTypeValueNew) {
+					calculateNewApplicationOutstandingBalance();
+				}
+				if ($('input[name=application_type]:checked').val() == applicationTypeValueRenewal) {
+					calculateRenewalApplicationOutstandingBalance();
+				}
+			}
+		});
+	}
+	
+	function calculateNewApplicationOutstandingBalance() {
+		$.ajax({
+			url: url+'/loan/application/cal-new-application-outstanding-balance',
+			dataType: 'json',
+			data: { loan_product_id : $("#loan_type").val() },
+			success: function(outstandingBalance) {
+				$("#outstanding_balance").val(addTwoZero(outstandingBalance));
+				calculateTotalDeduction();
+			}
+		});
+	}
+	
+	function calculateRenewalApplicationOutstandingBalance() {
+		$.ajax({
+			url: url+'/loan/application/cal-renewal-application-outstanding-balance',
+			dataType: 'json',
+			data: { loan_application_id : $("#renewal_application_id").val() },
+			success: function(outstandingBalance) {
+				$("#outstanding_balance").val(addTwoZero(outstandingBalance));
 				calculateTotalDeduction();
 			}
 		});
@@ -220,35 +260,6 @@
 			},
 			success: function(netProceeds) {
 				$("#net_proceeds").val(addTwoZero(netProceeds));
-				if ($('input[name=application_type]:checked').val() == applicationTypeValueNew) {
-					calculateNewApplicationOutstandingBalance();
-				}
-				if ($('input[name=application_type]:checked').val() == applicationTypeValueRenewal) {
-					calculateRenewalApplicationOutstandingBalance();
-				}
-			}
-		});
-	}
-	
-	function calculateNewApplicationOutstandingBalance() {
-		$.ajax({
-			url: url+'/loan/application/cal-new-application-outstanding-balance',
-			dataType: 'json',
-			data: { loan_product_id : $("#loan_type").val() },
-			success: function(outstandingBalance) {
-				$("#outstanding_balance").val(addTwoZero(outstandingBalance));
-				getMonthlyAmortization();
-			}
-		});
-	}
-	
-	function calculateRenewalApplicationOutstandingBalance() {
-		$.ajax({
-			url: url+'/loan/application/cal-renewal-application-outstanding-balance',
-			dataType: 'json',
-			data: { loan_application_id : $("#renewal_application_id").val() },
-			success: function(outstandingBalance) {
-				$("#outstanding_balance").val(addTwoZero(outstandingBalance));
 				getMonthlyAmortization();
 			}
 		});
@@ -261,6 +272,7 @@
 			data: { loan_product_id : $("#loan_type").val() },
 			success: function(amortization) {
 				$("#monthly_amortization").val(addTwoZero(amortization));
+				loadingModal('close');
 			}
 		});
 	}
