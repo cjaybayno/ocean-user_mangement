@@ -370,12 +370,9 @@ class LoanApplicationController extends Controller
      */
 	public function getCalNewApplicationOutstandingBalance(Request $request)
 	{	
-		$loanProduct = LoanProduct::select('term', 'amortization')->find($request->loan_product_id);
+		$loanProduct = LoanProduct::select('principal')->find($request->loan_product_id);
 		
-		$mortization = ($request->amortization) ? $request->amortization : $loanProduct['amortization'];
-		
-		/* === loan product term * amortization === */
-		return response()->json($loanProduct['term'] * $mortization);
+		return response()->json($loanProduct['principal']);
 	}
 	
 	/** 
