@@ -41,6 +41,10 @@
 		  text-align: left;
 		  vertical-align: middle;
 		}
+		
+		input.redBackground {
+			color: red;
+		}
     </style>
 	
 	<!-- Additional Stylesheet -->

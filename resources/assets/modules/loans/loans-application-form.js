@@ -11,6 +11,7 @@
  
 	/* ==== function to init this page === */
 	function initialPages($) {
+		numberFormat();
 		disabledEnterKey();
 		$('.select2').select2();
 		datePicker('#applied_date');
@@ -25,6 +26,10 @@
 		onBlurCapitalBuiildUpHandler();
 		onBlurAmortizationHandler();
 		formSubmit();
+	}
+	
+	function numberFormat() {
+		$('.number-format').number(true, 2);
 	}
 	
 	function disabledEnterKey() {
@@ -240,6 +245,7 @@
 			},
 			success: function(totalDeduction) {
 				$("#total_deduction").val(addTwoZero(totalDeduction));
+				$("#total_deduction").toggleClass('redBackground', $("#total_deduction").val() < 0);
 				calculateNetProceeds();
 			}
 		});
@@ -261,6 +267,8 @@
 	}
 	
 	function getMonthlyAmortization() {
+		
+		console.log( $('#loan_amount').val() );
 		$.ajax({
 			url: url+'/loan/application/get-amortization',
 			dataType: 'json',

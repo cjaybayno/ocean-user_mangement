@@ -61,6 +61,7 @@ class LoanApplicationController extends Controller
 				'/assets/gentellela-alela/js/icheck/icheck.min.js',
 				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
+				'/assets/gentellela-alela/js/jquery.number.min.js',
 				'/assets/modules/loans/loans-application-form.js',
 			],
 			'stylesheets' => [
