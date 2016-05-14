@@ -208,22 +208,33 @@ class LoanApplicationController extends Controller
      */
 	public function getValidateApplicationType(Request $request)
 	{
-		$loanCount = LoanApplication::select('id')->where([
+		$loanApplication = LoanApplication::select('id', 'num_made_payments')->where([
 			'member_id' 	  => $request->member_id,
 			'loan_product_id' => $request->loan_type,
-		])->count();
+		]);
 		
 		if ($request->application_type == config('loans.applicationType.new')) {
 			/* === if has current application to this loan product, not allowed === */
-			if ($loanCount > 0) return abort(404);
+			if ($loanApplication->count() > 0) return abort(404);
 		}
 		
 		if ($request->application_type == config('loans.applicationType.renewal')) {
 			/* === if has current application to this loan product, allowed === */
-			if ($loanCount <= 0) return abort(404);
+			if ($loanApplication->count() <= 0) {
+				return abort(404);
+			} else {
+				/* === get loan application num of months paid === */
+				$numMadePayments = $loanApplication->first()->num_made_payments;
+				
+				/* === get loan product params: renewal_month === */
+				$loanProduct  = LoanProduct::select('params')->find($request->loan_type);
+				$renewalMonth = json_decode($loanProduct->params, TRUE)['renewal_month'];
+			
+				/* === not allowed to renew, reason: allowed month of renewal exceeded === */
+				if ($numMadePayments > 2 /*$renewalMonth*/) return abort(404);
+			}
 		}
 	}
-	
 	
 	/**
      * Validate loam amount
@@ -360,32 +371,6 @@ class LoanApplicationController extends Controller
 		}
 		
 		return response()->json($amortization);
-	}
-	
-	/** 
-	 * Get New Application Outstanding Balance
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-	public function getCalNewApplicationOutstandingBalance(Request $request)
-	{	
-		$loanProduct = LoanProduct::select('principal')->find($request->loan_product_id);
-		
-		return response()->json($loanProduct['principal']);
-	}
-	
-	/** 
-	 * Get Renewal Application Outstanding Balance
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-	public function getCalRenewalApplicationOutstandingBalance(Request $request)
-	{	
-		$loanApplication = LoanApplication::select('outstanding_balance')->find($request->loan_application_id);
-				
-		return response()->json($loanApplication['outstanding_balance']);
 	}
 	
 	/** 

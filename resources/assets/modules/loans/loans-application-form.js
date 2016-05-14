@@ -228,31 +228,6 @@
 		});
 	}
 	
-	function calculateNewApplicationOutstandingBalance() {
-		$.ajax({
-			url: url+'/loan/application/cal-new-application-outstanding-balance',
-			dataType: 'json',
-			data: { loan_product_id : $("#loan_type").val() },
-			success: function(outstandingBalance) {
-				$("#outstanding_balance").val(addTwoZero(outstandingBalance));
-				calculateTotalDeduction();
-			}
-		});
-	}
-	
-	function calculateRenewalApplicationOutstandingBalance() {
-		$.ajax({
-			url: url+'/loan/application/cal-renewal-application-outstanding-balance',
-			dataType: 'json',
-			data: { loan_application_id : $("#renewal_application_id").val() },
-			success: function(outstandingBalance) {
-				$("#outstanding_balance").val(addTwoZero(outstandingBalance));
-				calculateTotalDeduction();
-			}
-		});
-	}
-	
-	
 	function calculateTotalDeduction() {
 		$.ajax({
 			url: url+'/loan/application/cal-total-deduction',
