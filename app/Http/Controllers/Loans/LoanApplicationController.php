@@ -347,8 +347,18 @@ class LoanApplicationController extends Controller
      */
 	public function getCalTotalDeduction(Request $request) 
 	{
-		/* ===  (Advance Interest) + (Processing Fee) + (Capital Build-Up) === */
-		$totalDeduction = ($request->advance_interest + $request->processing_fee + $request->capital_build_up);
+		$totalDeduction = 0;
+		
+		if ($request->application_type == config('loans.applicationType.new')) {
+			/* ===  (Advance Interest) + (Processing Fee) + (Capital Build-Up) === */			
+			$totalDeduction = ($request->advance_interest + $request->processing_fee + $request->capital_build_up);
+		}
+		
+		if ($request->application_type == config('loans.applicationType.renewal')) {
+			/* ===  (Advance Interest) + (Processing Fee) + (Capital Build-Up) * -1 === */			
+			$totalDeduction = ($request->advance_interest + $request->processing_fee + $request->capital_build_up) * -1;
+		}
+		
 		return response()->json($totalDeduction);
 	}
 	

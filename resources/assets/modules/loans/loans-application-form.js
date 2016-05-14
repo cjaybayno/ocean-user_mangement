@@ -235,7 +235,8 @@
 			data: {
 				advance_interest : $("#advance_interest").val(),
 				processing_fee   : $("#processing_fee").val(),
-				capital_build_up  : $("#capital_build_up").val(),
+				capital_build_up : $("#capital_build_up").val(),
+				application_type : $('input[name=application_type]:checked').val(),
 			},
 			success: function(totalDeduction) {
 				$("#total_deduction").val(addTwoZero(totalDeduction));
