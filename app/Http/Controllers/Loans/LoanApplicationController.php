@@ -232,7 +232,7 @@ class LoanApplicationController extends Controller
 				$renewalMonth = json_decode($loanProduct->params, TRUE)['renewal_month'];
 			
 				/* === not allowed to renew, reason: allowed month of renewal exceeded === */
-				if ($numMadePayments > 2 /*$renewalMonth*/) return abort(404);
+				if ($numMadePayments > $renewalMonth) return abort(404);
 			}
 		}
 	}
@@ -328,19 +328,6 @@ class LoanApplicationController extends Controller
 	}
 	
 	/**
-     * Calculate Net Proceeds
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-	public function getCalNetProceeds(Request $request) 
-	{
-		/* === (Loan Amount) - (Total Deductions)  === */
-		$netProceeds = ($request->loan_amount - $request->total_deduction);
-		return response()->json($netProceeds);
-	}
-	
-	/**
      * Calculate Total deduction
      *
      * @param  \Illuminate\Http\Request  $request
@@ -361,6 +348,43 @@ class LoanApplicationController extends Controller
 		}
 		
 		return response()->json($totalDeduction);
+	}
+	
+	/**
+     * Calculate Rebate
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function getCalRebate(Request $request) 
+	{
+		/* === get loan product get params: rebate percentage, renewal_month === */
+		$loanProduct 		= LoanProduct::select('params')->find($request->loan_product_id);
+		$params      		= json_decode($loanProduct->params, TRUE);
+		$renewalMonth		= $params['renewal_month'];
+		//$rebatePercentage   = $params['rebate_percentage'];
+		
+		/* === get loan number months payment === */
+		$loanApplication = LoanApplication::select('num_made_payments')->find($request->renewal_application_id);
+		
+		/* === calculate rebate === */
+		//$loanAmount = ($request->loan_amount * $rebatePercentage);
+		$rebate     = ($request->advance_interest * $renewalMonth) / ($renewalMonth - $loanApplication->num_made_payments);
+		
+		return response()->json($rebate);
+	}
+	
+	/**
+     * Calculate Net Proceeds
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function getCalNetProceeds(Request $request) 
+	{
+		/* === (Loan Amount) - (Total Deductions)  === */
+		$netProceeds = ($request->loan_amount - $request->total_deduction);
+		return response()->json($netProceeds);
 	}
 	
 	/**

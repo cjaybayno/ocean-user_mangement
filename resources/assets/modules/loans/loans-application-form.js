@@ -246,6 +246,28 @@
 			success: function(totalDeduction) {
 				$("#total_deduction").val(addTwoZero(totalDeduction));
 				$("#total_deduction").toggleClass('redBackground', $("#total_deduction").val() < 0);
+				if ($('input[name=application_type]:checked').val() == applicationTypeValueNew) {
+					calculateNetProceeds();
+				}
+				if ($('input[name=application_type]:checked').val() == applicationTypeValueRenewal) {
+					calculateRebate();
+				}
+			}
+		});
+	}
+	
+	function calculateRebate() {
+		$.ajax({
+			url: url+'/loan/application/cal-rebate',
+			dataType: 'json',
+			data: {
+				advance_interest       : $("#advance_interest").val(),
+				loan_amount     	   : $("#loan_amount").val(),
+				renewal_application_id : $("#renewal_application_id").val(),
+				loan_product_id 	   : $("#loan_type").val(),
+			},
+			success: function(rebate) {
+				$("#rebate").val(addTwoZero(rebate));
 				calculateNetProceeds();
 			}
 		});
@@ -267,8 +289,6 @@
 	}
 	
 	function getMonthlyAmortization() {
-		
-		console.log( $('#loan_amount').val() );
 		$.ajax({
 			url: url+'/loan/application/get-amortization',
 			dataType: 'json',
