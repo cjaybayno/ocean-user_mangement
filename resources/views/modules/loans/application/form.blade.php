@@ -126,17 +126,6 @@
 						</div>
 					</div>
 					
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Outstanding Balance</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" name="outstanding_balance" id="outstanding_balance" class="form-control col-md-7 col-xs-12 number-format"  placeholder ="0.00"
-								required
-								data-parsley-required-message= "{{ trans('users.required') }}"
-								data-parsley-pattern="{{ config('loans.amountRegex') }}"
-								data-parsley-pattern-message="{{ trans('loans.amount') }}">
-						</div>
-					</div>
-					
 					<div class="form-group" id="rebate_field" style="display:none">
 						<p class="control-label col-md-3 col-sm-3 col-xs-12">Rebate</p>
 						<div class="col-md-6 col-sm-6 col-xs-12">
@@ -148,6 +137,18 @@
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Total Deductions</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="text" name="total_deduction" id="total_deduction" class="form-control col-md-7 col-xs-12 number-format" placeholder ="0.00" readonly>
+						</div>
+					</div>
+					
+					<br/>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Outstanding Balance</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input type="text" name="outstanding_balance" id="outstanding_balance" class="form-control col-md-7 col-xs-12 number-format"  placeholder ="0.00"
+								required
+								data-parsley-required-message= "{{ trans('users.required') }}"
+								data-parsley-pattern="{{ config('loans.amountRegex') }}"
+								data-parsley-pattern-message="{{ trans('loans.amount') }}">
 						</div>
 					</div>
 					

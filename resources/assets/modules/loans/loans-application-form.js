@@ -149,7 +149,7 @@
 	}
 	
 	function autoCalculateProcess() {
-		loadingModal('show','Please wait, auto compute in process....');
+		//loadingModal('show','Please wait, auto compute in process....');
 		getApplicationId();
 	}
 	
@@ -181,7 +181,7 @@
 			dataType: 'json',
 			data: { loan_product_id : $("#loan_type").val() },
 			success: function(principalAmount) {
-				$("#loan_amount").val(addTwoZero(principalAmount));
+				$("#loan_amount").val(principalAmount);
 				calculateAdvanceInterest();
 			}
 		});
@@ -196,7 +196,7 @@
 				loan_product_id : $("#loan_type").val()
 			},
 			success: function(advanceInterest) {
-				$("#advance_interest").val(addTwoZero(advanceInterest));
+				$("#advance_interest").val(advanceInterest);
 				calculateProcessingFee();
 			}
 		});
@@ -211,43 +211,9 @@
 				loan_product_id : $("#loan_type").val()
 			},
 			success: function(processingFee) {
-				$("#processing_fee").val(addTwoZero(processingFee));
-				calculateOutstandingBalance();
-			}
-		});
-	}
-	
-	function calculateOutstandingBalance() {
-		$.ajax({
-			url: url+'/loan/application/cal-outstanding-balance',
-			dataType: 'json',
-			data: { 
-				loan_product_id     : $("#loan_type").val(),
-				loan_application_id : $("#renewal_application_id").val(),
-				application_type    : $('input[name=application_type]:checked').val(),
-			},
-			success: function(outstandingBalance) {
-				$("#outstanding_balance").val(addTwoZero(outstandingBalance));
-				calculateTotalDeduction();
-			}
-		});
-	}
-	
-	function calculateTotalDeduction() {
-		$.ajax({
-			url: url+'/loan/application/cal-total-deduction',
-			dataType: 'json',
-			data: {
-				advance_interest : $("#advance_interest").val(),
-				processing_fee   : $("#processing_fee").val(),
-				capital_build_up : $("#capital_build_up").val(),
-				application_type : $('input[name=application_type]:checked').val(),
-			},
-			success: function(totalDeduction) {
-				$("#total_deduction").val(addTwoZero(totalDeduction));
-				$("#total_deduction").toggleClass('redBackground', $("#total_deduction").val() < 0);
+				$("#processing_fee").val(processingFee);
 				if ($('input[name=application_type]:checked').val() == applicationTypeValueNew) {
-					calculateNetProceeds();
+					calculateTotalDeduction();
 				}
 				if ($('input[name=application_type]:checked').val() == applicationTypeValueRenewal) {
 					calculateRebate();
@@ -267,7 +233,41 @@
 				loan_product_id 	   : $("#loan_type").val(),
 			},
 			success: function(rebate) {
-				$("#rebate").val(addTwoZero(rebate));
+				$("#rebate").val(rebate);
+				calculateTotalDeduction();
+			}
+		});
+	}
+	
+	function calculateTotalDeduction() {
+		$.ajax({
+			url: url+'/loan/application/cal-total-deduction',
+			dataType: 'json',
+			data: {
+				advance_interest : $("#advance_interest").val(),
+				processing_fee   : $("#processing_fee").val(),
+				capital_build_up : $("#capital_build_up").val(),
+				application_type : $('input[name=application_type]:checked').val(),
+			},
+			success: function(totalDeduction) {
+				$("#total_deduction").val(totalDeduction);
+				$("#total_deduction").toggleClass('redBackground', $("#total_deduction").val() < 0);
+				calculateOutstandingBalance();
+			}
+		});
+	}
+	
+	function calculateOutstandingBalance() {
+		$.ajax({
+			url: url+'/loan/application/cal-outstanding-balance',
+			dataType: 'json',
+			data: { 
+				loan_product_id     : $("#loan_type").val(),
+				loan_application_id : $("#renewal_application_id").val(),
+				application_type    : $('input[name=application_type]:checked').val(),
+			},
+			success: function(outstandingBalance) {
+				$("#outstanding_balance").val(outstandingBalance);
 				calculateNetProceeds();
 			}
 		});
@@ -282,7 +282,7 @@
 				total_deduction : $("#total_deduction").val(),
 			},
 			success: function(netProceeds) {
-				$("#net_proceeds").val(addTwoZero(netProceeds));
+				$("#net_proceeds").val(netProceeds);
 				getMonthlyAmortization();
 			}
 		});
@@ -294,7 +294,7 @@
 			dataType: 'json',
 			data: { loan_product_id : $("#loan_type").val() },
 			success: function(amortization) {
-				$("#monthly_amortization").val(addTwoZero(amortization));
+				$("#monthly_amortization").val(amortization);
 				loadingModal('close');
 			}
 		});
