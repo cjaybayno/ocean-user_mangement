@@ -369,7 +369,7 @@ class LoanApplicationController extends Controller
 		
 		/* === calculate rebate === */
 		//$loanAmount = ($request->loan_amount * $rebatePercentage);
-		$rebate     = ($request->advance_interest * $renewalMonth) / ($renewalMonth - $loanApplication->num_made_payments);
+		$rebate     = ($request->advance_interest / $renewalMonth) * ($renewalMonth - $loanApplication->num_made_payments);
 		
 		return response()->json($rebate);
 	}
@@ -382,8 +382,16 @@ class LoanApplicationController extends Controller
      */
 	public function getCalNetProceeds(Request $request) 
 	{
-		/* === (Loan Amount) - (Total Deductions)  === */
-		$netProceeds = ($request->loan_amount - $request->total_deduction);
+		if ($request->application_type == config('loans.applicationType.new')) {
+			/* === Loan Amount - Total Deductions  === */
+			$netProceeds = ($request->loan_amount - $request->total_deduction);
+		}
+		
+		if ($request->application_type == config('loans.applicationType.renewal')) {
+			/* === (loan amount - outstanding balance) + rebate + total deduction === */ 
+			$netProceeds = ($request->loan_amount - $request->outstanding_balance) + $request->total_deduction + $request->rebate;
+		}
+		
 		return response()->json($netProceeds);
 	}
 	

@@ -278,8 +278,11 @@
 			url: url+'/loan/application/cal-net-proceeds',
 			dataType: 'json',
 			data: {
-				loan_amount     : $("#loan_amount").val(),
-				total_deduction : $("#total_deduction").val(),
+				application_type    : $('input[name=application_type]:checked').val(),
+				loan_amount         : $("#loan_amount").val(),
+				total_deduction     : $("#total_deduction").val(),
+				rebate     			: $("#rebate").val(),
+				outstanding_balance : $("#outstanding_balance").val(),
 			},
 			success: function(netProceeds) {
 				$("#net_proceeds").val(netProceeds);
