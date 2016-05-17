@@ -31,7 +31,7 @@ return [
 	'successLoanApplication'	 => 'Success Application!, Greate we have our new application',
 	
 	/* === Loan Payment === */
-	'successLoanPayment' => 'Success made of payment!',
+	'successLoanPayment' => 'Payment Successful! click "Show List of Payment" to see your payment transaction.',
 	'validatePaymentOR'  => 'This OR already process',
 	'paymentRequired'    => 'Required',
 	'paymentAmount'		 => 'This amount is lower than amortization OR higher than outstanding balance.',

@@ -9,6 +9,7 @@ use Log;
 use Crypt;
 use Datatables;
 
+use App\Balance;
 use App\LoanPayment;
 use App\LoanProduct;
 use App\Http\Requests;
@@ -94,6 +95,7 @@ class LoanPaymentsController extends Controller
 			
 		return Datatables::of($loanApplications)
 				->editColumn('date', '{{ date("m/d/Y", strtotime($date)) }}')
+				->editColumn('amount', '{{ number_format($amount, 2) }}')
 				->make();
 	}
 	
@@ -114,6 +116,7 @@ class LoanPaymentsController extends Controller
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
+				'/assets/gentellela-alela/js/jquery.number.min.js',
 				'/assets/modules/loans/loans-payments-form.js',
 			],
 			'stylesheets' => [
@@ -149,8 +152,8 @@ class LoanPaymentsController extends Controller
 		
 		if (isset($productType->type)) {
 			switch ($productType->type) {
-				case 'loan' :
-					$loanPayments = DB::table('view_loan_applications')
+				case config('loans.productType.loan'):
+					$loanApplication = DB::table('view_loan_applications')
 					->select([
 						'member_name', 
 						'id',
@@ -161,22 +164,23 @@ class LoanPaymentsController extends Controller
 					->where('fully_paid', false)
 					->where('loan_product_id', $request->loan_product_id);
 					
-					return Datatables::of($loanPayments)
-							->addColumn('paymentAmountInput', function ($loanPayments) {
+					return Datatables::of($loanApplication)
+							->addColumn('paymentAmountInput', function ($loanApplication) {
 								return view('modules/loans/payments/datatables.paymentAmountInput', [
-											'encryptID' => Crypt::encrypt($loanPayments->id),
-											'minAmount' => $loanPayments->amortization,
-											'maxAmount' => $loanPayments->outstanding_balance,
+											'type' 		=> config('loans.productType.loan'),
+											'encryptID' => Crypt::encrypt($loanApplication->id),
+											'minAmount' => $loanApplication->amortization,
+											'maxAmount' => $loanApplication->outstanding_balance,
 										])->render();
 							})
-							->addColumn('paymentORInput',  function ($loanPayments) {
+							->addColumn('paymentORInput',  function ($loanApplication) {
 								return view('modules/loans/payments/datatables.paymentORInput', [
-											'encryptID' => Crypt::encrypt($loanPayments->id),
+											'encryptID' => Crypt::encrypt($loanApplication->id),
 										])->render();
 							})
-							->addColumn('paymentAction', function ($loanPayments) {
+							->addColumn('paymentAction', function ($loanApplication) {
 								return view('modules/loans/payments/datatables.paymentAction', [
-											'encryptID' => Crypt::encrypt($loanPayments->id)
+											'encryptID' => Crypt::encrypt($loanApplication->id)
 										])->render();
 							})
 							->removeColumn('id')
@@ -185,27 +189,56 @@ class LoanPaymentsController extends Controller
 							->make();
 					break;
 				
-				case 'balance' :
-					$loanPayments = DB::table('view_members')
-					->select('member_name', 'id')
-					->where('entity_id', session('entity_id'));
+				case config('loans.productType.capital'):
+					$member = DB::table('view_members')
+						->select('member_name', 'id')
+						->where('entity_id', session('entity_id'));
 						
-					return Datatables::of($loanPayments)
-							->addColumn('paymentAmountInput', function ($loanPayments) {
+					return Datatables::of($member)
+							->addColumn('paymentAmountInput', function ($member) {
 								return view('modules/loans/payments/datatables.paymentAmountInput', [
-											'encryptID' => Crypt::encrypt($loanPayments->id),
+											'type' 		=> config('loans.productType.capital'),
+											'encryptID' => Crypt::encrypt($member->id),
 											'minAmount' => '1000',
 											'maxAmount' => '20000',
 										])->render();
 							})
-							->addColumn('paymentORInput',  function ($loanPayments) {
+							->addColumn('paymentORInput',  function ($member) {
 								return view('modules/loans/payments/datatables.paymentORInput', [
-											'encryptID' => Crypt::encrypt($loanPayments->id),
+											'encryptID' => Crypt::encrypt($member->id),
 										])->render();
 							})
-							->addColumn('paymentAction', function ($loanPayments) {
+							->addColumn('paymentAction', function ($member) {
 								return view('modules/loans/payments/datatables.paymentAction', [
-											'encryptID' => Crypt::encrypt($loanPayments->id)
+											'encryptID' => Crypt::encrypt($member->id)
+										])->render();
+							})
+							->removeColumn('id')
+							->make();
+					break;
+					
+				case config('loans.productType.savings'):
+					$member = DB::table('view_members')
+						->select('member_name', 'id')
+						->where('entity_id', session('entity_id'));
+						
+					return Datatables::of($member)
+							->addColumn('paymentAmountInput', function ($member) {
+								return view('modules/loans/payments/datatables.paymentAmountInput', [
+											'type' 		=> config('loans.productType.savings'),
+											'encryptID' => Crypt::encrypt($member->id),
+											'minAmount' => '1000',
+											'maxAmount' => '20000',
+										])->render();
+							})
+							->addColumn('paymentORInput',  function ($member) {
+								return view('modules/loans/payments/datatables.paymentORInput', [
+											'encryptID' => Crypt::encrypt($member->id),
+										])->render();
+							})
+							->addColumn('paymentAction', function ($member) {
+								return view('modules/loans/payments/datatables.paymentAction', [
+											'encryptID' => Crypt::encrypt($member->id)
 										])->render();
 							})
 							->removeColumn('id')
@@ -229,62 +262,26 @@ class LoanPaymentsController extends Controller
 	}
 	
 	/**
-     * Store payements.
+     * Store payments.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function postStore(Request $request)
     {
+		// return $request->all();
+		
 		/* === loop all data for payement ===*/
 		foreach ($request->data as $loan) {
-			/* === decrypt application id === */
-			$loanApplicationId = Crypt::decrypt($loan['payment_id']);
-			
-			$loanPayment = new LoanPayment;
-			$loanPayment->loan_application_id = $loanApplicationId;
-			$loanPayment->amount 			  = $loan['payment_amount'];
-			$loanPayment->or_number 		  = strtoupper($loan['payment_or']);
-			$loanPayment->entity_id 		  = session('entity_id');
-			$loanPayment->save();
-			
-			Log::info('Make Payment : ', [
-				'table'	=> [
-					'name' => 'loan_payments',
-					'data' => $loanPayment->toArray()
-				],
-				'session' => session()->all()
-			]);
-			
-			/* === if payment success === */
-			if ($loanPayment->id) {
-				$loanApplication = LoanApplication::find($loanApplicationId);
-				
-				/* === add 1 to num_made_payments === */
-				$loanApplication->num_made_payments = $loanApplication->num_made_payments + 1;
-				
-				/* === add payment amount total_made_payments === */
-				$loanApplication->total_made_payments = $loanApplication->total_made_payments + $loan['payment_amount'];
-				
-				/* === outstanding balance - payment_amount === */
-				$loanApplication->outstanding_balance = $loanApplication->outstanding_balance - $loan['payment_amount'];
-				
-				/* === check if fully paid === */
-				if ($loanApplication->outstanding_balance <= 0) {
-					$loanApplication->fully_paid = 1;
-					$loanApplication->paid_date  = date('y-m-d');
-					$loanApplication->remarks    = 'closed fully paid';
-				}
-				
-				$loanApplication->save();
-				
-				Log::info('Update Outstanding balance : ', [
-					'table'	=> [
-						'name' => 'loan_application',
-						'data' => $loanApplication->toArray()
-					],
-					'session' => session()->all()
-				]);
+			switch ($loan['type']) {
+				case config('loans.productType.loan'):
+					$this->paidLoan($loan);
+					break;
+					
+				case config('loans.productType.capital'):
+				case config('loans.productType.savings'):
+					$this->paidBalance($loan);
+					break;
 			}
 		}
 		
@@ -292,6 +289,105 @@ class LoanPaymentsController extends Controller
 			'success' => true,
 			'message' => trans('loans.successLoanPayment'),
 		]);
+	}
+	
+	/**
+     * Paid Loan Application
+     *
+     * @param  array $loan
+     * @return \Illuminate\Http\Response
+     */
+	private function paidLoan($loan)
+	{
+		/* === decrypt application id === */
+		$loanApplicationId = Crypt::decrypt($loan['id']);
+		
+		$loanPayment = new LoanPayment;
+		$loanPayment->loan_application_id = $loanApplicationId;
+		$loanPayment->amount 			  = $loan['payment_amount'];
+		$loanPayment->or_number 		  = strtoupper($loan['payment_or']);
+		$loanPayment->entity_id 		  = session('entity_id');
+		$loanPayment->save();
+		
+		Log::info('Make Payment : ', [
+			'table'	=> [
+				'name' => 'loan_payments',
+				'data' => $loanPayment->toArray()
+			],
+			'session' => session()->all()
+		]);
+		
+		/* === if payment success === */
+		if ($loanPayment->id) {
+			$loanApplication = LoanApplication::find($loanApplicationId);
+			
+			/* === add num_made_payments === */
+			$loanApplication->num_made_payments = $loanApplication->num_made_payments + 1;
+			
+			/* === add payment amount total_made_payments === */
+			$loanApplication->total_made_payments = $loanApplication->total_made_payments + $loan['payment_amount'];
+			
+			/* === update outstanding balance === */
+			$loanApplication->outstanding_balance = $loanApplication->outstanding_balance - $loan['payment_amount'];
+			
+			/* === check if fully paid === */
+			if ($loanApplication->outstanding_balance <= 0) {
+				$loanApplication->fully_paid = 1;
+				$loanApplication->paid_date  = date('y-m-d');
+				$loanApplication->remarks    = 'closed fully paid';
+			}
+			
+			$loanApplication->save();
+			
+			Log::info('Update loan application on payment : ', [
+				'table'	=> [
+					'name' => 'loan_application',
+					'data' => $loanApplication->toArray()
+				],
+				'session' => session()->all()
+			]);
+		}
+	}
+	
+	/**
+     * Paid Balance
+     *
+     * @param  array $paymentParams
+     * @return \Illuminate\Http\Response
+     */
+	private function paidBalance($paymentParams)
+	{
+		/* === decrypt member id === */
+		$memberId = Crypt::decrypt($paymentParams['id']);
+		
+		$getBalance = Balance::select('id')
+			->where('member_id', $memberId)
+			->where('type', $paymentParams['type'])
+			->first();
+		 
+		if (empty($getBalance)) {
+			$logInfo = 'Create '.$paymentParams['type'];
+			$balance = new Balance;
+			$balance->member_id = $memberId;
+			$balance->type 		= $paymentParams['type'];
+			$balance->entity_id = session('entity_id');
+		} else {
+			$logInfo = 'Update '.$paymentParams['type'];
+			$balance = Balance::find($getBalance->id);
+		}
+		
+		$balance->current_balance   = $balance->current_balance   + $paymentParams['payment_amount'];
+		$balance->available_balance = $balance->available_balance + $paymentParams['payment_amount'];
+		$balance->save();
+		
+		Log::info($logInfo.' : ', [
+			'table'	=> [
+				'name' => 'balance',
+				'data' => $balance->toArray()
+			],
+			'session' => session()->all()
+		]);
+		
 	}
 	
 	/**

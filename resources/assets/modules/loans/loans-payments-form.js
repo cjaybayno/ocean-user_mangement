@@ -102,11 +102,11 @@
 						notifier('danger','#loan-payments-make-result', oops);
 					},
 					success: function(result) {
-						console.log(result);
 						$('form .btn-submit-field').hide();
 						$('input, textarea').attr('readonly', true);
 						$('.flat, select').attr('disabled', true);
 						notifier('success','#loan-payments-make-result', result.message);
+						addBtn(url+'/loan/payments/form', 'Make Another Payment');
 					}
 				});
 			}
@@ -148,13 +148,14 @@
 
 	function paymentFormData() {
 		var datableRowCount   = table.rows().data().length;
-		var paymentIdSelector = $(".payment_id");
+		var IdSelector = $(".id");
 		var data = [];
 		for(var i = 0; i < datableRowCount; i++) {
 			var rowData = {
-				payment_id     : paymentIdSelector.eq(i).val(),
-				payment_amount : paymentIdSelector.eq(i).closest('tr').find('#payment_amount').val(),
-				payment_or     : paymentIdSelector.eq(i).closest('tr').find('#payment_or').val(),
+				id 				: IdSelector.eq(i).val(),
+				type 			: $('.type').val(),
+				payment_amount 	: IdSelector.eq(i).closest('tr').find('#payment_amount').val(),
+				payment_or     	: IdSelector.eq(i).closest('tr').find('#payment_or').val(),
 			}
 			data.push(rowData);
 		}

@@ -65,7 +65,10 @@ class LoanManagement
 		$balanceProductRaw = LoanProduct::select(['id', 'name'])
 			->orderBy('name')
 			->where('entity_id', session('entity_id'))
-			->where('type', 'balance')
+			->whereIn('type', [
+				config('loans.productType.capital'),
+				config('loans.productType.savings')
+			])
 			->get()
 			->keyBy('id');
 		

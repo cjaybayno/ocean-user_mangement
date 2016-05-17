@@ -1,4 +1,5 @@
-<input type="hidden" class="payment_id" value="{{ $encryptID }}">
+<input type="hidden" class="type" value="{{ $type }}">
+<input type="hidden" class="id"   value="{{ $encryptID }}">
 
 <div class="form-group">
 	<div class="col-md-6 col-sm-6 col-xs-12">
@@ -15,7 +16,8 @@
 </div>
 
 <script>
+	$(".payment_amount").number(true, 2);
 	$(".payment_amount").blur(function() {
-		$(this).val(addTwoZero($(this).val()));
+		$(this).val($(this).val());
 	});
 </script>
