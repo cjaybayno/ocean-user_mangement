@@ -271,7 +271,9 @@ class LoanPaymentsController extends Controller
 				
 				/* === check if fully paid === */
 				if ($loanApplication->outstanding_balance <= 0) {
-					$loanApplication->fully_paid = true;
+					$loanApplication->fully_paid = 1;
+					$loanApplication->paid_date  = date('y-m-d');
+					$loanApplication->remarks    = 'closed fully paid';
 				}
 				
 				$loanApplication->save();
