@@ -446,6 +446,24 @@ class LoanApplicationController extends Controller
      */
 	public function postStore(Request $request) 
 	{
+		/* === close current loan application for renewal, if any === */ 
+		if ($request->renewal_application_id) {
+			$currentLoan = LoanApplication::find($request->renewal_application_id);
+			$currentLoan->fully_paid = 1;
+			$currentLoan->paid_date  = date('y-m-d');
+			$currentLoan->remarks    = 'closed for renewal';
+			$currentLoan->save();
+			
+			Log::info('Close application : ', [
+				'table'	=> [
+					'name' => 'loans',
+					'data' => $currentLoan->toArray()
+				],
+				'session' => session()->all()
+			]);
+		}
+		
+		/* === create new loan application === */
 		$loan = new LoanApplication;
 		$loan->member_id 			= $request->member_name;
 		$loan->application_type 	= $request->application_type;

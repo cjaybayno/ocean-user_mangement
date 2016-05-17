@@ -149,7 +149,7 @@
 	}
 	
 	function autoCalculateProcess() {
-		//loadingModal('show','Please wait, auto compute in process....');
+		loadingModal('show','Please wait, auto compute in process....');
 		getApplicationId();
 	}
 	
