@@ -512,7 +512,7 @@ class LoanApplicationController extends Controller
 			$logInfo = 'Create capital';
 			$balance = new Balance;
 			$balance->member_id = $memberID;
-			$balance->type 		= 'capital';
+			$balance->type 		= config('loans.producType.capital');
 		} else {
 			$logInfo = 'Update capital';
 			$balance = Balance::find($getBalance->id);
