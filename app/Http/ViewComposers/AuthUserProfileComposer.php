@@ -3,6 +3,7 @@
 namespace App\Http\ViewComposers;
 
 use Auth;
+use App\Entity;
 use Illuminate\Contracts\View\View;
 
 class AuthUserProfileComposer
@@ -37,5 +38,10 @@ class AuthUserProfileComposer
         $view->with('name',   $user->name);
         $view->with('email',  $user->email);
         $view->with('avatar', $user->avatar);
+		
+		if (session('entity_id')) {
+			$entity = Entity::find(session('entity_id'));
+			$view->with('entity_name', $entity->entity_name);
+		}
     }
 }
