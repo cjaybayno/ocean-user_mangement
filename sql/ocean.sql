@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2016 at 08:25 PM
+-- Generation Time: May 20, 2016 at 09:00 PM
 -- Server version: 5.6.25
 -- PHP Version: 5.6.11
 
@@ -45,9 +45,35 @@ CREATE TABLE IF NOT EXISTS `balances` (
 INSERT INTO `balances` (`id`, `member_id`, `type`, `current_balance`, `available_balance`, `pending_balance`, `entity_id`, `created_at`, `updated_at`) VALUES
 (10, 9, 'capital', 1000, 1000, 0, 1, '2016-04-13 08:54:30', '2016-04-13 08:54:30'),
 (11, 13, 'capital', 6000, 6000, 0, 0, '2016-05-01 07:28:55', '2016-05-17 06:32:58'),
-(12, 1, 'capital', 17600, 17600, 0, 0, '2016-05-17 06:21:32', '2016-05-18 07:00:31'),
-(13, 1, 'savings', 11000, 11000, 0, 1, '2016-05-17 08:34:03', '2016-05-17 08:41:16'),
+(12, 1, 'capital', 21600, 21600, 0, 0, '2016-05-17 06:21:32', '2016-05-20 10:46:26'),
+(13, 1, 'savings', 12000, 12000, 0, 1, '2016-05-17 08:34:03', '2016-05-20 10:50:26'),
 (14, 3, 'capital', 1000, 1000, 0, 1, '2016-05-17 08:42:30', '2016-05-17 08:42:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `balance_payments`
+--
+
+CREATE TABLE IF NOT EXISTS `balance_payments` (
+  `id` int(10) NOT NULL,
+  `member_id` int(10) NOT NULL,
+  `outstanding_balance` float NOT NULL,
+  `amount` float NOT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  `or_number` varchar(100) NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `entity_id` int(10) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `balance_payments`
+--
+
+INSERT INTO `balance_payments` (`id`, `member_id`, `outstanding_balance`, `amount`, `type`, `or_number`, `date`, `entity_id`) VALUES
+(1, 1, 20600, 1000, 'capital', '1018', '2016-05-21 02:45:04', 1),
+(2, 1, 21600, 1000, 'capital', '1020', '2016-05-21 02:46:26', 1),
+(3, 1, 12000, 1000, 'savings', '1021', '2016-05-21 02:50:26', 1);
 
 -- --------------------------------------------------------
 
@@ -325,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('727e7494b4b0bd2f00eea5e172b242ab07140305', 79, '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'YTo5OntzOjY6Il90b2tlbiI7czo0MDoiZ3JSWjFIRldVekZTek1OcEo1SDljSlpyd0szcjY5WmNPd2pNTDB3YiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDc6Imh0dHA6Ly9sb2NhbGhvc3Qvb2NlYW4vbG9hbi9hcHBsaWNhdGlvbi9tZW1iZXJzIjt9czo1OiJmbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo3OTtzOjQ6InJvbGUiO2k6MTtzOjc6InVzZXJfaWQiO2k6Nzk7czo5OiJlbnRpdHlfaWQiO2k6MTtzOjg6Imdyb3VwX2lkIjtpOjU7czo5OiJfc2YyX21ldGEiO2E6Mzp7czoxOiJ1IjtpOjE0NjM3Njg1ODE7czoxOiJjIjtpOjE0NjM3NDkwNzc7czoxOiJsIjtzOjE6IjAiO319', 1463768581);
+('727e7494b4b0bd2f00eea5e172b242ab07140305', 79, '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'YTo5OntzOjY6Il90b2tlbiI7czo0MDoiZ3JSWjFIRldVekZTek1OcEo1SDljSlpyd0szcjY5WmNPd2pNTDB3YiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly9sb2NhbGhvc3Qvb2NlYW4vbG9hbi9wYXltZW50cyI7fXM6NToiZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Nzk7czo0OiJyb2xlIjtpOjE7czo3OiJ1c2VyX2lkIjtpOjc5O3M6OToiZW50aXR5X2lkIjtpOjE7czo4OiJncm91cF9pZCI7aTo1O3M6OToiX3NmMl9tZXRhIjthOjM6e3M6MToidSI7aToxNDYzNzcwMjMxO3M6MToiYyI7aToxNDYzNzQ5MDc3O3M6MToibCI7czoxOiIwIjt9fQ==', 1463770231);
 
 -- --------------------------------------------------------
 
@@ -2614,6 +2640,12 @@ ALTER TABLE `balances`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `balance_payments`
+--
+ALTER TABLE `balance_payments`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `entities`
 --
 ALTER TABLE `entities`
@@ -2713,6 +2745,11 @@ ALTER TABLE `zipcodes`
 --
 ALTER TABLE `balances`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `balance_payments`
+--
+ALTER TABLE `balance_payments`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `entities`
 --
