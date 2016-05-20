@@ -302,51 +302,54 @@ class LoanPaymentsController extends Controller
 		/* === decrypt application id === */
 		$loanApplicationId = Crypt::decrypt($loan['id']);
 		
-		$loanPayment = new LoanPayment;
-		$loanPayment->loan_application_id = $loanApplicationId;
-		$loanPayment->amount 			  = $loan['payment_amount'];
-		$loanPayment->or_number 		  = strtoupper($loan['payment_or']);
-		$loanPayment->entity_id 		  = session('entity_id');
-		$loanPayment->save();
+		/* === if payment success === */
+		$loanApplication = LoanApplication::find($loanApplicationId);
 		
-		Log::info('Make Payment : ', [
+		/* === add num_made_payments === */
+		$loanApplication->num_made_payments = $loanApplication->num_made_payments + 1;
+		
+		/* === add payment amount total_made_payments === */
+		$loanApplication->total_made_payments = $loanApplication->total_made_payments + $loan['payment_amount'];
+		
+		/* === update outstanding balance === */
+		$outstandingBalance = $loanApplication->outstanding_balance;
+		$remainingBalance   = $outstandingBalance - $loan['payment_amount'];
+		$loanApplication->outstanding_balance = $remainingBalance;
+		
+		/* === check if fully paid === */
+		if ($loanApplication->outstanding_balance <= 0) {
+			$loanApplication->fully_paid = 1;
+			$loanApplication->paid_date  = date('y-m-d');
+			$loanApplication->remarks    = 'closed fully paid';
+		}
+		
+		if ($loanApplication->save()) {
+			/* === save payments === */
+			$loanPayment = new LoanPayment;
+			$loanPayment->loan_application_id = $loanApplicationId;
+			$loanPayment->outstanding_balance = $outstandingBalance;
+			$loanPayment->amount 			  = $loan['payment_amount'];
+			$loanPayment->remaining_balance   = $remainingBalance;
+			$loanPayment->or_number 		  = strtoupper($loan['payment_or']);
+			$loanPayment->entity_id 		  = session('entity_id');
+			$loanPayment->save();
+			
+			Log::info('Make Payment : ', [
+				'table'	=> [
+					'name' => 'loan_payments',
+					'data' => $loanPayment->toArray()
+				],
+				'session' => session()->all()
+			]);			
+		}
+		
+		Log::info('Update loan application on payment : ', [
 			'table'	=> [
-				'name' => 'loan_payments',
-				'data' => $loanPayment->toArray()
+				'name' => 'loan_application',
+				'data' => $loanApplication->toArray()
 			],
 			'session' => session()->all()
 		]);
-		
-		/* === if payment success === */
-		if ($loanPayment->id) {
-			$loanApplication = LoanApplication::find($loanApplicationId);
-			
-			/* === add num_made_payments === */
-			$loanApplication->num_made_payments = $loanApplication->num_made_payments + 1;
-			
-			/* === add payment amount total_made_payments === */
-			$loanApplication->total_made_payments = $loanApplication->total_made_payments + $loan['payment_amount'];
-			
-			/* === update outstanding balance === */
-			$loanApplication->outstanding_balance = $loanApplication->outstanding_balance - $loan['payment_amount'];
-			
-			/* === check if fully paid === */
-			if ($loanApplication->outstanding_balance <= 0) {
-				$loanApplication->fully_paid = 1;
-				$loanApplication->paid_date  = date('y-m-d');
-				$loanApplication->remarks    = 'closed fully paid';
-			}
-			
-			$loanApplication->save();
-			
-			Log::info('Update loan application on payment : ', [
-				'table'	=> [
-					'name' => 'loan_application',
-					'data' => $loanApplication->toArray()
-				],
-				'session' => session()->all()
-			]);
-		}
 	}
 	
 	/**
