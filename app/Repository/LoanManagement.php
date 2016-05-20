@@ -1,10 +1,12 @@
 <?php
 namespace App\Repository;
 
+use DB;
 use App\Entity;
 use App\Member;
 use App\Parameter;
 use App\LoanProduct;
+use App\LoanApplication;
 
 class LoanManagement
 {
@@ -137,5 +139,28 @@ class LoanManagement
 		}
 		
 		return $responseAdvanceInterest;
+	}
+	
+	/**
+     * Get Member list of applications
+     *
+     * @param int  memberId
+     * @return array
+     */
+	public function getMemberApplications($memberId)
+	{
+		return $loanApplicationsRaw = LoanApplication::
+			join('loan_products', 'loan_applications.loan_product_id', '=' ,'loan_products.id')
+			->where('member_id', $memberId)
+			->where('fully_paid', false)
+			->select([
+				'loan_applications.id as product_id', 
+				'loan_products.name as product_name',
+				'loan_products.principal',
+				'loan_products.interest',
+			])
+			->get()
+			->keyBy('product_id')
+			->toArray();	
 	}
 }

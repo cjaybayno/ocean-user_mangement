@@ -36,4 +36,7 @@ return [
 	'paymentRequired'    => 'Required',
 	'paymentAmount'		 => 'This amount is lower than amortization OR higher than outstanding balance.',
 	'validatePaymentORSameField' => 'This OR is already used to other fields',
+	
+	/* === Loan Member Records === */
+	'noLoanAvalied' => 'Sorry the member you are looking for is currently no applied loans.',
 ];

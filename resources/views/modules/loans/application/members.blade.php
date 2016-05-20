@@ -5,7 +5,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>Members Records</h2>
+				<h2>Members Records <small>Select member record you want to view</small></h2>
 				<div class="pull-right">
 					<div class="btn-group">
 						<a href="{{ URL::route('loan.application.current') }}">
@@ -16,8 +16,7 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">				
-				<form id="loan-application-create-form" class="form-horizontal form-label-left">
-					<p class="well well-sm">Select member record you want to view</p>
+				<div class="form-horizontal">
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12" >Search Last Name </span></label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
@@ -37,8 +36,8 @@
 							]) !!}
 						</div>
 					</div>
-					
-				</form>
+					<div id="members-record-result"></div>
+				</div>
 			</div>
 		</div>
 	</div>

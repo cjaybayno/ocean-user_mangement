@@ -40,12 +40,12 @@ class LoanApplicationController extends Controller
 	{
 		$this->loanRepo = $LoanRepository;
 		
-		$this->middleware('ajax.request', ['except' => [
-            'getForm',
-            'getIndex',
-            'getShow',
-			'getMembers',
-        ]]);
+		// $this->middleware('ajax.request', ['except' => [
+            // 'getForm',
+            // 'getIndex',
+            // 'getShow',
+			// 'getMembers',
+        // ]]);
 	}
 	
 	/**
@@ -167,6 +167,64 @@ class LoanApplicationController extends Controller
     }
 	
 	/**
+     * Show member and all current loan application
+     *
+     * @return \Illuminate\Http\Response
+     */
+	public function getMembers()
+	{
+		$assets = [
+			'scripts' => [
+				'/assets/gentellela-alela/js/moment.min2.js',
+				'/assets/gentellela-alela/js/datepicker/daterangepicker.js',
+				'/assets/gentellela-alela/js/icheck/icheck.min.js',
+				'/assets/gentellela-alela/js/select/select2.full.js',
+				'/assets/gentellela-alela/js/parsley/parsley.min.js',
+				'/assets/gentellela-alela/js/jquery.number.min.js',
+				'/assets/modules/loans/loans-application-members.js',
+			],
+			'stylesheets' => [
+				'/assets/gentellela-alela/css/icheck/flat/green.css',
+				'/assets/gentellela-alela/css/select/select2.min.css'
+			]
+		];
+		
+		Log::info('View loan application form: ', ['session' => session()->all()]);
+	
+        return view('modules/loans/application.members')->with([
+			$this->menuKey => $this->menuValue,
+			'assets' 	   => $assets,
+			'loanTypes'	   => $this->loanRepo->loanProducts(),
+			'viewType'	   => 'create'
+		]);
+	}
+	
+	public function getMembersRecord(Request $request)
+	{
+		/* === get member loan products avail === */
+		$loanApplications = $this->loanRepo->getMemberApplications($request->member_id);
+				
+		foreach ($loanApplications as $loanApplication) {
+			/* === get member loan payments = to loan product avail === */
+			$loanPayment = DB::table('loan_payments')
+				->where('loan_application_id', $loanApplication['product_id'])
+				->select([
+					DB::raw(" DATE_FORMAT(date, '%m/%d/%Y') as date"),
+					'loan_payments.amount',
+					'remaining_balance',
+				])
+				->get();
+			
+			/* === join member loan avails + payments made === */
+			$loanApplications[$loanApplication['product_id']]['data'] = $loanPayment;
+		}
+		
+		return response()->json(view('modules/loans/application.membersRecord', [
+			'loanAvails' => $loanApplications
+		])->render());
+	}
+	
+	/** 
      * Get Member Last Name
 	 *
      * @param  \Illuminate\Http\Request  $request
@@ -529,34 +587,6 @@ class LoanApplicationController extends Controller
 				'data' => $balance->toArray()
 			],
 			'session' => session()->all()
-		]);
-	}
-	
-	public function getMembers()
-	{
-		$assets = [
-			'scripts' => [
-				'/assets/gentellela-alela/js/moment.min2.js',
-				'/assets/gentellela-alela/js/datepicker/daterangepicker.js',
-				'/assets/gentellela-alela/js/icheck/icheck.min.js',
-				'/assets/gentellela-alela/js/select/select2.full.js',
-				'/assets/gentellela-alela/js/parsley/parsley.min.js',
-				'/assets/gentellela-alela/js/jquery.number.min.js',
-				'/assets/modules/loans/loans-application-form.js',
-			],
-			'stylesheets' => [
-				'/assets/gentellela-alela/css/icheck/flat/green.css',
-				'/assets/gentellela-alela/css/select/select2.min.css'
-			]
-		];
-		
-		Log::info('View loan application form: ', ['session' => session()->all()]);
-	
-        return view('modules/loans/application.members')->with([
-			$this->menuKey => $this->menuValue,
-			'assets' 	   => $assets,
-			'loanTypes'	   => $this->loanRepo->loanProducts(),
-			'viewType'	   => 'create'
 		]);
 	}
 }
