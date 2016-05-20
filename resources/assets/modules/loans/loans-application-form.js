@@ -3,6 +3,7 @@
  * ======================================================================== */
 	var formNAme = '#loan-application-create-form';
 	var loanTypeCheckedValue = false;
+	var calculateModalTitle  = 'Please wait, auto compute in process....';
 	$(initialPages);
 
 /* ========================================================================
@@ -24,6 +25,7 @@
 		onChangeLoanTypeHandler();
 		onBlurLoanAmountHandler();
 		onBlurCapitalBuiildUpHandler();
+		onBlurOutstandingBalanceHandler();
 		onBlurAmortizationHandler();
 		formSubmit();
 	}
@@ -121,14 +123,24 @@
 	}
 	
 	function onBlurLoanAmountHandler() {
+		var currentValue = $("#loan_amount").val();
 		$("#loan_amount").blur(function() {
-			calculateAdvanceInterest();
+			calculateAdvanceInterest();				
+			loadingModal('show', calculateModalTitle);
 		});
 	}
 	
 	function onBlurCapitalBuiildUpHandler() {
 		$("#capital_build_up").blur(function() {
 			calculateTotalDeduction();
+			loadingModal('show', calculateModalTitle);
+		});
+	}
+	
+	function onBlurOutstandingBalanceHandler() {
+		$("#outstanding_balance").blur(function() {
+			calculateTotalDeduction();
+			loadingModal('show', calculateModalTitle);
 		});
 	}
 	
@@ -149,7 +161,7 @@
 	}
 	
 	function autoCalculateProcess() {
-		loadingModal('show','Please wait, auto compute in process....');
+		loadingModal('show', calculateModalTitle);
 		getApplicationId();
 	}
 	
