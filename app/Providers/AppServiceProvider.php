@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
 				'modules/loans/application.form',
 				'modules/loans/application.current',
 				'modules/loans/application.show',
+				'modules/loans/application.members',
 				'modules/loans/payments.form',
 				'modules/loans/payments.list',
 				'modules/members.list',

@@ -15,8 +15,9 @@
 			</li>
 			<li class="{{ $loanActiveMenu or '' }}"><a><i class="fa fa-credit-card"></i>Application<span class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu" style="display: none">
-					<li><a href="{{URL::route('loan.application.current')}}">Current Applications</a></li>
+					<li><a href="{{ URL::route('loan.application.current')}}">Current Applications</a></li>
 					<li><a href="{{ URL::route('loan.application.form') }}">Form Application</a></li>
+					<li><a href="{{ URL::route('loan.application.members') }}">Members Application</a></li>
 				</ul>
 			</li>
 			</li>

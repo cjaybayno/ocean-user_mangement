@@ -47,6 +47,7 @@ Route::group(['middleware' => 'web'], function () {
 				'getIndex'   => 'loan.application.current',
 				'getForm' 	 => 'loan.application.form',
 				'getShow' 	 => 'loan.application.show',
+				'getMembers' => 'loan.application.members',
 			]);
 			
 			// loan payments route
