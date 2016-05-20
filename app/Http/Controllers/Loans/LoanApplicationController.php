@@ -44,6 +44,7 @@ class LoanApplicationController extends Controller
             'getForm',
             'getIndex',
             'getShow',
+			'getMembers',
         ]]);
 	}
 	
@@ -528,6 +529,34 @@ class LoanApplicationController extends Controller
 				'data' => $balance->toArray()
 			],
 			'session' => session()->all()
+		]);
+	}
+	
+	public function getMembers()
+	{
+		$assets = [
+			'scripts' => [
+				'/assets/gentellela-alela/js/moment.min2.js',
+				'/assets/gentellela-alela/js/datepicker/daterangepicker.js',
+				'/assets/gentellela-alela/js/icheck/icheck.min.js',
+				'/assets/gentellela-alela/js/select/select2.full.js',
+				'/assets/gentellela-alela/js/parsley/parsley.min.js',
+				'/assets/gentellela-alela/js/jquery.number.min.js',
+				'/assets/modules/loans/loans-application-form.js',
+			],
+			'stylesheets' => [
+				'/assets/gentellela-alela/css/icheck/flat/green.css',
+				'/assets/gentellela-alela/css/select/select2.min.css'
+			]
+		];
+		
+		Log::info('View loan application form: ', ['session' => session()->all()]);
+	
+        return view('modules/loans/application.members')->with([
+			$this->menuKey => $this->menuValue,
+			'assets' 	   => $assets,
+			'loanTypes'	   => $this->loanRepo->loanProducts(),
+			'viewType'	   => 'create'
 		]);
 	}
 }
