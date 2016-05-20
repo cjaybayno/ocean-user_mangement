@@ -13,6 +13,7 @@ use App\Balance;
 use App\LoanPayment;
 use App\LoanProduct;
 use App\Http\Requests;
+use App\BalancePayment;
 use App\LoanApplication;
 use App\Repository\LoanManagement;
 use App\Http\Controllers\Controller;
@@ -297,10 +298,10 @@ class LoanPaymentsController extends Controller
      * @param  array $loan
      * @return \Illuminate\Http\Response
      */
-	private function paidLoan($loan)
+	private function paidLoan($paymentParams)
 	{
 		/* === decrypt application id === */
-		$loanApplicationId = Crypt::decrypt($loan['id']);
+		$loanApplicationId = Crypt::decrypt($paymentParams['id']);
 		
 		/* === if payment success === */
 		$loanApplication = LoanApplication::find($loanApplicationId);
@@ -309,11 +310,11 @@ class LoanPaymentsController extends Controller
 		$loanApplication->num_made_payments = $loanApplication->num_made_payments + 1;
 		
 		/* === add payment amount total_made_payments === */
-		$loanApplication->total_made_payments = $loanApplication->total_made_payments + $loan['payment_amount'];
+		$loanApplication->total_made_payments = $loanApplication->total_made_payments + $paymentParams['payment_amount'];
 		
 		/* === update outstanding balance === */
 		$outstandingBalance = $loanApplication->outstanding_balance;
-		$remainingBalance   = $outstandingBalance - $loan['payment_amount'];
+		$remainingBalance   = $outstandingBalance - $paymentParams['payment_amount'];
 		$loanApplication->outstanding_balance = $remainingBalance;
 		
 		/* === check if fully paid === */
@@ -324,13 +325,13 @@ class LoanPaymentsController extends Controller
 		}
 		
 		if ($loanApplication->save()) {
-			/* === save payments === */
+			/* === save to loan payments === */
 			$loanPayment = new LoanPayment;
 			$loanPayment->loan_application_id = $loanApplicationId;
 			$loanPayment->outstanding_balance = $outstandingBalance;
-			$loanPayment->amount 			  = $loan['payment_amount'];
+			$loanPayment->amount 			  = $paymentParams['payment_amount'];
 			$loanPayment->remaining_balance   = $remainingBalance;
-			$loanPayment->or_number 		  = strtoupper($loan['payment_or']);
+			$loanPayment->or_number 		  = strtoupper($paymentParams['payment_or']);
 			$loanPayment->entity_id 		  = session('entity_id');
 			$loanPayment->save();
 			
@@ -382,6 +383,27 @@ class LoanPaymentsController extends Controller
 		$balance->current_balance   = $balance->current_balance   + $paymentParams['payment_amount'];
 		$balance->available_balance = $balance->available_balance + $paymentParams['payment_amount'];
 		$balance->save();
+		
+		if ($balance->save()) {
+			/* === save to balance payments === */
+			$balancePayment = new BalancePayment;
+			$balancePayment->member_id 			 = $memberId;
+			$balancePayment->outstanding_balance = $balance->current_balance;
+			$balancePayment->amount 			 = $paymentParams['payment_amount'];
+			$balancePayment->type   			 = $paymentParams['type'];
+			$balancePayment->or_number 		  	 = strtoupper($paymentParams['payment_or']);
+			$balancePayment->entity_id 		  	 = session('entity_id');
+			$balancePayment->save();
+			
+			Log::info('Make Balance Payment : ', [
+				'table'	=> [
+					'name' => 'balance_payments',
+					'data' => $balancePayment->toArray()
+				],
+				'session' => session()->all()
+			]);			
+		}
+		
 		
 		Log::info($logInfo.' : ', [
 			'table'	=> [
