@@ -70,7 +70,7 @@
 						$('input, textarea').attr('readonly', true);
 						$('#status, select').attr('disabled', true);
 						notifier('success','#user-creation-result', result.message);
-						editBtn(url+'/users/edit-profile/'+encrptyId);
+						editBtn(url+'/users/edit-profile/'+encrptyId, 'Edit');
 						
 						// add back to profile btn
 						$('#view-btn').empty().html(''+
