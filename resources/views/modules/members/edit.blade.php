@@ -55,21 +55,23 @@
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender<span class="required">*</span></label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							{!! Form::select('gender',config('members.gender'), $member->gender, [
-								'class' => 'form-control select2',
+							{!! Form::select('gender',config('members.gender'),  $member->gender, [
+								'class' => 'form-control select2 required',
 								'id'    => 'gender',
+								'data-parsley-required-message' => trans('members.required'),
 							]) !!}
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Marital Status</label>
+						<label class="control-label col-md-3 col-sm-3 col-xs-12">Marital Status<span class="required">*</span></label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							{!! Form::select('marital_status', config('members.marital_status'), $member->marital_status, [
-								'class' => 'form-control select2',
+								'class' => 'form-control select2 required',
 								'id'    => 'marital_status',
+								'data-parsley-required-message' => trans('members.required'),
 							]) !!}
 						</div>
 					</div>

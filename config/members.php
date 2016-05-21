@@ -12,6 +12,7 @@ return [
     */
 
 	'gender' => [
+		''       => 'Select Gender',
 		'male'   => 'Male',
 		'female' => 'Female',
 	],
@@ -26,7 +27,8 @@ return [
     */
 	
 	'marital_status' => [
+		'' 			=> 'Select Status',
 		'unmarried' => 'Unmarried',
-		'married' => 'Married',
+		'married'   => 'Married',
 	],
 ];
