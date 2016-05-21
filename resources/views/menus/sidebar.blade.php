@@ -21,7 +21,13 @@
 				</ul>
 			</li>
 			</li>
-			<li><a><i class="fa fa-cubes"></i> Consolidation</a></li>
+			<li class="{{ $consoActive or '' }}"><a><i class="fa fa-cubes"></i> Consolidation <span class="fa fa-chevron-down"></span></a>
+				<ul class="nav child_menu" style="display: none">
+					<li><a href="{{ URL::route('conso.loan') }}">Loan</a></li>
+					<li><a href="#">Capital</a></li>
+					<li><a href="#">Savings</a></li>
+				</ul>
+			</li>
 			<li class="{{ $loanPaymentsActiveMenu or '' }}"><a><i class="fa fa-money"></i> Payment <span class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu" style="display: none">
 					<li><a href="{{ URL::route('loan.payments.list') }}">List of Payments</a></li>

@@ -34,14 +34,18 @@
 	function onChangeMemberFullNameHandler() {
 		$('#member_name').change(function() {
 			if ($(this).val() != ' ') {
+				loadingModal('show', 'Please wait....')
 				$.ajax({
 					url: url+'/loan/application/members-record',
 					data: {member_id : $(this).val()},
 					dataType: 'json',
 					success: function(result) {
+						loadingModal('close');
 						$("#members-record-result").empty().html(result);
 					}
 				});
+			} else {
+				$("#members-record-result").empty();
 			}
 		});
 	}

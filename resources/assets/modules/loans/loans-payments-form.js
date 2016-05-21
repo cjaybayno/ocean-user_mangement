@@ -52,7 +52,7 @@
 	}
 	
 	function dataTables() {
-		$.fn.dataTableExt.sErrMode = 'throw';
+		//$.fn.dataTableExt.sErrMode = 'throw';
 		table = $('#loan-payments-make-table').DataTable({
 			columns : [
 				{"searchable" : true},

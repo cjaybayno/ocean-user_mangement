@@ -65,6 +65,15 @@ Route::group(['middleware' => 'web'], function () {
 			]);
 		});
 		
+		// Consolildation group 
+		Route::group(['prefix' => 'conso'], function () {
+			// consolidated loan route
+			Route::controller('loan', 'Conso\ConsoLoanController', [
+				'getIndex' => 'conso.loan',
+			]);
+		});
+		
+		
 		// member route
 		Route::controller('members', 'Members\MembersController', [
 			'getIndex'	  => 'members',
