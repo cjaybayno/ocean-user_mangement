@@ -423,7 +423,10 @@ class LoanPaymentsController extends Controller
      */
 	public function getValidateOr(Request $request)
 	{
-		$orNumberCount = LoanPayment::select('or_number')->where('or_number', $request->payment_or)->count();
+		$orNumberCount = LoanPayment::select('or_number')
+			->where('or_number', $request->payment_or)
+			->where('entity_id', session('entity_id'))
+			->count();
 		
 		if ($orNumberCount > 0) abort(404);
 	}
