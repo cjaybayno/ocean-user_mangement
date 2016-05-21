@@ -498,6 +498,7 @@ class LoanApplicationController extends Controller
 		/* === close current loan application for renewal, if any === */ 
 		if ($request->renewal_application_id) {
 			$currentLoan = LoanApplication::find($request->renewal_application_id);
+			$currentLoan->outstanding_balance = 0;
 			$currentLoan->fully_paid = 1;
 			$currentLoan->paid_date  = date('y-m-d');
 			$currentLoan->remarks    = 'closed for renewal';
