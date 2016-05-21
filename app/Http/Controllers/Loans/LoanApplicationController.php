@@ -341,8 +341,7 @@ class LoanApplicationController extends Controller
      */
 	public function getGetPrincipalAmount(Request $request)
 	{
-		$loanProduct = LoanProduct::select('principal')->find($request->loan_product_id);
-		
+		$loanProduct     = LoanProduct::select('principal')->find($request->loan_product_id);
 		$principalAmount = (! empty($loanProduct['principal'])) ? $loanProduct['principal'] : 0.00;
 		
 		return response()->json($principalAmount);
@@ -394,8 +393,6 @@ class LoanApplicationController extends Controller
      */
 	public function getCalTotalDeduction(Request $request) 
 	{
-		$totalDeduction = 0;
-		
 		if ($request->application_type == config('loans.applicationType.new')) {
 			/* ===  (Advance Interest) + (Processing Fee) + (Capital Build-Up) === */			
 			$totalDeduction = ($request->advance_interest + $request->processing_fee + $request->capital_build_up);
@@ -462,15 +459,8 @@ class LoanApplicationController extends Controller
      */
 	public function getGetAmortization(Request $request) 
 	{
-		$loanProduct = LoanProduct::select('amortization')->find($request->loan_product_id);
-		
-		if (empty($loanProduct['amortization'])) {
-			/* === calculate amortization === */
-			$amortization = 'compute';
-		} else {
-			/* === get in db === */
-			$amortization = $loanProduct['amortization'];
-		}
+		$loanProduct  = LoanProduct::select('amortization')->find($request->loan_product_id);
+		$amortization = (! empty($loanProduct['amortization'])) ? $loanProduct['amortization'] : 0.00;
 		
 		return response()->json($amortization);
 	}
