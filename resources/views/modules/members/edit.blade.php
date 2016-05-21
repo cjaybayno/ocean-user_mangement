@@ -7,7 +7,7 @@
 			<div class="x_title">
 				<h2>Modify Member Name : {{ $member->first_name.' '.$member->middle_name.' '.$member->last_name }}</h2>
 				<div class="pull-right">
-					<div id="add-btn" class="btn-group"></div> &nbsp
+					<div id="edit-btn" class="btn-group"></div> &nbsp
 					<div class="btn-group">
 						<a href="{{ URL::route('members') }}">
 							<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-th-list"></i> Show List of Member</button>

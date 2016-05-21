@@ -25,7 +25,7 @@
 			calender_style : "picker_2",
 			showDropdowns: true,
 			startDate : moment().format('MM/DD/YYYY'),
-			maxDate :  moment().format('MM/DD/YYYY'), //moment(moment().get('year')+'-01-01').subtract(80, 'years').format('MM/DD/YYYY'),
+			maxDate :  moment().format('MM/DD/YYYY'),
 		});
 	}
 	
@@ -66,7 +66,7 @@
 	function formSubmit() {
 		$('#form-submit').on('click', function () {
 			if(formValidation()) {
-				loadingModal('show','Modify in process....');
+				loadingModal('show','Saving....');
 				ajaxCsrfToken();
 				$.ajax({
 					url: url+'/members/update',
@@ -83,6 +83,7 @@
 						$('form .btn-submit-field').hide();
 						$('input, textarea').attr('readonly', true);
 						$('.flat, select').attr('disabled', true);
+						editBtn(url+'/members/edit/'+$('#encryptId').val(), 'Edit');
 						notifier('success',resultDiv, result.message);
 					}
 				});
