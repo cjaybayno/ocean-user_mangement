@@ -345,6 +345,8 @@ class PaymentsController extends Controller
 		$remainingBalance   = $outstandingBalance - $paymentParams['payment_amount'];
 		$loanApplication->outstanding_balance = $remainingBalance;
 		
+		$loanApplication->updated_date  = date('y-m-d');
+		
 		/* === check if fully paid === */
 		if ($loanApplication->outstanding_balance <= 0) {
 			$loanApplication->fully_paid = 1;

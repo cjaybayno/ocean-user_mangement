@@ -107,7 +107,7 @@ class ConsoLoanController extends Controller
 			])
 			->where('entity_id', session('entity_id'))
 			->where('loan_product_id', $request->loan_product_id)
-			->whereBetween('updated_at', [
+			->whereBetween('updated_date', [
 				date('Y-m-d', strtotime($request->from_date)), 
 				date('Y-m-d', strtotime($request->to_date)),
 			]);
