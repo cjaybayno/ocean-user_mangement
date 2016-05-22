@@ -30,8 +30,8 @@
 			</li>
 			<li class="{{ $loanPaymentsActiveMenu or '' }}"><a><i class="fa fa-money"></i> Payment <span class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu" style="display: none">
-					<li><a href="{{ URL::route('loan.payments.list') }}">List of Payments</a></li>
-					<li><a href="{{ URL::route('loan.payments.form') }}">Make Payments</a></li>
+					<li><a href="{{ URL::route('payments.list') }}">List of Payments</a></li>
+					<li><a href="{{ URL::route('payments.form') }}">Make Payments</a></li>
 				</ul>
 			</li>
 			<li class="{{ $loanProductsActiveMenu or '' }}">

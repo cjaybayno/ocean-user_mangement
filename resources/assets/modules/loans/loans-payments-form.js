@@ -2,7 +2,7 @@
  *  Initialize Pages
  * ======================================================================== */
 	var table;
-	var formNAme = '#loan-payments-make-form';
+	var formNAme = '#payments-make-form';
 	$(initialPages);
 
 /* ========================================================================
@@ -27,22 +27,24 @@
 	}
 	
 	function onChangeLoanTypeHandler() {
-		$("#loan_type").change(function() {
-			var paymentTableSelector = $("#loan-payments-make-table");
+		$("#product_type").change(function() {
+			var headerTitleSelector  = $("#header-title");
+			var paymentTableSelector = $("#payments-make-table");
 			var payBtnSelector 		   = $(".btn-submit-field");
 			if ($(this).val() != '') {
 				paymentTableSelector.show(); 
 				dataTables();
 				$.ajax({
-					url: url+'/loan/payments/get-loan-type-name',
-					data: {loan_product_id : $(this).val()},
+					url: route+'/get-product-type-name',
+					data: {product_id : $(this).val()},
 					dataType: 'json',
-					success: function(loanProductName) {
-						$("#header-title").empty().text(loanProductName);
-						 table.ajax.reload();
+					success: function(productName) {
+						headerTitleSelector.empty().text(productName+'  Payments ');
+						table.ajax.reload();
 					}
 				});
 			} else {
+				headerTitleSelector.empty().text('Payments Form');
 				paymentTableSelector.hide();
 				payBtnSelector.hide();
 				table.destroy();
@@ -53,7 +55,7 @@
 	
 	function dataTables() {
 		//$.fn.dataTableExt.sErrMode = 'throw';
-		table = $('#loan-payments-make-table').DataTable({
+		table = $('#payments-make-table').DataTable({
 			columns : [
 				{"searchable" : true},
 				{"searchable" : false, "orderable" : false},
@@ -68,9 +70,9 @@
 			serverSide: true,
 			bRetrieve : true,
 			ajax: {
-				url: url+'/loan/payments/paginate-payment-form',
+				url: route+'/paginate-payment-form',
 				data : function (d) {
-					d.loan_product_id = $("#loan_type").val();
+					d.product_id = $("#product_type").val();
 				},
 				complete : function (result) {
 					var resultCount = table.rows().data().length;
@@ -91,7 +93,7 @@
 				loadingModal('show','Processing Payment....');
 				ajaxCsrfToken();
 				$.ajax({
-					url: url+'/loan/payments/store',
+					url: route+'/store',
 					type: "post",
 					data: {data: paymentFormData() },	
 					dataType: 'json',
@@ -99,14 +101,14 @@
 						loadingModal('close');
 					},
 					error: function(result) {
-						notifier('danger','#loan-payments-make-result', oops);
+						notifier('danger','#payments-make-result', oops);
 					},
 					success: function(result) {
 						$('form .btn-submit-field').hide();
 						$('input, textarea').attr('readonly', true);
 						$('.flat, select').attr('disabled', true);
-						notifier('success','#loan-payments-make-result', result.message);
-						addBtn(url+'/loan/payments/form', 'Make Another Payment');
+						notifier('success','#payments-make-result', result.message);
+						addBtn(route+'/form', 'Make Another Payment');
 					}
 				});
 			}
@@ -123,7 +125,7 @@
 	function validateOr() {
 		window.Parsley.addAsyncValidator('validateOR', function (xhr) {
 			return xhr.status !== 404;
-		}, 	url+'/loan/payments/validate-or');
+		}, 	route+'/validate-or');
 		
 		window.Parsley
 			.addValidator('notEqual', {

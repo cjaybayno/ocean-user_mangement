@@ -29,6 +29,50 @@
 			responsive: true,
 			processing: true,
 			serverSide: true,
-			ajax: url+'/loan/payments/paginate-payment-list',
+			ajax: route+'/paginate-loan',
+		});
+		
+		$('#capital-payment-list').DataTable({
+			order : [[ 0, "desc" ]],
+			columns : [
+				{"searchable" : false},
+				{"searchable" : true}, 
+				{"searchable" : false},
+				{"searchable" : false},
+			],
+			oLanguage : {
+				"sSearch": "Member "
+			},
+			responsive: true,
+			processing: true,
+			serverSide: true,
+			ajax: {
+				url: route+'/paginate-balance',
+				data: function (d) {
+					d.type = 'capital';
+				},
+			}
+		});
+		
+		$('#savings-payment-list').DataTable({
+			order : [[ 0, "desc" ]],
+			columns : [
+				{"searchable" : false},
+				{"searchable" : true}, 
+				{"searchable" : false},
+				{"searchable" : false},
+			],
+			oLanguage : {
+				"sSearch": "Member "
+			},
+			responsive: true,
+			processing: true,
+			serverSide: true,
+			ajax: {
+				url: route+'/paginate-balance',
+				data: function (d) {
+					d.type = 'savings';
+				},
+			}
 		});
 	}

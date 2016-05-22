@@ -131,14 +131,24 @@
         <div id="notif-group" class="tabbed_notifications"></div>
     </div>
 	
+	
+	<?php $route = (isset($assets['route'])) ? url($assets['route']) : false ?>
+	
 	<script>
 		/* === javascript global variable === */
 	
-		// base url of application 
+		// define route
+		var route = "{{ $route }}";
+		if (! route) {
+			console.log('route not define in controller');
+		}
+	
+		// site url of application 
 		var url = "{{ url('') }}";
 		
 		// opps message
 		var oops = "{{ trans('general.oops') }}";
+		
 		
 	</script>
 	

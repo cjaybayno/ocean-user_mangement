@@ -10,21 +10,25 @@ use Crypt;
 use Datatables;
 
 use App\Balance;
-use App\LoanPayment;
+use App\Payment;
 use App\LoanProduct;
 use App\Http\Requests;
-use App\BalancePayment;
 use App\LoanApplication;
 use App\Repository\LoanManagement;
 use App\Http\Controllers\Controller;
 
-class LoanPaymentsController extends Controller
+class PaymentsController extends Controller
 {
     /**
 	* Determine Active Menu
 	*/
 	public $menuKey   = 'loanPaymentsActiveMenu';
 	public $menuValue = 'current-page';
+	
+	/**
+	* Frontend route 
+	*/
+	public $route = '/loan/payments';
 	
 	/**
      * The loan repository implementation.
@@ -66,7 +70,8 @@ class LoanPaymentsController extends Controller
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
 				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		Log::info('View loan payments made list: ', ['session' => session()->all()]);
@@ -78,11 +83,11 @@ class LoanPaymentsController extends Controller
 	}
 	
 	/**
-     * Return payments list paginated.
+     * Return loan payments list paginated.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getPaginatePaymentList(Request $request)
+    public function getPaginateLoan(Request $request)
     {
 		$loanApplications = DB::table('view_loan_payments')
 		->where('entity_id', session('entity_id'))
@@ -90,13 +95,37 @@ class LoanPaymentsController extends Controller
 			'date', 
 			'member_name',
 			'loan_product_name',
-			'amount',
+			'payment_amount',
 			'or_number',
 		]);
 			
 		return Datatables::of($loanApplications)
 				->editColumn('date', '{{ date("m/d/Y", strtotime($date)) }}')
-				->editColumn('amount', '{{ number_format($amount, 2) }}')
+				->editColumn('payment_amount', '{{ number_format($payment_amount, 2) }}')
+				->make();
+	}
+	
+	/**
+     * Return balance payments list paginated.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPaginateBalance(Request $request)
+    {
+		$balancePayment = DB::table('view_balance_payments')
+		->where('entity_id', session('entity_id'))
+		->select([
+			'date', 
+			'member_name',
+			'payment_amount',
+			'or_number',
+		]);
+		
+		$balancePayment->where('type', $request->type);
+				
+		return Datatables::of($balancePayment)
+				->editColumn('date', '{{ date("m/d/Y", strtotime($date)) }}')
+				->editColumn('payment_amount', '{{ number_format($payment_amount, 2) }}')
 				->make();
 	}
 	
@@ -124,7 +153,8 @@ class LoanPaymentsController extends Controller
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
 				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
 				'/assets/gentellela-alela/css/select/select2.min.css'
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		Log::info('View loan payments form: ', ['session' => session()->all()]);
@@ -138,7 +168,7 @@ class LoanPaymentsController extends Controller
         return view('modules/loans/payments.form')->with([
 			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
-			'loanTypes'	   => $payementType,
+			'payementType' => $payementType,
 		]);
     }
 	
@@ -149,7 +179,7 @@ class LoanPaymentsController extends Controller
      */
     public function getPaginatePaymentForm(Request $request)
     {	
-		$productType = LoanProduct::select('type')->find($request->loan_product_id);
+		$productType = LoanProduct::select('type')->find($request->product_id);
 		
 		if (isset($productType->type)) {
 			switch ($productType->type) {
@@ -163,7 +193,7 @@ class LoanPaymentsController extends Controller
 					])
 					->where('entity_id', session('entity_id'))
 					->where('fully_paid', false)
-					->where('loan_product_id', $request->loan_product_id);
+					->where('loan_product_id', $request->product_id);
 					
 					return Datatables::of($loanApplication)
 							->addColumn('paymentAmountInput', function ($loanApplication) {
@@ -255,11 +285,11 @@ class LoanPaymentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-	public function getGetLoanTypeName(Request $request)
+	public function getGetProductTypeName(Request $request)
 	{
-		$loanProduct = LoanProduct::select('name')->find($request->loan_product_id);
+		$loanProduct = LoanProduct::select('name')->find($request->product_id);
 		
-		return response()->json($loanProduct['name'].' Payments Form');
+		return response()->json($loanProduct['name']);
 	}
 	
 	/**
@@ -270,8 +300,6 @@ class LoanPaymentsController extends Controller
      */
     public function postStore(Request $request)
     {
-		// return $request->all();
-		
 		/* === loop all data for payement ===*/
 		foreach ($request->data as $loan) {
 			switch ($loan['type']) {
@@ -325,23 +353,16 @@ class LoanPaymentsController extends Controller
 		}
 		
 		if ($loanApplication->save()) {
-			/* === save to loan payments === */
-			$loanPayment = new LoanPayment;
-			$loanPayment->loan_application_id = $loanApplicationId;
-			$loanPayment->outstanding_balance = $outstandingBalance;
-			$loanPayment->amount 			  = $paymentParams['payment_amount'];
-			$loanPayment->remaining_balance   = $remainingBalance;
-			$loanPayment->or_number 		  = strtoupper($paymentParams['payment_or']);
-			$loanPayment->entity_id 		  = session('entity_id');
-			$loanPayment->save();
-			
-			Log::info('Make Payment : ', [
-				'table'	=> [
-					'name' => 'loan_payments',
-					'data' => $loanPayment->toArray()
-				],
-				'session' => session()->all()
-			]);			
+			/* ==== save payments=== */
+			$this->savePayment([
+				'parent_id' 		  => $loanApplicationId,
+				'outstanding_balance' => $outstandingBalance,
+				'payment_amount'	  => $paymentParams['payment_amount'],
+				'remaining_balance'   => $remainingBalance,
+				'or_number'			  => strtoupper($paymentParams['payment_or']),
+				'type'			  	  => config('loans.productType.loan'),
+				'entity_id'			  => session('entity_id'),
+			]);
 		}
 		
 		Log::info('Update loan application on payment : ', [
@@ -380,30 +401,26 @@ class LoanPaymentsController extends Controller
 			$balance = Balance::find($getBalance->id);
 		}
 		
+		/* === cal outstanding and remaining balance === */
+		$outstandingBalance = $balance->current_balance;
+		$remainingBalance   = $outstandingBalance + $paymentParams['payment_amount'];
+		
 		$balance->current_balance   = $balance->current_balance   + $paymentParams['payment_amount'];
 		$balance->available_balance = $balance->available_balance + $paymentParams['payment_amount'];
 		$balance->save();
 		
 		if ($balance->save()) {
-			/* === save to balance payments === */
-			$balancePayment = new BalancePayment;
-			$balancePayment->member_id 			 = $memberId;
-			$balancePayment->outstanding_balance = $balance->current_balance;
-			$balancePayment->amount 			 = $paymentParams['payment_amount'];
-			$balancePayment->type   			 = $paymentParams['type'];
-			$balancePayment->or_number 		  	 = strtoupper($paymentParams['payment_or']);
-			$balancePayment->entity_id 		  	 = session('entity_id');
-			$balancePayment->save();
-			
-			Log::info('Make Balance Payment : ', [
-				'table'	=> [
-					'name' => 'balance_payments',
-					'data' => $balancePayment->toArray()
-				],
-				'session' => session()->all()
-			]);			
+			/* ==== save payments=== */
+			$this->savePayment([
+				'parent_id' 		  => $balance->id,
+				'outstanding_balance' => (! empty($outstandingBalance)) ? $outstandingBalance : 0,
+				'payment_amount'	  => $paymentParams['payment_amount'],
+				'remaining_balance'   => $remainingBalance,
+				'or_number'			  => strtoupper($paymentParams['payment_or']),
+				'type'			  	  => $paymentParams['type'],
+				'entity_id'			  => session('entity_id'),
+			]);
 		}
-		
 		
 		Log::info($logInfo.' : ', [
 			'table'	=> [
@@ -416,6 +433,33 @@ class LoanPaymentsController extends Controller
 	}
 	
 	/**
+     * Save payments
+	 *
+     * @param  Array $paymentParams
+     * @return void
+     */
+	private function savePayment($paymentParams) 
+	{
+		$payment = new Payment;
+		$payment->parent_id 		  = $paymentParams['parent_id'];
+		$payment->outstanding_balance = $paymentParams['outstanding_balance'];
+		$payment->payment_amount 	   = $paymentParams['payment_amount'];
+		$payment->remaining_balance   = $paymentParams['remaining_balance'];
+		$payment->or_number 		  = strtoupper($paymentParams['or_number']);
+		$payment->type 		  		  = $paymentParams['type'];
+		$payment->entity_id 		  = session('entity_id');
+		$payment->save();
+		
+		Log::info('Save Payment : ', [
+			'table'	=> [
+				'name' => 'payment',
+				'data' => $payment->toArray()
+			],
+			'session' => session()->all()
+		]);
+	}
+	
+	/**
      * Validate OR
 	 *
      * @param  \Illuminate\Http\Request  $request
@@ -423,7 +467,7 @@ class LoanPaymentsController extends Controller
      */
 	public function getValidateOr(Request $request)
 	{
-		$orNumberCount = LoanPayment::select('or_number')
+		$orNumberCount = Payment::select('or_number')
 			->where('or_number', $request->payment_or)
 			->where('entity_id', session('entity_id'))
 			->count();

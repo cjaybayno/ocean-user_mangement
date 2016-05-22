@@ -50,10 +50,10 @@ Route::group(['middleware' => 'web'], function () {
 				'getMembers' => 'loan.application.members',
 			]);
 			
-			// loan payments route
-			Route::controller('payments', 'Loans\LoanPaymentsController', [
-				'getIndex' => 'loan.payments.list',
-				'getForm'  => 'loan.payments.form',
+			//loan payments route
+			Route::controller('payments', 'Loans\PaymentsController', [
+				'getIndex' => 'payments.list',
+				'getForm'  => 'payments.form',
 			]);
 			
 			// loan products route

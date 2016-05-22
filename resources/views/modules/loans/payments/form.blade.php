@@ -16,7 +16,7 @@
 				<div class="pull-right">
 					<div id="add-btn" class="btn-group"></div>
 					<div class="btn-group">
-						<a href="{{ URL::route('loan.payments.list')}}">
+						<a href="{{ URL::route('payments.list')}}">
 							<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-th-list"></i> Show List of Payments</button>
 						</a>
 					</div>
@@ -24,18 +24,18 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<div id="loan-payments-make-result"></div>
-				<form id="loan-payments-make-form" class="form-horizontal form-label-left">
+				<div id="payments-make-result"></div>
+				<form id="payments-make-form" class="form-horizontal form-label-left">
 					<div class="form-group">
 						<div class="col-md-4 col-sm-4 col-xs-12">
-							{!! Form::select('loan_type', $loanTypes, null, [
+							{!! Form::select('product_type', $payementType, null, [
 								'class' => 'form-control select2 col-md-7 col-xs-12', 
-								'id'    => 'loan_type', 
+								'id'    => 'product_type', 
 							]) !!}
 						</div>
 					</div>
 					<br>
-					<table id="loan-payments-make-table"  class="table table-striped responsive-utilities jambo_table" cellspacing="0" width="100%" style="display:none">
+					<table id="payments-make-table"  class="table table-striped responsive-utilities jambo_table" cellspacing="0" width="100%" style="display:none">
 						<thead>
 							 <tr class="headings">
 								<th>Member Name</th>
