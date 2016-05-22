@@ -34,12 +34,12 @@
 								@endif
 							</td>
 							<td>{{ $loanAvail['interest'] }}%</td>
-							<td>PHP {{ number_format($loanAvailData->amount, 2) }}</td>
+							<td>PHP {{ number_format($loanAvailData->payment_amount, 2) }}</td>
 							<td>PHP {{ number_format($loanAvailData->remaining_balance, 2) }} </td>
 						</tr>
 						<?php $totalInterest  	 = $totalInterest + $loanAvail['interest'] ?>
-						<?php $totalPayment   	 = $totalPayment  + $loanAvailData->amount ?>
-						<?php $grandTotalPayment = $grandTotalPayment + $loanAvailData->amount ?>
+						<?php $totalPayment   	 = $totalPayment  + $loanAvailData->payment_amount ?>
+						<?php $grandTotalPayment = $grandTotalPayment + $loanAvailData->payment_amount ?>
 						<?php $totalRemainBal 	 = $loanAvailData->remaining_balance ?>
 						@endforeach
 					</tbody>
@@ -61,7 +61,7 @@
 
 @if (! empty($loanAvails))
 	<div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8 col-xs-12">
-		<h2>TOTAL : PHP {{ number_format($grandTotalPayment, 2) }}</h2>
+		<h2>TOTAL PAYMENT : PHP {{ number_format($grandTotalPayment, 2) }}</h2>
 	</div>
 @else
 	<div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8 col-xs-12">

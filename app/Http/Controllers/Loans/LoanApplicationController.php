@@ -206,11 +206,11 @@ class LoanApplicationController extends Controller
 				
 		foreach ($loanApplications as $loanApplication) {
 			/* === get member loan payments = to loan product avail === */
-			$loanPayment = DB::table('loan_payments')
+			$loanPayment = DB::table('view_loan_payments')
 				->where('loan_application_id', $loanApplication['product_id'])
 				->select([
 					DB::raw(" DATE_FORMAT(date, '%m/%d/%Y') as date"),
-					'loan_payments.amount',
+					'payment_amount',
 					'remaining_balance',
 				])
 				->get();
