@@ -291,7 +291,7 @@ class LoanApplicationController extends Controller
 				$renewalMonth = json_decode($loanProduct->params, TRUE)['renewal_month'];
 			
 				/* === not allowed to renew, reason: allowed month of renewal exceeded === */
-				if ($numMadePayments > $renewalMonth) return abort(404);
+				if ($numMadePayments < $renewalMonth) return abort(404);
 			}
 		}
 	}
