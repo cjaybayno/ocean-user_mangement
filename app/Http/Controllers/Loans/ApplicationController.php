@@ -26,6 +26,11 @@ class ApplicationController extends Controller
 	public $menuValue = 'current-page';
 	
 	/**
+	* Frontend route 
+	*/
+	public $route = '/loan/application';
+	
+	/**
      * The loan repository implementation.
      */
 	protected $loanRepo;
@@ -68,7 +73,8 @@ class ApplicationController extends Controller
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/icheck/flat/green.css',
 				'/assets/gentellela-alela/css/select/select2.min.css'
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		Log::info('View loan application form: ', ['session' => session()->all()]);
@@ -99,7 +105,8 @@ class ApplicationController extends Controller
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
 				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		Log::info('View loan application current: ', ['session' => session()->all()]);
@@ -186,7 +193,8 @@ class ApplicationController extends Controller
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/icheck/flat/green.css',
 				'/assets/gentellela-alela/css/select/select2.min.css'
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		Log::info('View loan application form: ', ['session' => session()->all()]);

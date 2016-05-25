@@ -64,7 +64,7 @@
 			memberNameSelector.empty().removeAttr('disabled');
 			if ($(this).val() != '') {
 				$.ajax({
-					url: url+'/loan/application/get-member-in-last-name',
+					url: route+'/get-member-in-last-name',
 					data: {last_name : $(this).val()},
 					dataType: 'json',
 					success: function(result) {
@@ -147,7 +147,7 @@
 	function onBlurAmortizationHandler() {
 		$("#monthly_amortization").blur(function() {
 			$.ajax({
-				url: url+'/loan/application/cal-new-application-outstanding-balance',
+				url: route+'cal-new-application-outstanding-balance',
 				dataType: 'json',
 				data: {
 					loan_product_id : $("#loan_type").val(),
@@ -173,7 +173,7 @@
 		}
 		
 		$.ajax({
-			url: url+'/loan/application/get-application-id',
+			url: route+'/get-application-id',
 			dataType: 'json',
 			data: { 
 					member_id		 : $('#member_name').val(),
@@ -189,7 +189,7 @@
 	
 	function getPrincipalLoanAmount() {
 		$.ajax({
-			url: url+'/loan/application/get-principal-amount',
+			url: route+'/get-principal-amount',
 			dataType: 'json',
 			data: { loan_product_id : $("#loan_type").val() },
 			success: function(principalAmount) {
@@ -201,7 +201,7 @@
 	
 	function calculateAdvanceInterest() {
 		$.ajax({
-			url: url+'/loan/application/cal-advance-interest',
+			url: route+'/cal-advance-interest',
 			dataType: 'json',
 			data: {
 				loan_amount 	: $("#loan_amount").val(),
@@ -216,7 +216,7 @@
 	
 	function calculateProcessingFee() {
 		$.ajax({
-			url: url+'/loan/application/cal-processing-fee',
+			url: route+'/cal-processing-fee',
 			dataType: 'json',
 			data: {
 				loan_amount 	: $("#loan_amount").val(),
@@ -236,7 +236,7 @@
 	
 	function calculateRebate() {
 		$.ajax({
-			url: url+'/loan/application/cal-rebate',
+			url: route+'/cal-rebate',
 			dataType: 'json',
 			data: {
 				advance_interest       : $("#advance_interest").val(),
@@ -253,7 +253,7 @@
 	
 	function calculateTotalDeduction() {
 		$.ajax({
-			url: url+'/loan/application/cal-total-deduction',
+			url: route+'/cal-total-deduction',
 			dataType: 'json',
 			data: {
 				advance_interest : $("#advance_interest").val(),
@@ -271,7 +271,7 @@
 	
 	function calculateOutstandingBalance() {
 		$.ajax({
-			url: url+'/loan/application/cal-outstanding-balance',
+			url: route+'/cal-outstanding-balance',
 			dataType: 'json',
 			data: { 
 				loan_product_id     : $("#loan_type").val(),
@@ -287,7 +287,7 @@
 	
 	function calculateNetProceeds() {
 		$.ajax({
-			url: url+'/loan/application/cal-net-proceeds',
+			url: route+'/cal-net-proceeds',
 			dataType: 'json',
 			data: {
 				application_type    : $('input[name=application_type]:checked').val(),
@@ -305,7 +305,7 @@
 	
 	function getMonthlyAmortization() {
 		$.ajax({
-			url: url+'/loan/application/get-amortization',
+			url: route+'/get-amortization',
 			dataType: 'json',
 			data: { loan_product_id : $("#loan_type").val() },
 			success: function(amortization) {
@@ -321,7 +321,7 @@
 				loadingModal('show','Saving ....');
 				ajaxCsrfToken();
 				$.ajax({
-					url: url+'/loan/application/store',
+					url: route+'/store',
 					type: "post",
 					data: $('input, select').serialize(),
 					dataType: 'json',
@@ -360,7 +360,7 @@
 			loanAmountSelector.attr('data-parsley-remote-message', ValidateLoanAmountMessage);
 			window.Parsley.addAsyncValidator('validateLoanAmount', function (xhr) {
 				return xhr.status !== 404;
-			}, 	url+'/loan/application/validate-loan-amount', {
+			}, 	route+'/validate-loan-amount', {
 					"dataType" : "jsonp", 
 					"data": 
 					{ "loan_product_id": $('#loan_type').val() }
@@ -383,7 +383,7 @@
 		loanTypeSelector.attr('data-parsley-remote-message', validateApplicationTypeMessage);
 		window.Parsley.addAsyncValidator('validateApplicationType', function (xhr) {
 			return xhr.status !== 404;
-			}, url+'/loan/application/validate-application-type', {
+			}, route+'/validate-application-type', {
 				"dataType" : "jsonp", 
 				"data": {
 						"member_id"		  : $('#member_name').val(),
