@@ -23,6 +23,11 @@ class ConsoLoanController extends Controller
 	public $menuValue = 'current-page';
 	
 	/**
+	* Frontend route 
+	*/
+	public $route = '/conso/loan';
+	
+	/**
      * Create a new instance.
      *
      * @param  LoanManagement  $LoanRepository
@@ -61,7 +66,8 @@ class ConsoLoanController extends Controller
 				'/assets/gentellela-alela/css/select/select2.min.css',
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
 				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		Log::info('View consolidation : ', ['session' => session()->all()]);

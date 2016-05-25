@@ -61,7 +61,7 @@
 			consoLoanTableSelector.show(); 
 			ajaxCsrfToken();
 			$.ajax({
-				url: url+'/conso/loan/get-params',
+				url: route+'/get-params',
 				data: {loan_product_id : loanTypeSelector.val()},
 				dataType: 'json',
 				success: function(result) {
@@ -136,7 +136,7 @@
 			serverSide: true,
 			bRetrieve : true,
 			ajax: {
-				url: url+'/conso/loan/paginate-conso',
+				url: route+'/paginate-conso',
 				data : function (d) {
 					d.loan_product_id = $('#loan_type').val();
 					d.from_date       = $('[name=daterangepicker_start]').val();
