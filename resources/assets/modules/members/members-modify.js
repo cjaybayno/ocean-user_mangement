@@ -32,7 +32,7 @@
 	function selectProvinceCity() {
 		$('#province_city').change(function() {
 			$('#brgy_town').empty().attr('disabled', true);
-			$.ajax({url: url+"/members/brgy-town/"+$(this).val(),
+			$.ajax({url: route+"/brgy-town/"+$(this).val(),
 				dataType: "json",
 				success: function(result) {
 					var selectData = [];
@@ -54,7 +54,7 @@
 	function selectBrgyTown() {
 		$('#brgy_town').change(function() {
 			$('#zipcode').empty();
-			$.ajax({url: url+"/members/zipcode/"+$(this).val(),
+			$.ajax({url: route+"/zipcode/"+$(this).val(),
 				dataType: "json",
 				success: function(result) {
 					$('#zipcode').val(result);
@@ -69,7 +69,7 @@
 				loadingModal('show','Saving....');
 				ajaxCsrfToken();
 				$.ajax({
-					url: url+'/members/update',
+					url: route+'/update',
 					type: "post",
 					data: $('input, select').serialize(),
 					dataType: 'json',
@@ -83,7 +83,7 @@
 						$('form .btn-submit-field').hide();
 						$('input, textarea').attr('readonly', true);
 						$('.flat, select').attr('disabled', true);
-						editBtn(url+'/members/edit/'+$('#encryptId').val(), 'Edit');
+						editBtn(route+'/edit/'+$('#encryptId').val(), 'Edit');
 						notifier('success',resultDiv, result.message);
 					}
 				});

@@ -27,6 +27,6 @@
 			responsive: true,
 			processing: true,
 			serverSide: true,
-			ajax: url+'/members/paginate',
+			ajax: route+'/paginate',
 		});
 	}

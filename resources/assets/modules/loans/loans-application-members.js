@@ -19,7 +19,7 @@
 			memberNameSelector.empty().removeAttr('disabled');
 			if ($(this).val() != '') {
 				$.ajax({
-					url: url+'/loan/application/get-member-in-last-name',
+					url: route+'/get-member-in-last-name',
 					data: {last_name : $(this).val()},
 					dataType: 'json',
 					success: function(result) {
@@ -36,7 +36,7 @@
 			if ($(this).val() != ' ') {
 				loadingModal('show', 'Please wait....')
 				$.ajax({
-					url: url+'/loan/application/members-record',
+					url: route+'/members-record',
 					data: {member_id : $(this).val()},
 					dataType: 'json',
 					success: function(result) {
