@@ -11,10 +11,9 @@ use Datatables;
 use App\Entity;
 use App\LoanProduct; 
 use App\Http\Requests;
-use App\Repository\LoanManagement;
 use App\Http\Controllers\Controller;
 
-class ConsoLoanController extends Controller
+class LoanController extends Controller
 {
     /**
 	* Determine Active Menu
@@ -30,13 +29,10 @@ class ConsoLoanController extends Controller
 	/**
      * Create a new instance.
      *
-     * @param  LoanManagement  $LoanRepository
      * @return void
      */
-	public function __construct(LoanManagement $LoanRepository)
+	public function __construct()
 	{
-		$this->loanRepo = $LoanRepository;
-		
 		$this->middleware('ajax.request', ['except' => [
             'getIndex',
         ]]);
@@ -70,7 +66,7 @@ class ConsoLoanController extends Controller
 			'route' => $this->route,
 		];
 		
-		Log::info('View consolidation : ', ['session' => session()->all()]);
+		Log::info('View loan consolidation : ', ['session' => session()->all()]);
 		
         return view('modules/conso/loan.conso')->with([
 			$this->menuKey => $this->menuValue,
