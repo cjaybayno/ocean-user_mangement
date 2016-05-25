@@ -14,13 +14,18 @@ use App\Http\Requests;
 use App\Repository\LoanManagement;
 use App\Http\Controllers\Controller;
 
-class LoanProductsController extends Controller
+class ProductsController extends Controller
 {
     /**
 	* Determine Active Menu
 	*/
 	public $menuKey   = 'loanProductsActiveMenu';
 	public $menuValue = 'current-page';
+	
+	/**
+	* Frontend route 
+	*/
+	public $route = '/loan/products';
 	
 	/**
      * The loan repository implementation.
@@ -56,7 +61,8 @@ class LoanProductsController extends Controller
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
 				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		Log::info('View loan products: ', ['session' => session()->all()]);
@@ -121,7 +127,8 @@ class LoanProductsController extends Controller
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css'
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		Log::info('View loan product create: ', ['session' => session()->all()]);
@@ -181,7 +188,8 @@ class LoanProductsController extends Controller
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css'
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		$loanProduct = LoanProduct::findOrFail(Crypt::decrypt($encryptID));
@@ -214,7 +222,8 @@ class LoanProductsController extends Controller
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css'
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		$loanProduct = LoanProduct::findOrFail(Crypt::decrypt($encryptID));

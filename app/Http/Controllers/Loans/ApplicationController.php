@@ -17,7 +17,7 @@ use App\LoanApplication;
 use App\Repository\LoanManagement;
 use App\Http\Controllers\Controller;
 
-class LoanApplicationController extends Controller
+class ApplicationController extends Controller
 {
     /**
 	* Determine Active Menu

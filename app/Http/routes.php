@@ -43,7 +43,7 @@ Route::group(['middleware' => 'web'], function () {
 		// Loans route group
 		Route::group(['prefix' => 'loan'], function () {
 			// loan application route
-			Route::controller('application', 'Loans\LoanApplicationController', [
+			Route::controller('application', 'Loans\ApplicationController', [
 				'getIndex'   => 'loan.application.current',
 				'getForm' 	 => 'loan.application.form',
 				'getShow' 	 => 'loan.application.show',
@@ -57,7 +57,7 @@ Route::group(['middleware' => 'web'], function () {
 			]);
 			
 			// loan products route
-			Route::controller('products', 'Loans\LoanProductsController', [
+			Route::controller('products', 'Loans\ProductsController', [
 				'getIndex'  => 'loan.products',
 				'getCreate' => 'loan.products.create',
 				'getShow'   => 'loan.products.show',

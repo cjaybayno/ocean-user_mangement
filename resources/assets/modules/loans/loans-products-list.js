@@ -29,6 +29,6 @@
 			responsive: true,
 			processing: true,
 			serverSide: true,
-			ajax: url+'/loan/products/paginate',
+			ajax: route+'/paginate',
 		});
 	}

@@ -29,7 +29,7 @@
 				loadingModal('show','Saving ....');
 				ajaxCsrfToken();
 				$.ajax({
-					url: url+'/loan/products/store',
+					url: route+'/store',
 					type: "post",
 					data: $('form').serialize(),
 					dataType: 'json',
@@ -44,8 +44,7 @@
 						$('input, textarea').attr('readonly', true);
 						$('#entity, select').attr('disabled', true);
 						notifier('success', resultDiv, result.message);
-						addBtn(url+'/loan/products/create', 'New Product');
-						editBtn(url+'/loan/products/show', 'Edit');
+						addBtn(route+'/create', 'New Product');
 					}
 				});
 			}

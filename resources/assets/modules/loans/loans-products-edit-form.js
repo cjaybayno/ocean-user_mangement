@@ -40,7 +40,7 @@
 				loadingModal('show','Saving ....');
 				ajaxCsrfToken();
 				$.ajax({
-					url: url+'/loan/products/update',
+					url: route+'/update',
 					type: "post",
 					data: $('form').serialize(),
 					dataType: 'json',
@@ -55,7 +55,7 @@
 						$('input, textarea').attr('readonly', true);
 						$('#entity, select').attr('disabled', true);
 						notifier('success', resultDiv, result.message);
-						editBtn(url+'/loan/products/show', 'Edit');
+						editBtn(route+'/show', 'Edit');
 					}
 				});
 			}
