@@ -36,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
 				'modules/conso/capital.contribution',
 				'modules/conso/savings.conso',
 				'modules/conso/savings.contribution',
+				'modules/balanceSheet/form',
 			], 
 			'App\Http\ViewComposers\AuthUserProfileComposer'
 		);

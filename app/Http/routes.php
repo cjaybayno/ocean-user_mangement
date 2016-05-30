@@ -86,6 +86,11 @@ Route::group(['middleware' => 'web'], function () {
 		});
 		
 		
+		// Balance Sheet route
+		Route::controller('balance-sheet', 'BalanceSheetController', [
+			'getForm'  => 'balance-sheet.form',
+		]);
+		
 		// member route
 		Route::controller('members', 'Members\MembersController', [
 			'getIndex'	  => 'members',

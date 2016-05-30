@@ -43,7 +43,11 @@
 	<div class="menu_section">
 		<h3>BackOffice</h3>
 		<ul class="nav side-menu">
-			<li><a><i class="fa fa-file-text-o"></i> Balance Sheet</a></li>
+			<li class="{{ $balanceSheetActiveMenu or '' }}">
+				<a href="#">
+					<i class="fa fa-file-text-o"></i> Balance Sheet
+				</a>
+			</li>
 			<li><a><i class="fa fa-file-text"></i> Income Statement</a></li>
 		</ul>
 	</div>
