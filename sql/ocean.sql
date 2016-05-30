@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 25, 2016 at 05:58 PM
+-- Generation Time: May 30, 2016 at 05:14 PM
 -- Server version: 5.6.25
 -- PHP Version: 5.6.11
 
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `loan_products` (
   `params` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `loan_products`
@@ -252,11 +252,72 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 
 CREATE TABLE IF NOT EXISTS `parameters` (
   `id` int(11) NOT NULL,
-  `param_name` varchar(250) NOT NULL,
-  `param_label` varchar(250) NOT NULL,
-  `param_group` varchar(250) NOT NULL,
-  `param_value` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `parent_id` int(11) DEFAULT NULL,
+  `name` varchar(250) NOT NULL,
+  `label` varchar(250) NOT NULL,
+  `value` text
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `parameters`
+--
+
+INSERT INTO `parameters` (`id`, `parent_id`, `name`, `label`, `value`) VALUES
+(1, NULL, 'balance_sheet', 'Balance Sheet', NULL),
+(2, 1, 'assets', 'ASSETS', NULL),
+(3, 1, 'liabilities_and_equity', 'LIABILITIES AND OWNER''S EQUITY', NULL),
+(4, 2, 'current_assets', 'Current Assets', NULL),
+(5, 2, 'fixed_assets', 'Fixed Assets', NULL),
+(6, 2, 'other_assets', 'Other Assets', NULL),
+(7, 3, 'current_liabilities', 'Current Liabilities', NULL),
+(8, 3, 'long_term_liabilities', 'Long-Term Liabilities', NULL),
+(9, 3, 'other_liabilities', 'Other Liabilities', NULL),
+(10, 4, 'cash_in_bank', 'Cash in Bank', NULL),
+(11, 4, 'accounts_receivables', 'Accounts Receivables', NULL),
+(12, 4, 'prepaid_expenses', 'Prepaid Expenses', NULL),
+(13, 4, 'other', 'Other', NULL),
+(14, 5, 'machinery_and_equipment', 'Machinery & Equipment', NULL),
+(15, 5, 'furniture_and_fixtures', 'Furniture & Fixtures', NULL),
+(16, 5, 'leasehold_improvements', 'Leasehold Improvements', NULL),
+(17, 5, 'real_estate_Buildings', 'Real Estate / Buildings', NULL),
+(18, 5, 'other', 'Other', NULL),
+(19, 7, 'accounts_payable', 'Accounts Payable', NULL),
+(20, 7, 'taxes_payable', 'Taxes Payable', NULL),
+(21, 7, 'loans', 'Loans', NULL),
+(22, 3, 'equity', 'Equity', NULL),
+(23, 8, 'bank_loans_payable', 'Bank Loans Payable (greater than 12 months)', NULL),
+(24, 8, 'Less_Short_term_Portion ', 'Less: Short-term Portion ', NULL),
+(25, 8, 'notes_payable_to_stockholders', 'Notes Payable to Stockholders\r\n', NULL),
+(27, NULL, 'income_statement', 'Income Statement', NULL),
+(28, 27, 'income', 'Income', NULL),
+(29, 27, 'expenses', 'Expenses', NULL),
+(30, 28, 'interest_income', 'Interest Income', NULL),
+(31, 28, 'other_income', 'Other Income', NULL),
+(32, 29, 'amortization', 'Amortization', NULL),
+(33, 29, 'bad_debts', 'Bad Debts', NULL),
+(34, 29, 'bank_charges', 'Bank Charges', NULL),
+(35, 29, 'charitable_contributions', 'Charitable Contributions', NULL),
+(36, 29, 'commissions', 'Commissions', NULL),
+(37, 29, 'contract_labor', 'Contract Labor', NULL),
+(38, 29, 'Depreciation', 'depreciation', NULL),
+(39, 29, 'dues_and_subscriptions', 'Dues and Subscriptions', NULL),
+(40, 29, 'employee_benefit_programs', 'Employee Benefit Programs', NULL),
+(41, 29, 'insurance', 'Insurance', NULL),
+(42, 29, 'interest', 'Interest', NULL),
+(43, 29, 'legal_and_professional_fees', 'Legal and Professional Fees', NULL),
+(44, 29, 'licenses_and_fees', 'Licenses and Fees', NULL),
+(45, 29, 'miscellaneous', 'Miscellaneous', NULL),
+(46, 29, 'office_expense', 'Office Expense', NULL),
+(47, 29, 'payroll_taxes', 'Payroll Taxes', NULL),
+(48, 29, 'postage', 'Postage', NULL),
+(49, 29, 'rent', 'Rent', NULL),
+(50, 29, 'repairs_and_maintenance', 'Repairs and Maintenance', NULL),
+(51, 29, 'supplies', 'Supplies', NULL),
+(52, 29, 'telephone', 'Telephone', NULL),
+(53, 29, 'travel', 'Travel', NULL),
+(54, 29, 'utilities', 'Utilities', NULL),
+(55, 29, 'vehicle_expenses', 'Vehicle Expenses', NULL),
+(56, 29, 'wages', 'Wages', NULL);
 
 -- --------------------------------------------------------
 
@@ -375,7 +436,8 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('a168785822ec9089c1ac3437654d8d60cc77c18d', 79, '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6IlBBRmNPanljeTczOFYzcWRSWlM0aTNIVnVqdENZN2hDYTJ5OXBza1YiO3M6MzoidXJsIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0OToiaHR0cDovL2xvY2FsaG9zdC9vY2Vhbi9jb25zby9jYXBpdGFsL2NvbnRyaWJ1dGlvbiI7fXM6NToiZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Nzk7czo0OiJyb2xlIjtpOjE7czo3OiJ1c2VyX2lkIjtpOjc5O3M6OToiZW50aXR5X2lkIjtpOjE7czo4OiJncm91cF9pZCI7aTo1O3M6OToiX3NmMl9tZXRhIjthOjM6e3M6MToidSI7aToxNDY0MTkxNTAxO3M6MToiYyI7aToxNDY0MTUzMzY0O3M6MToibCI7czoxOiIwIjt9fQ==', 1464191501);
+('a168785822ec9089c1ac3437654d8d60cc77c18d', 79, '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'YToxMDp7czo2OiJfdG9rZW4iO3M6NDA6IlBBRmNPanljeTczOFYzcWRSWlM0aTNIVnVqdENZN2hDYTJ5OXBza1YiO3M6MzoidXJsIjthOjA6e31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0NDoiaHR0cDovL2xvY2FsaG9zdC9vY2Vhbi9sb2FuL2FwcGxpY2F0aW9uL2Zvcm0iO31zOjU6ImZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjc5O3M6NDoicm9sZSI7aToxO3M6NzoidXNlcl9pZCI7aTo3OTtzOjk6ImVudGl0eV9pZCI7aToxO3M6ODoiZ3JvdXBfaWQiO2k6NTtzOjk6Il9zZjJfbWV0YSI7YTozOntzOjE6InUiO2k6MTQ2NDE5MjQ3MjtzOjE6ImMiO2k6MTQ2NDE1MzM2NDtzOjE6ImwiO3M6MToiMCI7fX0=', 1464192472),
+('d591584f40d1cd6b8253a37774357ae9ad151ce1', 79, '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'YTo5OntzOjY6Il90b2tlbiI7czo0MDoiMkNpc25NeVZnM3FhY2Fuc0VJSW55ZEVMU1F5NXBqUHV5cHBMTmJFTyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly9sb2NhbGhvc3Qvb2NlYW4vbG9hbi9wcm9kdWN0cyI7fXM6NToiZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Nzk7czo0OiJyb2xlIjtpOjE7czo3OiJ1c2VyX2lkIjtpOjc5O3M6OToiZW50aXR5X2lkIjtpOjE7czo4OiJncm91cF9pZCI7aTo1O3M6OToiX3NmMl9tZXRhIjthOjM6e3M6MToidSI7aToxNDY0NjIxMTI3O3M6MToiYyI7aToxNDY0NjEzNjAwO3M6MToibCI7czoxOiIwIjt9fQ==', 1464621127);
 
 -- --------------------------------------------------------
 
@@ -423,7 +485,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `name`, `contact_number`, `em
 (76, 'tanauncoop_user', '$2y$10$m4QXvKaI06tIC3qKX3tEQOdVY7FWtZRPTkbzkipTt4hHcDtLpqP6C', 'Tanaun Coop User', '092787253', '', 'http://localhost/ocean/public/images/users/1456852745.jpg', NULL, 1, 0, 1, 1, 2, '', '2016-03-01 09:19:05', '2016-03-01 09:46:16', '2016-09-02'),
 (77, 'support', '$2y$10$eJ0MWteL56gHFokYqkzzKekd/2w7xsh2LpGWUjfbKqL0ySd30xpC6', 'Support Support', '094563456', '', 'NULL', NULL, 1, 0, 0, NULL, 11, '', '2016-03-01 09:49:03', '2016-03-01 09:49:03', '2016-09-02'),
 (78, 'asfasdf', '$2y$10$r9YhBfv66FRh1WocvYJZFexpBN10iT5wg5MmhbBxZ5LA5uVeMaZqu', 'Fasdfs', '9567867', 'christianjaybayno@gmail.com', 'NULL', NULL, 1, 0, 0, NULL, 11, '', '2016-03-16 07:03:16', '2016-03-16 07:03:16', '2016-09-16'),
-(79, 'CTECC_USER', '$2y$10$CEFKDZPD4YTLElSTx20wdeT2l90H3DRT7FytvFOXMY8voO1mlnK4W', 'Christian Jay Bayno', '0927111111', '', 'public/images/users/1463847206.png', 'OAWf1wybsgFzqWz3ldcYR1tG6dMtsp5wULRd0Vb3gXse9VDccoAgHH3XKtgu', 1, 1, 1, 1, 5, '', '2016-03-23 10:46:20', '2016-05-24 21:17:05', '2016-09-24'),
+(79, 'CTECC_USER', '$2y$10$CEFKDZPD4YTLElSTx20wdeT2l90H3DRT7FytvFOXMY8voO1mlnK4W', 'Christian Jay Bayno', '0927111111', '', 'public/images/users/1463847206.png', 'OAWf1wybsgFzqWz3ldcYR1tG6dMtsp5wULRd0Vb3gXse9VDccoAgHH3XKtgu', 1, 1, 1, 1, 5, '', '2016-03-23 10:46:20', '2016-05-30 05:08:17', '2016-09-24'),
 (82, 'joy_test', '$2y$10$64JlxJ1YW8IK.qyGuQEKJeepLDWA5fHiW/vO1LZWKEFW6x0xCSTMi', 'Marjoirie Ordenes', '09645634564', '', 'public/images/users/1462116923.jpg', NULL, 3, 0, 1, 1, 5, '', '2016-05-01 07:35:23', '2016-05-01 07:36:14', '2016-11-01'),
 (83, 'superadmin', '$2y$10$X74W.ad6.tA61/a7G.GlHO8Mz1u5EN2FGLWu7MAW2nG.m.0as/3b2', 'Christian Jay Bayno', '09278726770', 'christianjaybayno@gmail.com', 'public/images/users/1463847357.png', 'tRQ4NPvXfBbBpM2A9qgl4UfQ0W3HxSJ24Rrt1QILC9sPACFM3jmnpXwbfg0w', 1, 0, 0, NULL, 1, '', '2016-05-21 07:31:47', '2016-05-21 08:38:24', '2016-11-21'),
 (84, 'peoplescoop_user', '$2y$10$i2roqJ2thlCliL4xppzyWu3xfWVGE5Mv6Up9ip1DAj12dTAM1JKwu', 'Peoplescoop Cooperative', '0927876771', '', 'public/images/users/1463847269.png', 'a7YdAQcoAXFsSJrHlgKSKuxrdBv9c1BeRZKkzDEramKZlcVd9r9bgYUOee9q', 1, 0, 1, 2, 4, '', '2016-05-21 07:34:18', '2016-05-21 09:26:38', '2016-11-21');
@@ -2811,7 +2873,7 @@ ALTER TABLE `loan_applications`
 -- AUTO_INCREMENT for table `loan_products`
 --
 ALTER TABLE `loan_products`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `members`
 --
@@ -2821,7 +2883,7 @@ ALTER TABLE `members`
 -- AUTO_INCREMENT for table `parameters`
 --
 ALTER TABLE `parameters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT for table `payments`
 --
