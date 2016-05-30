@@ -77,6 +77,12 @@ Route::group(['middleware' => 'web'], function () {
 				'getIndex' 		  => 'conso.capital',
 				'getContribution' => 'conso.capital.contribution',
 			]);
+			
+			// consolidated savings route
+			Route::controller('savings', 'Conso\SavingsController', [
+				'getIndex' 		  => 'conso.savings',
+				'getContribution' => 'conso.savings.contribution',
+			]);
 		});
 		
 		

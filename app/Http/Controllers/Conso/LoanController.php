@@ -11,6 +11,7 @@ use Datatables;
 use App\Entity;
 use App\LoanProduct; 
 use App\Http\Requests;
+use App\Repository\LoanManagement;
 use App\Http\Controllers\Controller;
 
 class LoanController extends Controller
@@ -28,11 +29,14 @@ class LoanController extends Controller
 	
 	/**
      * Create a new instance.
-     *
+	 *
+     * @param  LoanManagement  $LoanRepository
      * @return void
      */
-	public function __construct()
+	public function __construct(LoanManagement $LoanRepository)
 	{
+		$this->loanRepo = $LoanRepository;
+		
 		$this->middleware('ajax.request', ['except' => [
             'getIndex',
         ]]);
