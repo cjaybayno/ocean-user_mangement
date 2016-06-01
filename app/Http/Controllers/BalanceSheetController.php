@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Log;
 
+use App\Parameter;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -42,9 +43,14 @@ class BalanceSheetController extends Controller
      */
 	public function getForm()
 	{
+		$balanceSheet = Parameter::where('name', 'balance_sheet')->first();
+		$params = Parameter::where('parent_id', $balanceSheet->id)->get()->toArray();
+		$params = $this->builTree($params);
+		
 		$assets = [
 			'scripts' => [
-				'/assets/modules/loans/.js' 
+				'/assets/gentellela-alela/js/jquery.number.min.js',
+				'/assets/modules/balanceSheet/assets-form.js' 
 			],
 			'stylesheets' => [
 				
@@ -56,7 +62,42 @@ class BalanceSheetController extends Controller
 		
         return view('modules/balanceSheet/form')->with([
 			$this->menuKey => $this->menuValue,
-			'assets' 	   => $assets
-		]);
+			'assets' 	   => $assets,
+			'assetParams'  => $this->getParent($params, 'assets'),
+			'laeParams'    => $this->getParent($params, 'liabilities_and_equity'),
+ 		]);
+	}
+	
+	/**
+     * Get Specific parent
+     *
+     * @param array $params
+     * @return Array
+     */
+	private function getParent($params, $name)
+	{
+		foreach ($params as $param) {
+			if ($param['name'] == $name) $params = $param;
+		}
+		
+		return $params;
+	}
+	
+	/**
+     * Build Tree
+     *
+     * @param array $params
+     * @return Array
+     */
+	private function builTree($params)
+	{
+		$primaryData = [];
+		for ($i = 0; $i < count($params); $i++) {
+			$child = Parameter::where('parent_id', $params[$i]['id'])->get()->toArray();
+			$params[$i]['child'] = $this->builTree($child);
+			$primaryData[] = $params[$i];
+		}
+		
+		return $primaryData;
 	}
 }
