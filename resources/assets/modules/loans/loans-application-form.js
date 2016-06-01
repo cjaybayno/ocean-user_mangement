@@ -327,6 +327,7 @@
 					dataType: 'json',
 					complete: function() {
 						loadingModal('close');
+						scrollTop();
 					},
 					error: function(result) {
 						notifier('danger','#loan-application-creation-result', oops);

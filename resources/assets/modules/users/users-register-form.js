@@ -80,6 +80,7 @@
 					processData: false,
 					complete: function() {	
 						loadingModal('close');
+						scrollTop();
 					},
 					error: function(result) {
 						notifier('danger','#user-creation-result', oops);

@@ -99,6 +99,7 @@
 					dataType: 'json',
 					complete: function() {
 						loadingModal('close');
+						scrollTop();
 					},
 					error: function(result) {
 						notifier('danger','#payments-make-result', oops);

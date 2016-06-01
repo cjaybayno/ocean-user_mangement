@@ -75,6 +75,7 @@
 					dataType: 'json',
 					complete: function() {
 						loadingModal('close');
+						scrollTop();
 					},
 					error: function(result) {
 						notifier('danger',resultDiv, oops);

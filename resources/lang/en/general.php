@@ -14,4 +14,6 @@ return [
 	/* === General error Message === */
    'oops' => "Sorry, we couldn't complete your action because of some problem on our server. Please try again.",
    
+   'successSave' => 'Transaction Succesfully Save!'
+   
 ];

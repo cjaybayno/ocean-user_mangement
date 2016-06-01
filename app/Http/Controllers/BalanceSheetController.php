@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Log;
 
 use App\Parameter;
+use App\BalanceSheet;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -50,7 +51,7 @@ class BalanceSheetController extends Controller
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/jquery.number.min.js',
-				'/assets/modules/balanceSheet/assets-form.js' 
+				'/assets/modules/balanceSheet/form.js' 
 			],
 			'stylesheets' => [
 				
@@ -99,5 +100,30 @@ class BalanceSheetController extends Controller
 		}
 		
 		return $primaryData;
+	}
+	
+	public function postStore(Request $request) 
+	{
+		// foreach($request->input() as $paramId => $amount) {
+			// if ($amount != 0 OR !empty($amount)) {
+				// $balanceSheet = new BalanceSheet;
+				// $balanceSheet->param_id = $paramId;
+				// $balanceSheet->amount   = $amount;
+				// $balanceSheet->save();
+				
+				// Log::info('Balance sheet save : ', [
+					// 'table'	=> [
+						// 'name' => 'balance_sheets',
+						// 'data' => $balanceSheet->toArray()
+					// ],
+					// 'session' => session()->all()
+				// ]);
+			// }
+		// }
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('general.successSave'),
+		]);
 	}
 }
