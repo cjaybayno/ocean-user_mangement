@@ -16,12 +16,6 @@ use App\Http\Controllers\Controller;
 
 class ProductsController extends Controller
 {
-    /**
-	* Determine Active Menu
-	*/
-	public $menuKey   = 'loanProductsActiveMenu';
-	public $menuValue = 'current-page';
-	
 	/**
 	* Frontend route 
 	*/
@@ -69,8 +63,7 @@ class ProductsController extends Controller
 		
 			
         return view('modules/loans/products.list')->with([
-			$this->menuKey => $this->menuValue,
-			'assets' 	   => $assets
+			'assets' => $assets
 		]);
     }
 	
@@ -134,7 +127,6 @@ class ProductsController extends Controller
 		Log::info('View loan product create: ', ['session' => session()->all()]);
 	
         return view('modules/loans/products.form')->with([
-			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
 			'entities'     => $this->loanRepo->entities(),
 			'viewType'	   => 'create'
@@ -197,7 +189,6 @@ class ProductsController extends Controller
 		Log::info('View loan product show: ', ['session' => session()->all()]);
 	
         return view('modules/loans/products.form')->with([
-			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
 			'entities'     => $this->loanRepo->entities(),
 			'viewType'	   => 'view',
@@ -231,7 +222,6 @@ class ProductsController extends Controller
 		Log::info('View loan product show: ', ['session' => session()->all()]);
 	
         return view('modules/loans/products.form')->with([
-			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
 			'entities'     => $this->loanRepo->entities(),
 			'viewType'	   => 'edit',

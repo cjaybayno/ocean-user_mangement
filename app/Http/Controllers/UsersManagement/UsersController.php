@@ -19,12 +19,6 @@ use App\Http\Controllers\Controller;
 class UsersController extends Controller
 {
 	/**
-	 * Determine Active Menu
-	 */
-	public $menuKey   = 'userActiveMenu';
-	public $menuValue = 'current-page';
-	
-	/**
      * The user repository implementation.
      */
 	protected $userRepo;
@@ -67,8 +61,7 @@ class UsersController extends Controller
 		Log::info('View users list: ', ['session' => Session::all()]);
 		
         return view('modules/users.list')->with([
-			$this->menuKey => $this->menuValue,
-			'assets' 	   => $assets
+			'assets' => $assets
 		]);
     }
 	
@@ -161,11 +154,10 @@ class UsersController extends Controller
 		Log::info('View user registration: ', ['session' => Session::all()]);
 		
         return view('modules/users.form')->with([
-			$this->menuKey => $this->menuValue,
-			'assets' 	   => $assets,
-			'userGroup'    => $this->userRepo->groups(),
-			'entities'     => $this->userRepo->entities(),
-			'viewType'	   => 'create'
+			'assets' 	 => $assets,
+			'userGroup'  => $this->userRepo->groups(),
+			'entities'   => $this->userRepo->entities(),
+			'viewType'	 => 'create'
 		]);
     }
 	
@@ -329,7 +321,6 @@ class UsersController extends Controller
 		 
 		
 		return view('modules/users.form')->with([
-			$this->menuKey    => $this->menuValue,
 			'assets'	      => $assets,
 			'user'		      => $user,
 			'userGroup'		  => $this->userRepo->groups($user->entity_id),
@@ -428,10 +419,9 @@ class UsersController extends Controller
 		]);
 		
 		return view('modules/users.form')->with([
-			$this->menuKey => $this->menuValue,
-			'assets'	   => $assets,
-			'user'		   => $user,
-			'viewType'	   => 'edit',
+			'assets'	=> $assets,
+			'user'		=> $user,
+			'viewType'	=> 'edit',
 		]);
 	}
 	

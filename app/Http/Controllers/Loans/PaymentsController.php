@@ -19,12 +19,6 @@ use App\Http\Controllers\Controller;
 
 class PaymentsController extends Controller
 {
-    /**
-	* Determine Active Menu
-	*/
-	public $menuKey   = 'loanPaymentsActiveMenu';
-	public $menuValue = 'current-page';
-	
 	/**
 	* Frontend route 
 	*/
@@ -77,8 +71,7 @@ class PaymentsController extends Controller
 		Log::info('View loan payments made list: ', ['session' => session()->all()]);
 		
         return view('modules/loans/payments.list')->with([
-			$this->menuKey => $this->menuValue,
-			'assets' 	   => $assets
+			'assets' => $assets
 		]);
 	}
 	
@@ -166,7 +159,6 @@ class PaymentsController extends Controller
 		$payementType[''] = 'Select Payment Type';
 	
         return view('modules/loans/payments.form')->with([
-			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
 			'payementType' => $payementType,
 		]);

@@ -13,12 +13,6 @@ use App\Http\Controllers\Controller;
 
 class BalanceSheetController extends Controller
 {
-    /**
-	* Determine Active Menu
-	*/
-	public $menuKey   = 'BalanceSheetActiveMenu';
-	public $menuValue = 'current-page';
-	
 	/**
 	* Frontend route 
 	*/
@@ -62,10 +56,9 @@ class BalanceSheetController extends Controller
 		Log::info('View balance sheet: ', ['session' => session()->all()]);
 		
         return view('modules/balanceSheet/form')->with([
-			$this->menuKey => $this->menuValue,
-			'assets' 	   => $assets,
-			'assetParams'  => $this->getParent($params, 'assets'),
-			'laeParams'    => $this->getParent($params, 'liabilities_and_equity'),
+			'assets' 	  => $assets,
+			'assetParams' => $this->getParent($params, 'assets'),
+			'laeParams'   => $this->getParent($params, 'liabilities_and_equity'),
  		]);
 	}
 	
@@ -104,22 +97,22 @@ class BalanceSheetController extends Controller
 	
 	public function postStore(Request $request) 
 	{
-		// foreach($request->input() as $paramId => $amount) {
-			// if ($amount != 0 OR !empty($amount)) {
-				// $balanceSheet = new BalanceSheet;
-				// $balanceSheet->param_id = $paramId;
-				// $balanceSheet->amount   = $amount;
-				// $balanceSheet->save();
+		foreach($request->input() as $paramId => $amount) {
+			if ($amount != 0 OR !empty($amount)) {
+				$balanceSheet = new BalanceSheet;
+				$balanceSheet->param_id = $paramId;
+				$balanceSheet->amount   = $amount;
+				$balanceSheet->save();
 				
-				// Log::info('Balance sheet save : ', [
-					// 'table'	=> [
-						// 'name' => 'balance_sheets',
-						// 'data' => $balanceSheet->toArray()
-					// ],
-					// 'session' => session()->all()
-				// ]);
-			// }
-		// }
+				Log::info('Balance sheet save : ', [
+					'table'	=> [
+						'name' => 'balance_sheets',
+						'data' => $balanceSheet->toArray()
+					],
+					'session' => session()->all()
+				]);
+			}
+		}
 		
 		return response()->json([
 			'success' => true,

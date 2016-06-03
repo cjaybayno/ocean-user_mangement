@@ -16,12 +16,6 @@ use App\Http\Controllers\Controller;
 
 class LoanController extends Controller
 {
-    /**
-	* Determine Active Menu
-	*/
-	public $menuKey   = 'consoActiveMenu';
-	public $menuValue = 'current-page';
-	
 	/**
 	* Frontend route 
 	*/
@@ -73,9 +67,8 @@ class LoanController extends Controller
 		Log::info('View loan consolidation : ', ['session' => session()->all()]);
 		
         return view('modules/conso/loan.conso')->with([
-			$this->menuKey => $this->menuValue,
-			'loanTypes'	   => $this->loanRepo->loanProducts(),
-			'assets' 	   => $assets,
+			'loanTypes'	=> $this->loanRepo->loanProducts(),
+			'assets' 	=> $assets,
 		]);
 	}
 	

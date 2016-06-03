@@ -17,12 +17,6 @@ use App\Http\Controllers\Controller;
 
 class SavingsController extends Controller
 {
-    /**
-	* Determine Active Menu
-	*/
-	public $menuKey   = 'consoActiveMenu';
-	public $menuValue = 'current-page';
-	
 	/**
 	* Frontend route 
 	*/
@@ -71,7 +65,6 @@ class SavingsController extends Controller
 		Log::info('View savings consolidation : ', ['session' => session()->all()]);
 		
         return view('modules/conso/savings.conso')->with([
-			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
 		]);
 	}
@@ -187,7 +180,6 @@ class SavingsController extends Controller
 		Log::info('View savings yearly contribution : ', ['session' => session()->all()]);
 		
         return view('modules/conso/savings.contribution')->with([
-			$this->menuKey  => $this->menuValue,
 			'assets'		=> $assets,
 			'monthNames'	=> $monthNames,
 			'contributions'	=> $savingsceMembers,

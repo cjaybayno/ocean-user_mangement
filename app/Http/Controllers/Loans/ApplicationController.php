@@ -19,12 +19,6 @@ use App\Http\Controllers\Controller;
 
 class ApplicationController extends Controller
 {
-    /**
-	* Determine Active Menu
-	*/
-	public $menuKey   = 'loanActiveMenu';
-	public $menuValue = 'current-page';
-	
 	/**
 	* Frontend route 
 	*/
@@ -80,7 +74,6 @@ class ApplicationController extends Controller
 		Log::info('View loan application form: ', ['session' => session()->all()]);
 	
         return view('modules/loans/application.form')->with([
-			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
 			'loanTypes'	   => $this->loanRepo->loanProducts(),
 			'viewType'	   => 'create'
@@ -112,8 +105,7 @@ class ApplicationController extends Controller
 		Log::info('View loan application current: ', ['session' => session()->all()]);
 		
         return view('modules/loans/application.current')->with([
-			$this->menuKey => $this->menuValue,
-			'assets' 	   => $assets
+			'assets' => $assets
 		]);
 	}
 	
@@ -167,9 +159,8 @@ class ApplicationController extends Controller
 		Log::info('View loan application show: ', ['session' => session()->all()]);
 	
         return view('modules/loans/application.show')->with([
-			$this->menuKey => $this->menuValue,
-			'loanTypes'	   => $this->loanRepo->loanProducts(),
-			'application'  => $loaApplication,
+			'loanTypes'	  => $this->loanRepo->loanProducts(),
+			'application' => $loaApplication,
 		]);
     }
 	
@@ -200,10 +191,9 @@ class ApplicationController extends Controller
 		Log::info('View loan application form: ', ['session' => session()->all()]);
 	
         return view('modules/loans/application.members')->with([
-			$this->menuKey => $this->menuValue,
-			'assets' 	   => $assets,
-			'loanTypes'	   => $this->loanRepo->loanProducts(),
-			'viewType'	   => 'create'
+			'assets' 	 => $assets,
+			'loanTypes'	 => $this->loanRepo->loanProducts(),
+			'viewType'	 => 'create'
 		]);
 	}
 	

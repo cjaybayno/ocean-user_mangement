@@ -17,12 +17,6 @@ use App\Http\Controllers\Controller;
 
 class UserGroupController extends Controller
 {
-    /**
-	* Determine Active Menu
-	*/
-	public $menuKey   = 'userGroupActiveMenu';
-	public $menuValue = 'current-page';
-	
 	/**
      * The user repository implementation.
      */
@@ -72,8 +66,7 @@ class UserGroupController extends Controller
 		$entities[0] = 'No Entity';
 		
         return view('modules/users/groups.list')->with([
-			$this->menuKey => $this->menuValue,
-			'assets' 	   => $assets
+			'assets' => $assets
 		])
 		->nest('editUserGroupView', 'modules/users/groups.edit')
 		->nest('addUserGroupView',  'modules/users/groups.add', [

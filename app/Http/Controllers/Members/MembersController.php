@@ -16,12 +16,6 @@ use App\Http\Controllers\Controller;
 
 class MembersController extends Controller
 {
-   /**
-	* Determine Active Menu
-	*/
-	public $menuKey   = 'memberActiveMenu';
-	public $menuValue = 'current-page';
-	
 	/**
 	* Frontend route 
 	*/
@@ -74,8 +68,7 @@ class MembersController extends Controller
 		Log::info('View members list: ', ['session' => session()->all()]);
 		
         return view('modules/members.list')->with([
-			$this->menuKey => $this->menuValue,
-			'assets' 	   => $assets
+			'assets' => $assets
 		]);
 	}
 	
@@ -129,7 +122,6 @@ class MembersController extends Controller
 		Log::info('View member registration form: ', ['session' => session()->all()]);
 	
         return view('modules/members.register')->with([
-			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
 			'provinceCity' => $this->memberRepo->provinceCity(),
 		]);
@@ -146,9 +138,8 @@ class MembersController extends Controller
 		Log::info('View specific member : ', ['session' => session()->all()]);
 	
         return view('modules/members.show')->with([
-			$this->menuKey => $this->menuValue,
-			'member' 	   => Member::findOrFail(Crypt::decrypt($encryptId)),
-			'encryptId'    => $encryptId,
+			'member' 	=> Member::findOrFail(Crypt::decrypt($encryptId)),
+			'encryptId' => $encryptId,
 		]);
     }
 	
@@ -179,7 +170,6 @@ class MembersController extends Controller
 		Log::info('View member edit form: ', ['session' => session()->all()]);
 	
         return view('modules/members.edit')->with([
-			$this->menuKey => $this->menuValue,
 			'assets' 	   => $assets,
 			'provinceCity' => $this->memberRepo->provinceCity(),
 			'brgyTown' 	   => $this->memberRepo->brgyTown($member->province_city_address),

@@ -17,12 +17,6 @@ use App\Http\Controllers\Controller;
 
 class CapitalController extends Controller
 {
-    /**
-	* Determine Active Menu
-	*/
-	public $menuKey   = 'consoActiveMenu';
-	public $menuValue = 'current-page';
-	
 	/**
 	* Frontend route 
 	*/
@@ -71,8 +65,7 @@ class CapitalController extends Controller
 		Log::info('View capital consolidation : ', ['session' => session()->all()]);
 		
         return view('modules/conso/capital.conso')->with([
-			$this->menuKey => $this->menuValue,
-			'assets' 	   => $assets,
+			'assets' => $assets,
 		]);
 	}
 	
@@ -187,7 +180,6 @@ class CapitalController extends Controller
 		Log::info('View capital yearly contribution : ', ['session' => session()->all()]);
 		
         return view('modules/conso/capital.contribution')->with([
-			$this->menuKey  => $this->menuValue,
 			'assets'		=> $assets,
 			'monthNames'	=> $monthNames,
 			'contributions'	=> $capitalceMembers,
