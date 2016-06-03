@@ -32,8 +32,6 @@ class UsersController extends Controller
 	public function __construct(UserManagement $UserRepository)
 	{
 		$this->userRepo = $UserRepository;
-		
-        $this->authorize('adminRole');
 	}
 	
     /**
