@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2016 at 07:29 PM
+-- Generation Time: Jun 03, 2016 at 10:05 PM
 -- Server version: 5.6.25
 -- PHP Version: 5.6.11
 
@@ -285,78 +285,133 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `modules`
+--
+
+CREATE TABLE IF NOT EXISTS `modules` (
+  `id` int(11) NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `order_list` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(50) NOT NULL,
+  `label` varchar(50) NOT NULL,
+  `role` int(1) NOT NULL,
+  `route` varchar(20) DEFAULT NULL,
+  `icon` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `modules`
+--
+
+INSERT INTO `modules` (`id`, `parent_id`, `order_list`, `name`, `label`, `role`, `route`, `icon`) VALUES
+(1, NULL, 2, 'user_management', 'User Management', 0, NULL, NULL),
+(2, 1, 0, 'users', 'Users', 0, 'users', 'fa fa-user'),
+(3, NULL, 0, 'loans', 'Loans', 1, NULL, NULL),
+(4, 3, 1, 'member', 'Members', 1, NULL, 'fa fa-users'),
+(5, 4, 0, 'list', 'List', 1, 'members', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `parameters`
 --
 
 CREATE TABLE IF NOT EXISTS `parameters` (
   `id` int(11) NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
+  `order_list` int(10) NOT NULL DEFAULT '0',
   `name` varchar(250) NOT NULL,
   `label` varchar(250) NOT NULL,
   `value` text
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `parameters`
 --
 
-INSERT INTO `parameters` (`id`, `parent_id`, `name`, `label`, `value`) VALUES
-(1, NULL, 'balance_sheet', 'Balance Sheet', NULL),
-(2, 1, 'assets', 'ASSETS', NULL),
-(3, 1, 'liabilities_and_equity', 'LIABILITIES AND OWNER''S EQUITY', NULL),
-(4, 2, 'current_assets', 'Current Assets', NULL),
-(5, 2, 'fixed_assets', 'Fixed Assets', NULL),
-(6, 2, 'other_assets', 'Other Assets', NULL),
-(7, 3, 'current_liabilities', 'Current Liabilities', NULL),
-(8, 3, 'long_term_liabilities', 'Long-Term Liabilities', NULL),
-(9, 3, 'other_liabilities', 'Other Liabilities', NULL),
-(10, 4, 'cash_in_bank', 'Cash in Bank', NULL),
-(11, 4, 'accounts_receivables', 'Accounts Receivables', NULL),
-(12, 4, 'prepaid_expenses', 'Prepaid Expenses', NULL),
-(13, 4, 'other', 'Other', NULL),
-(14, 5, 'machinery_and_equipment', 'Machinery & Equipment', NULL),
-(15, 5, 'furniture_and_fixtures', 'Furniture & Fixtures', NULL),
-(16, 5, 'leasehold_improvements', 'Leasehold Improvements', NULL),
-(17, 5, 'real_estate_Buildings', 'Real Estate / Buildings', NULL),
-(18, 5, 'other', 'Other', NULL),
-(19, 7, 'accounts_payable', 'Accounts Payable', NULL),
-(20, 7, 'taxes_payable', 'Taxes Payable', NULL),
-(21, 7, 'loans', 'Loans', NULL),
-(22, 3, 'equity', 'Company Equity', NULL),
-(23, 8, 'bank_loans_payable', 'Bank Loans Payable (greater than 12 months)', NULL),
-(24, 8, 'Less_Short_term_Portion ', 'Less: Short-term Portion ', NULL),
-(25, 8, 'notes_payable_to_stockholders', 'Notes Payable to Stockholders', NULL),
-(27, NULL, 'income_statement', 'Income Statement', NULL),
-(28, 27, 'income', 'Income', NULL),
-(29, 27, 'expenses', 'Expenses', NULL),
-(30, 28, 'interest_income', 'Interest Income', NULL),
-(31, 28, 'other_income', 'Other Income', NULL),
-(32, 29, 'amortization', 'Amortization', NULL),
-(33, 29, 'bad_debts', 'Bad Debts', NULL),
-(34, 29, 'bank_charges', 'Bank Charges', NULL),
-(35, 29, 'charitable_contributions', 'Charitable Contributions', NULL),
-(36, 29, 'commissions', 'Commissions', NULL),
-(37, 29, 'contract_labor', 'Contract Labor', NULL),
-(38, 29, 'Depreciation', 'depreciation', NULL),
-(39, 29, 'dues_and_subscriptions', 'Dues and Subscriptions', NULL),
-(40, 29, 'employee_benefit_programs', 'Employee Benefit Programs', NULL),
-(41, 29, 'insurance', 'Insurance', NULL),
-(42, 29, 'interest', 'Interest', NULL),
-(43, 29, 'legal_and_professional_fees', 'Legal and Professional Fees', NULL),
-(44, 29, 'licenses_and_fees', 'Licenses and Fees', NULL),
-(45, 29, 'miscellaneous', 'Miscellaneous', NULL),
-(46, 29, 'office_expense', 'Office Expense', NULL),
-(47, 29, 'payroll_taxes', 'Payroll Taxes', NULL),
-(48, 29, 'postage', 'Postage', NULL),
-(49, 29, 'rent', 'Rent', NULL),
-(50, 29, 'repairs_and_maintenance', 'Repairs and Maintenance', NULL),
-(51, 29, 'supplies', 'Supplies', NULL),
-(52, 29, 'telephone', 'Telephone', NULL),
-(53, 29, 'travel', 'Travel', NULL),
-(54, 29, 'utilities', 'Utilities', NULL),
-(55, 29, 'vehicle_expenses', 'Vehicle Expenses', NULL),
-(56, 29, 'wages', 'Wages', NULL),
-(57, 22, 'equity', 'Total Equity', NULL);
+INSERT INTO `parameters` (`id`, `parent_id`, `order_list`, `name`, `label`, `value`) VALUES
+(1, NULL, 0, 'balance_sheet', 'Balance Sheet', NULL),
+(2, 1, 0, 'assets', 'ASSETS', NULL),
+(3, 1, 0, 'liabilities_and_equity', 'LIABILITIES AND OWNER''S EQUITY', NULL),
+(4, 2, 0, 'current_assets', 'Current Assets', NULL),
+(5, 2, 0, 'fixed_assets', 'Fixed Assets', NULL),
+(6, 2, 0, 'other_assets', 'Other Assets', NULL),
+(7, 3, 0, 'current_liabilities', 'Current Liabilities', NULL),
+(8, 3, 0, 'long_term_liabilities', 'Long-Term Liabilities', NULL),
+(9, 3, 0, 'other_liabilities', 'Other Liabilities', NULL),
+(10, 4, 0, 'cash_in_bank', 'Cash in Bank', NULL),
+(11, 4, 0, 'accounts_receivables', 'Accounts Receivables', NULL),
+(12, 4, 0, 'prepaid_expenses', 'Prepaid Expenses', NULL),
+(13, 4, 0, 'other', 'Other', NULL),
+(14, 5, 0, 'machinery_and_equipment', 'Machinery & Equipment', NULL),
+(15, 5, 0, 'furniture_and_fixtures', 'Furniture & Fixtures', NULL),
+(16, 5, 0, 'leasehold_improvements', 'Leasehold Improvements', NULL),
+(17, 5, 0, 'real_estate_Buildings', 'Real Estate / Buildings', NULL),
+(18, 5, 0, 'other', 'Other', NULL),
+(19, 7, 0, 'accounts_payable', 'Accounts Payable', NULL),
+(20, 7, 0, 'taxes_payable', 'Taxes Payable', NULL),
+(21, 7, 0, 'loans', 'Loans', NULL),
+(22, 3, 0, 'equity', 'Company Equity', NULL),
+(23, 8, 0, 'bank_loans_payable', 'Bank Loans Payable (greater than 12 months)', NULL),
+(24, 8, 0, 'Less_Short_term_Portion ', 'Less: Short-term Portion ', NULL),
+(25, 8, 0, 'notes_payable_to_stockholders', 'Notes Payable to Stockholders', NULL),
+(27, NULL, 0, 'income_statement', 'Income Statement', NULL),
+(28, 27, 0, 'income', 'Income', NULL),
+(29, 27, 0, 'expenses', 'Expenses', NULL),
+(30, 28, 0, 'interest_income', 'Interest Income', NULL),
+(31, 28, 0, 'other_income', 'Other Income', NULL),
+(32, 29, 0, 'amortization', 'Amortization', NULL),
+(33, 29, 0, 'bad_debts', 'Bad Debts', NULL),
+(34, 29, 0, 'bank_charges', 'Bank Charges', NULL),
+(35, 29, 0, 'charitable_contributions', 'Charitable Contributions', NULL),
+(36, 29, 0, 'commissions', 'Commissions', NULL),
+(37, 29, 0, 'contract_labor', 'Contract Labor', NULL),
+(38, 29, 0, 'Depreciation', 'depreciation', NULL),
+(39, 29, 0, 'dues_and_subscriptions', 'Dues and Subscriptions', NULL),
+(40, 29, 0, 'employee_benefit_programs', 'Employee Benefit Programs', NULL),
+(41, 29, 0, 'insurance', 'Insurance', NULL),
+(42, 29, 0, 'interest', 'Interest', NULL),
+(43, 29, 0, 'legal_and_professional_fees', 'Legal and Professional Fees', NULL),
+(44, 29, 0, 'licenses_and_fees', 'Licenses and Fees', NULL),
+(45, 29, 0, 'miscellaneous', 'Miscellaneous', NULL),
+(46, 29, 0, 'office_expense', 'Office Expense', NULL),
+(47, 29, 0, 'payroll_taxes', 'Payroll Taxes', NULL),
+(48, 29, 0, 'postage', 'Postage', NULL),
+(49, 29, 0, 'rent', 'Rent', NULL),
+(50, 29, 0, 'repairs_and_maintenance', 'Repairs and Maintenance', NULL),
+(51, 29, 0, 'supplies', 'Supplies', NULL),
+(52, 29, 0, 'telephone', 'Telephone', NULL),
+(53, 29, 0, 'travel', 'Travel', NULL),
+(54, 29, 0, 'utilities', 'Utilities', NULL),
+(55, 29, 0, 'vehicle_expenses', 'Vehicle Expenses', NULL),
+(56, 29, 0, 'wages', 'Wages', NULL),
+(57, 22, 0, 'equity', 'Total Equity', NULL),
+(58, NULL, 0, 'menus', 'Menus', NULL),
+(59, 58, 2, 'user_management', 'User Management', '{"role":"0"}'),
+(60, 59, 0, 'users', 'Users', '{"route":"users", "icon":"fa fa-user"}'),
+(61, 58, 0, 'loans', 'Loans', '{"role":"1"}'),
+(62, 61, 1, 'member', 'Members', '{"icon":"fa fa-users"}'),
+(63, 62, 0, 'list', 'List', '{"route":"members"}'),
+(64, 62, 0, 'register', 'Register', '{"route":"members.register"}'),
+(65, 61, 0, 'dashboard', 'Dashboard', '{"icon":"fa fa-dashboard"}'),
+(66, 62, 0, 'batch_registration', 'Batch Registration', ''),
+(67, 61, 2, 'application', 'Application', '{"icon":"fa fa-credit-card"}'),
+(68, 67, 0, 'current_application', 'Current Application', '{"route":"loan.application.current"}'),
+(69, 67, 0, 'form_application', 'Form Application', '{"route":"loan.application.form"}'),
+(70, 67, 0, 'member_application', 'Member Application', '{"route":"loan.application.members"}'),
+(71, 61, 3, 'consolidation', 'Consolidation', '{"icon":"fa fa-cubes"}'),
+(72, 71, 0, 'loan', 'Loan', '{"route":"conso.loan"}'),
+(73, 71, 0, 'capital', 'Capital', '{"route":"conso.capital"}'),
+(74, 71, 0, 'savings', 'Savings', '{"route":"conso.savings"}'),
+(75, 61, 4, 'payments', 'Payments', '{"icon":"fa fa-money"}'),
+(76, 75, 0, 'list_of_payments', 'List of Payments', '{"route":"payments.list"}'),
+(77, 75, 0, 'make_payments', 'Make Payments', '{"route":"payments.form"}'),
+(78, 61, 5, 'products', 'Products', '{"route":"loan.products", "icon":"fa fa-briefcase"}'),
+(79, 58, 1, 'backoffice', 'BACKOFFICE', '{"role":"1"}'),
+(80, 79, 0, 'balance_sheet', 'Balance Sheet', '{"route":"balance-sheet.form", "icon":"fa fa-file-text-o"}'),
+(81, 79, 1, 'income_statement', 'Income Statement', '{"icon":"fa fa-file-text"}'),
+(82, 59, 0, 'user_groups', 'Groups', '{"route":"user.groups", "icon":"fa fa-users"}'),
+(83, 59, 0, 'user_access', 'Access', '{"icon":"fa fa-key"}');
 
 -- --------------------------------------------------------
 
@@ -488,7 +543,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('2a43d816b7c7e3f2003543a201ac3d9b7f90e7a0', 79, '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'YTo5OntzOjY6Il90b2tlbiI7czo0MDoieTlLSVdTQjR0Wk9oeDY3Ylp2ckVXTktwenU0Rkk3Sno5ckNQdDlocyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly9sb2NhbGhvc3Qvb2NlYW4vYmFsYW5jZS1zaGVldC9mb3JtIjt9czo1OiJmbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo3OTtzOjQ6InJvbGUiO2k6MTtzOjc6InVzZXJfaWQiO2k6Nzk7czo5OiJlbnRpdHlfaWQiO2k6MTtzOjg6Imdyb3VwX2lkIjtpOjU7czo5OiJfc2YyX21ldGEiO2E6Mzp7czoxOiJ1IjtpOjE0NjQ4MDE4MjQ7czoxOiJjIjtpOjE0NjQ3ODc3MjQ7czoxOiJsIjtzOjE6IjAiO319', 1464801824);
+('211009521f2b3f72f72b5020ef22ad84e8e25d83', 79, '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'YTo5OntzOjY6Il90b2tlbiI7czo0MDoieXc5cVJ5djNEWVF4VTVPblY1TFR3c3VuWFV4UENRWUo4WGlxako4RiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly9sb2NhbGhvc3Qvb2NlYW4vbG9hbi9wYXltZW50cy9mb3JtIjt9czo1OiJmbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjQ6InJvbGUiO2k6MTtzOjc6InVzZXJfaWQiO2k6Nzk7czo5OiJlbnRpdHlfaWQiO2k6MTtzOjg6Imdyb3VwX2lkIjtpOjU7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Nzk7czo5OiJfc2YyX21ldGEiO2E6Mzp7czoxOiJ1IjtpOjE0NjQ5ODI3MjI7czoxOiJjIjtpOjE0NjQ5NjMzMjg7czoxOiJsIjtzOjE6IjAiO319', 1464982723);
 
 -- --------------------------------------------------------
 
@@ -521,7 +576,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `name`, `contact_number`, `email`, `avatar`, `remember_token`, `status`, `is_login`, `role`, `entity_id`, `group_access_id`, `remarks`, `created_at`, `updated_at`, `expired_at`) VALUES
-(6, 'ralphdungo', '$2y$10$Rl8sI/CC.1pKvMrY9p1RaOU0okpn1xVPD82dB2KF04nUJ2pLFRvvi', 'Ralph Dungo', '09278726770', 'ralphima@pwr.com.ph', 'public/images/users/1458820187.jpg', 't3KhFIC86UMwvq1EWRYaKqk0gHnpQ5rI2dPZRFMcTmr6wBdj9ToxYrifg8he', 1, 0, 0, NULL, 1, 'Philippine wrestling revolution\r\nchampion', '2015-09-25 11:46:48', '2016-05-21 07:32:17', '2017-02-18'),
+(6, 'ralphdungo', '$2y$10$Rl8sI/CC.1pKvMrY9p1RaOU0okpn1xVPD82dB2KF04nUJ2pLFRvvi', 'Ralph Dungo', '09278726770', 'ralphima@pwr.com.ph', 'public/images/users/1458820187.jpg', 'qcAItIPHQhZkFN9ZRnhn2wJMlpYbK2zbCzKVS92P5f68PTHhYKFJgEHAhptI', 1, 0, 0, NULL, 1, 'Philippine wrestling revolution\r\nchampion', '2015-09-25 11:46:48', '2016-06-03 09:36:11', '2017-02-18'),
 (7, 'kendungo', '$2y$10$KOLS6esmqtQUFa9hvSs/JuMPXEbbEg397bHKu4KEwVgoKLaoFgBo2', 'Ken Dungo', '0927067805', '', 'http://localhost/ocean/public/images/users/1455027516.jpg', NULL, 1, 0, NULL, NULL, NULL, '', '2015-09-25 11:48:25', '2016-02-12 11:26:40', NULL),
 (9, '10204908560140358', '$2y$10$gxw1PLtYc8goGGHOuXIhIu0kUSsXB7GStsEw7L2IGXlgR1rBIXoGO', 'Christian Jay Bayno', '09278726770', '', 'https://graph.facebook.com/v2.4/10204908560140358/picture?type=normal', NULL, 4, 0, 0, NULL, 1, '', '2015-09-26 07:44:07', '2016-02-27 06:39:49', NULL),
 (11, '686774891424693', '$2y$10$m2bY80NYiTaS05hlFraZ4.asxxXVDYeTwKMUsj0Ykf7v6XGwvqY32', 'Jorryn Anne Horan', '', NULL, 'https://graph.facebook.com/v2.4/686774891424693/picture?type=normal', NULL, 4, 0, NULL, NULL, NULL, '', '2015-09-26 08:13:17', '2016-02-22 06:47:10', NULL),
@@ -536,9 +591,9 @@ INSERT INTO `users` (`id`, `username`, `password`, `name`, `contact_number`, `em
 (76, 'tanauncoop_user', '$2y$10$m4QXvKaI06tIC3qKX3tEQOdVY7FWtZRPTkbzkipTt4hHcDtLpqP6C', 'Tanaun Coop User', '092787253', '', 'http://localhost/ocean/public/images/users/1456852745.jpg', NULL, 1, 0, 1, 1, 2, '', '2016-03-01 09:19:05', '2016-03-01 09:46:16', '2016-09-02'),
 (77, 'support', '$2y$10$eJ0MWteL56gHFokYqkzzKekd/2w7xsh2LpGWUjfbKqL0ySd30xpC6', 'Support Support', '094563456', '', 'NULL', NULL, 1, 0, 0, NULL, 11, '', '2016-03-01 09:49:03', '2016-03-01 09:49:03', '2016-09-02'),
 (78, 'asfasdf', '$2y$10$r9YhBfv66FRh1WocvYJZFexpBN10iT5wg5MmhbBxZ5LA5uVeMaZqu', 'Fasdfs', '9567867', 'christianjaybayno@gmail.com', 'NULL', NULL, 1, 0, 0, NULL, 11, '', '2016-03-16 07:03:16', '2016-03-16 07:03:16', '2016-09-16'),
-(79, 'CTECC_USER', '$2y$10$CEFKDZPD4YTLElSTx20wdeT2l90H3DRT7FytvFOXMY8voO1mlnK4W', 'Christian Jay Bayno', '0927111111', '', 'public/images/users/1463847206.png', 'OAWf1wybsgFzqWz3ldcYR1tG6dMtsp5wULRd0Vb3gXse9VDccoAgHH3XKtgu', 1, 1, 1, 1, 5, '', '2016-03-23 10:46:20', '2016-06-01 05:29:58', '2016-09-24'),
+(79, 'CTECC_USER', '$2y$10$CEFKDZPD4YTLElSTx20wdeT2l90H3DRT7FytvFOXMY8voO1mlnK4W', 'Christian Jay Bayno', '0927111111', '', 'public/images/users/1463847206.png', 'p3SJC9viYwXjG5iWS3SkOSA5cPZHmXaoa088OyAZMgeoBeHYB4zHAQxHyeC6', 1, 1, 1, 1, 5, '', '2016-03-23 10:46:20', '2016-06-03 10:15:37', '2016-09-24'),
 (82, 'joy_test', '$2y$10$64JlxJ1YW8IK.qyGuQEKJeepLDWA5fHiW/vO1LZWKEFW6x0xCSTMi', 'Marjoirie Ordenes', '09645634564', '', 'public/images/users/1462116923.jpg', NULL, 3, 0, 1, 1, 5, '', '2016-05-01 07:35:23', '2016-05-01 07:36:14', '2016-11-01'),
-(83, 'superadmin', '$2y$10$X74W.ad6.tA61/a7G.GlHO8Mz1u5EN2FGLWu7MAW2nG.m.0as/3b2', 'Christian Jay Bayno', '09278726770', 'christianjaybayno@gmail.com', 'public/images/users/1463847357.png', 'tRQ4NPvXfBbBpM2A9qgl4UfQ0W3HxSJ24Rrt1QILC9sPACFM3jmnpXwbfg0w', 1, 0, 0, NULL, 1, '', '2016-05-21 07:31:47', '2016-05-21 08:38:24', '2016-11-21'),
+(83, 'superadmin', '$2y$10$X74W.ad6.tA61/a7G.GlHO8Mz1u5EN2FGLWu7MAW2nG.m.0as/3b2', 'Christian Jay Bayno', '09278726770', 'christianjaybayno@gmail.com', 'public/images/users/1463847357.png', 'eQJAxlgtKNW7Jlmjg27FT9m5l39E642i3cD6A6DDVD7IUw2wzjdoWMLuc376', 1, 0, 0, NULL, 1, '', '2016-05-21 07:31:47', '2016-06-03 10:15:14', '2016-11-21'),
 (84, 'peoplescoop_user', '$2y$10$i2roqJ2thlCliL4xppzyWu3xfWVGE5Mv6Up9ip1DAj12dTAM1JKwu', 'Peoplescoop Cooperative', '0927876771', '', 'public/images/users/1463847269.png', 'a7YdAQcoAXFsSJrHlgKSKuxrdBv9c1BeRZKkzDEramKZlcVd9r9bgYUOee9q', 1, 0, 1, 2, 4, '', '2016-05-21 07:34:18', '2016-05-21 09:26:38', '2016-11-21');
 
 -- --------------------------------------------------------
@@ -570,15 +625,22 @@ INSERT INTO `user_access` (`id`, `name`, `ability`, `user_access_module_id`) VAL
 
 CREATE TABLE IF NOT EXISTS `user_access_module` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `module_id` int(11) NOT NULL,
+  `entity_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_access_module`
 --
 
-INSERT INTO `user_access_module` (`id`, `name`) VALUES
-(1, 'Users Management');
+INSERT INTO `user_access_module` (`id`, `module_id`, `entity_id`, `group_id`) VALUES
+(1, 60, 1, 5),
+(2, 68, 1, 5),
+(3, 61, 1, 5),
+(4, 67, 1, 5),
+(5, 69, 1, 5),
+(6, 70, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -2841,6 +2903,13 @@ ALTER TABLE `members`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `modules`
+--
+ALTER TABLE `modules`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
 -- Indexes for table `parameters`
 --
 ALTER TABLE `parameters`
@@ -2942,10 +3011,15 @@ ALTER TABLE `loan_products`
 ALTER TABLE `members`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
+-- AUTO_INCREMENT for table `modules`
+--
+ALTER TABLE `modules`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
 -- AUTO_INCREMENT for table `parameters`
 --
 ALTER TABLE `parameters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=84;
 --
 -- AUTO_INCREMENT for table `payments`
 --
@@ -2965,7 +3039,7 @@ ALTER TABLE `user_access`
 -- AUTO_INCREMENT for table `user_access_module`
 --
 ALTER TABLE `user_access_module`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `user_groups`
 --
