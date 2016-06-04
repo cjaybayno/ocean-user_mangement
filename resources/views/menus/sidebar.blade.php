@@ -2,12 +2,12 @@
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 	@foreach ($menus as $menu)
 		@can('moduleRole', $menu['role'])
-			@can('menuAccess', $menu['id'])
+			@can('moduleAccessById', $menu['id'])
 				<div class="menu_section">
 					<h3>{{ $menu['label'] }}</h3>
 					<ul class="nav side-menu">
 						@foreach ($menu['child'] as $menu)
-							@can('menuAccess', $menu['id'])
+							@can('moduleAccessById', $menu['id'])
 								<li>
 									<a 
 										@if (isset($menu['route']))
@@ -22,7 +22,7 @@
 									</a>
 									<ul class="nav child_menu" style="display: none">
 										@foreach ($menu['child'] as $menu)
-											@can('menuAccess', $menu['id'])
+											@can('moduleAccessById', $menu['id'])
 												<li>
 													<a 
 														@if (isset($menu['route']))

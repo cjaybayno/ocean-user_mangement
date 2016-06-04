@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies($gate);
 		
 		/* === administrator === */
-		$gate->before(function ($user, $ability) {
+		$gate->before(function ($user) {
 			if($user->group_access_id === 1) return true;
 		});
 		
@@ -37,11 +37,11 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role == $moduleRole;
         });
 		
-		/* === show only valid mennu === */
-		$gate->define('menuAccess', function ($user, $menuId) {
+		/* === determine if user has authorize to visit the module using ID === */
+		$gate->define('moduleAccessById', function ($user, $moduleId) {
             $count = DB::table('user_access_module')
 				->where('group_id', $user->group_access_id)
-				->where('module_id', $menuId)
+				->where('module_id', $moduleId)
 				->where('entity_id', $user->entity_id)
 				->count();
 				
@@ -49,8 +49,8 @@ class AuthServiceProvider extends ServiceProvider
         });
 		
 		/* === authorize controller to access by web === */
-		$gate->define('controllerAccess', function ($user, $name) {
-			$params = DB::table('parameters')->where('name', $name)->first();
+		$gate->define('moduleAccessByName', function ($user, $name) {
+			$params = DB::table('modules')->where('name', $name)->first();
 			if (! empty($params)) {
 				$count = DB::table('user_access_module')
 				->where('group_id', $user->group_access_id)
@@ -59,10 +59,9 @@ class AuthServiceProvider extends ServiceProvider
 				->count();
 				
 				return ($count > 0);
-			} else {
-				dd('abort: sample not authorize page');
 			}
+			
+			return false;
         });
-		
     }
 }

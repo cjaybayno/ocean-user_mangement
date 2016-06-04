@@ -8,11 +8,13 @@
 			<div class="x_title">
 				<h2>List of Members</h2>
 				<div class="pull-right">
-					<div class="btn-group">
-						<a href="{{ URL::route('members.register') }}">
-							<button type="button" class="btn btn-block btn-sm btn-info"><i class="fa fa-plus-circle"></i> Add New Member</button>
-						</a>
-					</div>
+					@can('moduleAccessByName', 'member_register')
+						<div class="btn-group">
+							<a href="{{ URL::route('members.register') }}">
+								<button type="button" class="btn btn-block btn-sm btn-info"><i class="fa fa-plus-circle"></i> Add New Member</button>
+							</a>
+						</div>
+					@endcan
 				</div>
 				<div class="clearfix"></div>
 			</div>

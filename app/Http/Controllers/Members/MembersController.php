@@ -41,6 +41,8 @@ class MembersController extends Controller
 			'getShow',
 			'getEdit',
         ]]);
+		
+		$this->authorize('moduleAccessByName', 'members');
 	}
 	
 	/**
@@ -50,6 +52,8 @@ class MembersController extends Controller
      */
 	public function getIndex()
 	{
+		$this->authorize('moduleAccessByName', 'member_list');
+		
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
@@ -105,6 +109,8 @@ class MembersController extends Controller
      */
     public function getRegister()
     {
+		$this->authorize('moduleAccessByName', 'member_register');
+		
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/moment.min2.js',
@@ -134,7 +140,7 @@ class MembersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getShow($encryptId)
-    {	
+    {
 		Log::info('View specific member : ', ['session' => session()->all()]);
 	
         return view('modules/members.show')->with([
