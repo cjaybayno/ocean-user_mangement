@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -40,6 +41,10 @@ class AppServiceProvider extends ServiceProvider
 			], 
 			'App\Http\ViewComposers\AuthUserProfileComposer'
 		);
+		
+		Blade::directive('menuRoute', function($route) {
+            return "<?php echo 'href='.URL::route($route) ?>";
+        });
     }
 
     /**

@@ -4,24 +4,17 @@ namespace App\Http\ViewComposers;
 
 use Auth;
 use App\Entity;
-use App\Repository\Parameters;
+use App\Repository\Modules;
 use Illuminate\Contracts\View\View;
 
 class AuthUserProfileComposer
 {
-    /**
-     * The user repository implementation.
-     *
-     * @var UserRepository
-     */
-    protected $users;
-	
 	/**
      * The parameters repository implementation.
      *
      * @var parameters
      */
-    protected $parameters;
+    protected $modules;
 
     /**
      * Create a new profile composer.
@@ -29,9 +22,9 @@ class AuthUserProfileComposer
      * @param  UserRepository  $users
      * @return void
      */
-    public function __construct(Parameters $parameters)
+    public function __construct(Modules $modules)
     {
-       $this->parameters = $parameters;
+       $this->modules = $modules;
     }
 
     /**
@@ -48,8 +41,8 @@ class AuthUserProfileComposer
         $view->with('avatar', $user->avatar);
 		
 		if (session('entity_id'))
-			$view->with('entity_name', Entity::find(session('entity_id'))->entity_name);
+			$view->with('entity_name', Entity::find($user->entity_id)->entity_name);
 		
-		$view->with('menus', $this->parameters->getParams('menus'));
+		$view->with('menus', $this->modules->getMenus());
     }
 }

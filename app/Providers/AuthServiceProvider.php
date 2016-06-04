@@ -27,8 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 		
+		/* === administrator === */
 		$gate->before(function ($user, $ability) {
-			/* === administrator === */
 			if($user->group_access_id === 1) return true;
 		});
 		

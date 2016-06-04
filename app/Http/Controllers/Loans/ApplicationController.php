@@ -46,7 +46,7 @@ class ApplicationController extends Controller
 			'getMembers',
         ]]);
 		
-		$this->authorize('controllerAccess', 'applicatio');
+		//$this->authorize('controllerAccess', 'applicatio');
 	}
 	
 	/**
