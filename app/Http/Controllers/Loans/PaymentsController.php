@@ -59,7 +59,7 @@ class PaymentsController extends Controller
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
-				'/assets/modules/loans/loans-payments-list.js' 
+				'/assets/modules/loans/payments-list.js' 
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
@@ -140,7 +140,7 @@ class PaymentsController extends Controller
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
 				'/assets/gentellela-alela/js/jquery.number.min.js',
-				'/assets/modules/loans/loans-payments-form.js',
+				'/assets/modules/loans/payments-form.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',

@@ -10,13 +10,13 @@
 				<div class="pull-right">
 					<div id="add-btn" class="btn-group"></div> &nbsp
 					<div class="btn-group">
-						<a href="{{ URL::route('members.edit', $encryptId) }}">
+						<a href="{{ URL::route('loan.members.edit', $encryptId) }}">
 							<button type="button" class="btn btn-block btn-sm btn-info"><i class="fa fa-edit"></i>Edit</button>
 						</a>
 					</div>
 					&nbsp
 					<div class="btn-group">
-						<a href="{{ URL::route('members') }}">
+						<a href="{{ URL::route('loan.members') }}">
 							<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-th-list"></i> Show List of Member</button>
 						</a>
 					</div>

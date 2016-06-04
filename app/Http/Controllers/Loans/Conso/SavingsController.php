@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Conso;
+namespace App\Http\Controllers\Loans\Conso;
 
 use Illuminate\Http\Request;
 
@@ -20,7 +20,7 @@ class SavingsController extends Controller
 	/**
 	* Frontend route 
 	*/
-	public $route = '/conso/savings';
+	public $route = '/loan/conso/savings';
 	
 	/**
      * Create a new instance.
@@ -52,7 +52,7 @@ class SavingsController extends Controller
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
 				'/assets/gentellela-alela/js/jquery.number.min.js',
-				'/assets/modules/conso/conso-savings.js',
+				'/assets/modules/loans/conso-savings.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css',
@@ -64,8 +64,8 @@ class SavingsController extends Controller
 		
 		Log::info('View savings consolidation : ', ['session' => session()->all()]);
 		
-        return view('modules/conso/savings.conso')->with([
-			'assets' 	   => $assets,
+        return view('modules/loans/conso/savings.conso')->with([
+			'assets' => $assets,
 		]);
 	}
 	
@@ -179,7 +179,7 @@ class SavingsController extends Controller
 		
 		Log::info('View savings yearly contribution : ', ['session' => session()->all()]);
 		
-        return view('modules/conso/savings.contribution')->with([
+        return view('modules/loans/conso/savings.contribution')->with([
 			'assets'		=> $assets,
 			'monthNames'	=> $monthNames,
 			'contributions'	=> $savingsceMembers,

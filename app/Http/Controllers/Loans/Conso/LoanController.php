@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Conso;
+namespace App\Http\Controllers\Loans\Conso;
 
 use Illuminate\Http\Request;
 
@@ -19,7 +19,7 @@ class LoanController extends Controller
 	/**
 	* Frontend route 
 	*/
-	public $route = '/conso/loan';
+	public $route = '/loan/conso/loan';
 	
 	/**
      * Create a new instance.
@@ -54,7 +54,7 @@ class LoanController extends Controller
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
 				'/assets/gentellela-alela/js/jquery.number.min.js',
-				'/assets/modules/conso/conso-loan.js',
+				'/assets/modules/loans/conso-loan.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css',
@@ -66,7 +66,7 @@ class LoanController extends Controller
 		
 		Log::info('View loan consolidation : ', ['session' => session()->all()]);
 		
-        return view('modules/conso/loan.conso')->with([
+        return view('modules/loans/conso/loan.conso')->with([
 			'loanTypes'	=> $this->loanRepo->loanProducts(),
 			'assets' 	=> $assets,
 		]);

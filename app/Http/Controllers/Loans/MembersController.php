@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Members;
+namespace App\Http\Controllers\Loans;
 
 use Illuminate\Http\Request;
 
@@ -19,7 +19,7 @@ class MembersController extends Controller
 	/**
 	* Frontend route 
 	*/
-	public $route = '/members';
+	public $route = '/loan/members';
 	
 	/**
      * The member repository implementation.
@@ -60,7 +60,7 @@ class MembersController extends Controller
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
-				'/assets/modules/members/members-list.js' 
+				'/assets/modules/loans/members-list.js' 
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
@@ -71,7 +71,7 @@ class MembersController extends Controller
 		
 		Log::info('View members list: ', ['session' => session()->all()]);
 		
-        return view('modules/members.list')->with([
+        return view('modules/loans/members.list')->with([
 			'assets' => $assets
 		]);
 	}
@@ -94,7 +94,7 @@ class MembersController extends Controller
 			
 		return Datatables::of($members)
 				->addColumn('action', function ($members) {
-					return view('modules/members/datatables.action', [
+					return view('modules/loans/members/datatables.action', [
 								'encryptID' => Crypt::encrypt($members->id)
 							])->render();
 				})
@@ -117,7 +117,7 @@ class MembersController extends Controller
 				'/assets/gentellela-alela/js/datepicker/daterangepicker.js',
 				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
-				'/assets/modules/members/members-registration.js',
+				'/assets/modules/loans/members-registration.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css'
@@ -127,7 +127,7 @@ class MembersController extends Controller
 		
 		Log::info('View member registration form: ', ['session' => session()->all()]);
 	
-        return view('modules/members.register')->with([
+        return view('modules/loans/members.register')->with([
 			'assets' 	   => $assets,
 			'provinceCity' => $this->memberRepo->provinceCity(),
 		]);
@@ -143,7 +143,7 @@ class MembersController extends Controller
     {
 		Log::info('View specific member : ', ['session' => session()->all()]);
 	
-        return view('modules/members.show')->with([
+        return view('modules/loans/members.show')->with([
 			'member' 	=> Member::findOrFail(Crypt::decrypt($encryptId)),
 			'encryptId' => $encryptId,
 		]);
@@ -165,7 +165,7 @@ class MembersController extends Controller
 				'/assets/gentellela-alela/js/datepicker/daterangepicker.js',
 				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
-				'/assets/modules/members/members-modify.js',
+				'/assets/modules/laons/members-modify.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css'
@@ -175,7 +175,7 @@ class MembersController extends Controller
 		
 		Log::info('View member edit form: ', ['session' => session()->all()]);
 	
-        return view('modules/members.edit')->with([
+        return view('modules/loans/members.edit')->with([
 			'assets' 	   => $assets,
 			'provinceCity' => $this->memberRepo->provinceCity(),
 			'brgyTown' 	   => $this->memberRepo->brgyTown($member->province_city_address),

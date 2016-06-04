@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backoffice;
 
 use Illuminate\Http\Request;
 
@@ -45,7 +45,7 @@ class BalanceSheetController extends Controller
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/jquery.number.min.js',
-				'/assets/modules/balanceSheet/form.js' 
+				'/assets/modules/backoffice/balanceSheet/form.js' 
 			],
 			'stylesheets' => [
 				
@@ -55,7 +55,7 @@ class BalanceSheetController extends Controller
 		
 		Log::info('View balance sheet: ', ['session' => session()->all()]);
 		
-        return view('modules/balanceSheet/form')->with([
+        return view('modules/backoffice/balanceSheet.form')->with([
 			'assets' 	  => $assets,
 			'assetParams' => $this->getParent($params, 'assets'),
 			'laeParams'   => $this->getParent($params, 'liabilities_and_equity'),

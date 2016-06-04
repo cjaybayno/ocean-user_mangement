@@ -15,7 +15,7 @@
 				<h2>Capital Contributions<small>as of {{ date('l F jS, Y') }}</small></h2>
 				<div class="pull-right">
 					<div class="btn-group">
-						<a href="{{ URL::route('conso.capital')}}">
+						<a href="{{ URL::route('loan.conso.capital')}}">
 							<button type="button" class="btn btn-block btn-sm btn-primary"><i class="glyphicon glyphicon-arrow-left"></i> Capital Consolidation</button>
 						</a>
 					</div>

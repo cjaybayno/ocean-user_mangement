@@ -20,10 +20,10 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2 id="header-title">Capital Consolidation</h2>
+				<h2 id="header-title">Savings Consolidation</h2>
 				<div class="pull-right">
 					<div class="btn-group">
-						<a href="{{ URL::route('conso.capital.contribution')}}">
+						<a href="{{ URL::route('loan.conso.savings.contribution')}}">
 							<button type="button" class="btn btn-block btn-sm btn-primary"><i class="glyphicon glyphicon-th-list"></i> View Contribution Table</button>
 						</a>
 					</div>
@@ -35,7 +35,7 @@
 					<div class="form-group">
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<div class="btn-group">
-								<a href="{{ URL::route('conso.capital') }}">
+								<a href="{{ URL::route('loan.conso.savings') }}">
 									<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
 								</a>
 							</div>
@@ -47,7 +47,7 @@
 						</div>
 					</div>
 					<br>
-					<table id="conso-capital-table"  class="table table-striped responsive-utilities jambo_table" cellspacing="0" width="100%" style="display:none">
+					<table id="conso-savings-table"  class="table table-striped responsive-utilities jambo_table" cellspacing="0" width="100%" style="display:none">
 						<thead>
 							 <tr class="headings">
 								<th>Member Name</th>

@@ -30,7 +30,7 @@
 					<div class="form-group">
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<div class="btn-group">
-								<a href="{{ URL::route('conso.loan') }}">
+								<a href="{{ URL::route('loan.conso.loan') }}">
 									<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-refresh"></i> Refresh</button>
 								</a>
 							</div>

@@ -9,7 +9,7 @@
 				<h2>List of Payments</h2>
 				<div class="pull-right">
 					<div class="btn-group">
-						<a href="{{ URL::route('payments.form') }}">
+						<a href="{{ URL::route('loan.payments.form') }}">
 							<button type="button" class="btn btn-block btn-sm btn-info"><i class="fa fa-upload"></i> Make Payments</button>
 						</a>
 					</div>

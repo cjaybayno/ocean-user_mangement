@@ -13,7 +13,7 @@
 					@endcan
 					@can('moduleAccessByName', 'member_list')
 						<div class="btn-group">
-							<a href="{{ URL::route('members') }}">
+							<a href="{{ URL::route('loan.members') }}">
 								<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-th-list"></i> Show List of Member</button>
 							</a>
 						</div>

@@ -42,6 +42,15 @@ Route::group(['middleware' => 'web'], function () {
 		
 		// Loans route group
 		Route::group(['prefix' => 'loan'], function () {
+			
+			// member route
+			Route::controller('members', 'Loans\MembersController', [
+				'getIndex'	  => 'loan.members',
+				'getRegister' => 'loan.members.register',
+				'getShow' 	  => 'loan.members.show',
+				'getEdit' 	  => 'loan.members.edit',
+			]);
+			
 			// loan application route
 			Route::controller('application', 'Loans\ApplicationController', [
 				'getIndex'   => 'loan.application.current',
@@ -50,10 +59,30 @@ Route::group(['middleware' => 'web'], function () {
 				'getMembers' => 'loan.application.members',
 			]);
 			
+			// Consolildation group 
+			Route::group(['prefix' => 'conso'], function () {
+				// consolidated loan route
+				Route::controller('loan', 'Loans\Conso\LoanController', [
+					'getIndex' => 'loan.conso.loan',
+				]);
+				
+				// consolidated capital route
+				Route::controller('capital', 'Loans\Conso\CapitalController', [
+					'getIndex' 		  => 'loan.conso.capital',
+					'getContribution' => 'loan.conso.capital.contribution',
+				]);
+				
+				// consolidated savings route
+				Route::controller('savings', 'Loans\Conso\SavingsController', [
+					'getIndex' 		  => 'loan.conso.savings',
+					'getContribution' => 'loan.conso.savings.contribution',
+				]);
+			});
+			
 			//loan payments route
 			Route::controller('payments', 'Loans\PaymentsController', [
-				'getIndex' => 'payments.list',
-				'getForm'  => 'payments.form',
+				'getIndex' => 'loan.payments.list',
+				'getForm'  => 'loan.payments.form',
 			]);
 			
 			// loan products route
@@ -63,44 +92,20 @@ Route::group(['middleware' => 'web'], function () {
 				'getShow'   => 'loan.products.show',
 				'getEdit'   => 'loan.products.edit',
 			]);
+			
 		});
 		
-		// Consolildation group 
-		Route::group(['prefix' => 'conso'], function () {
-			// consolidated loan route
-			Route::controller('loan', 'Conso\LoanController', [
-				'getIndex' => 'conso.loan',
-			]);
+		// Users route gruop
+		Route::group(['prefix' => 'backoffice'], function () {
 			
-			// consolidated capital route
-			Route::controller('capital', 'Conso\CapitalController', [
-				'getIndex' 		  => 'conso.capital',
-				'getContribution' => 'conso.capital.contribution',
-			]);
-			
-			// consolidated savings route
-			Route::controller('savings', 'Conso\SavingsController', [
-				'getIndex' 		  => 'conso.savings',
-				'getContribution' => 'conso.savings.contribution',
+			// Balance Sheet route
+			Route::controller('balance-sheet', 'Backoffice\BalanceSheetController', [
+				'getForm'  => 'backoffice.balance-sheet.form',
 			]);
 		});
-		
-		
-		// Balance Sheet route
-		Route::controller('balance-sheet', 'BalanceSheetController', [
-			'getForm'  => 'balance-sheet.form',
-		]);
-		
-		// member route
-		Route::controller('members', 'Members\MembersController', [
-			'getIndex'	  => 'members',
-			'getRegister' => 'members.register',
-			'getShow' 	  => 'members.show',
-			'getEdit' 	  => 'members.edit',
-		]);
 				
 		// Users route
-		Route::controller('users', 'UsersManagement\UsersController', [
+		Route::controller('users', 'Users\UsersController', [
 			'getIndex'          => 'users',
 			'getRegister'       => 'users.register',
 			'postStore'         => 'users.store',
@@ -112,7 +117,7 @@ Route::group(['middleware' => 'web'], function () {
 		// Users route gruop
 		Route::group(['prefix' => 'user'], function () {
 			// users/groups route
-			Route::controller('groups', 'UsersManagement\UserGroupController', [
+			Route::controller('groups', 'Users\UserGroupController', [
 				'getIndex' => 'user.groups',
 			]);
 		});	

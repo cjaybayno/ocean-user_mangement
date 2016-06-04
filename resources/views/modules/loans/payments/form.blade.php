@@ -16,7 +16,7 @@
 				<div class="pull-right">
 					<div id="add-btn" class="btn-group"></div>
 					<div class="btn-group">
-						<a href="{{ URL::route('payments.list')}}">
+						<a href="{{ URL::route('loan.payments.list')}}">
 							<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-th-list"></i> Show List of Payments</button>
 						</a>
 					</div>

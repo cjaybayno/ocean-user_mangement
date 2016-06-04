@@ -15,7 +15,7 @@
 				<h2>Savings Contributions<small>as of {{ date('l F jS, Y') }}</small></h2>
 				<div class="pull-right">
 					<div class="btn-group">
-						<a href="{{ URL::route('conso.savings')}}">
+						<a href="{{ URL::route('loan.conso.savings')}}">
 							<button type="button" class="btn btn-block btn-sm btn-primary"><i class="glyphicon glyphicon-arrow-left"></i> Savings Consolidation</button>
 						</a>
 					</div>

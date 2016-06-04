@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Conso;
+namespace App\Http\Controllers\Loans\Conso;
 
 use Illuminate\Http\Request;
 
@@ -20,7 +20,7 @@ class CapitalController extends Controller
 	/**
 	* Frontend route 
 	*/
-	public $route = '/conso/capital';
+	public $route = '/loan/conso/capital';
 	
 	/**
      * Create a new instance.
@@ -52,7 +52,7 @@ class CapitalController extends Controller
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
 				'/assets/gentellela-alela/js/jquery.number.min.js',
-				'/assets/modules/conso/conso-capital.js',
+				'/assets/modules/loans/conso-capital.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css',
@@ -64,7 +64,7 @@ class CapitalController extends Controller
 		
 		Log::info('View capital consolidation : ', ['session' => session()->all()]);
 		
-        return view('modules/conso/capital.conso')->with([
+        return view('modules/loans/conso/capital.conso')->with([
 			'assets' => $assets,
 		]);
 	}
@@ -179,7 +179,7 @@ class CapitalController extends Controller
 		
 		Log::info('View capital yearly contribution : ', ['session' => session()->all()]);
 		
-        return view('modules/conso/capital.contribution')->with([
+        return view('modules/loans/conso/capital.contribution')->with([
 			'assets'		=> $assets,
 			'monthNames'	=> $monthNames,
 			'contributions'	=> $capitalceMembers,

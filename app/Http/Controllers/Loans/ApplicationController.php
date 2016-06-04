@@ -64,7 +64,7 @@ class ApplicationController extends Controller
 				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
 				'/assets/gentellela-alela/js/jquery.number.min.js',
-				'/assets/modules/loans/loans-application-form.js',
+				'/assets/modules/loans/application-form.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/icheck/flat/green.css',
@@ -95,7 +95,7 @@ class ApplicationController extends Controller
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
-				'/assets/modules/loans/loans-application-current.js' 
+				'/assets/modules/loans/application-current.js' 
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
@@ -181,7 +181,7 @@ class ApplicationController extends Controller
 				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
 				'/assets/gentellela-alela/js/jquery.number.min.js',
-				'/assets/modules/loans/loans-application-members.js',
+				'/assets/modules/loans/application-members.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/icheck/flat/green.css',

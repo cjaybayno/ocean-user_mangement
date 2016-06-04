@@ -10,7 +10,7 @@
 				<div class="pull-right">
 					@can('moduleAccessByName', 'member_register')
 						<div class="btn-group">
-							<a href="{{ URL::route('members.register') }}">
+							<a href="{{ URL::route('loan.members.register') }}">
 								<button type="button" class="btn btn-block btn-sm btn-info"><i class="fa fa-plus-circle"></i> Add New Member</button>
 							</a>
 						</div>

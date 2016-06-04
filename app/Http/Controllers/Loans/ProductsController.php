@@ -50,7 +50,7 @@ class ProductsController extends Controller
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
-				'/assets/modules/loans/loans-products-list.js' 
+				'/assets/modules/loans/products-list.js' 
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
@@ -116,7 +116,7 @@ class ProductsController extends Controller
 			'scripts' => [
 				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
-				'/assets/modules/loans/loans-products-create-form.js',
+				'/assets/modules/loans/products-create-form.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css'
@@ -176,7 +176,7 @@ class ProductsController extends Controller
 			'scripts' => [
 				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
-				'/assets/modules/loans/loans-products-view-form.js',
+				'/assets/modules/loans/products-view-form.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css'
@@ -209,7 +209,7 @@ class ProductsController extends Controller
 			'scripts' => [
 				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
-				'/assets/modules/loans/loans-products-edit-form.js',
+				'/assets/modules/loans/products-edit-form.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css'
