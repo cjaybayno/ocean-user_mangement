@@ -7,12 +7,13 @@ class Modules
 {
 	/**
      * Get Parameters 
-     *
+     * 
+     * @param int $parentId
      * @return Array
      */
-	public function getMenus()
+	public function getMenus($parentId = 0)
 	{
-		$params = Module::where('parent_id', 0)->orderBy('order_list','asc')->get()->toArray();
+		$params = Module::where('parent_id', $parentId)->orderBy('order_list','asc')->get()->toArray();
 		return $this->builTree($params);
 	}
 	

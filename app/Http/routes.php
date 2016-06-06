@@ -95,12 +95,22 @@ Route::group(['middleware' => 'web'], function () {
 			
 		});
 		
-		// Users route gruop
+		// backoffice route gruop
 		Route::group(['prefix' => 'backoffice'], function () {
 			
 			// Balance Sheet route
 			Route::controller('balance-sheet', 'Backoffice\BalanceSheetController', [
 				'getForm'  => 'backoffice.balance-sheet.form',
+			]);
+		});
+		
+		// portal route gruop
+		Route::group(['prefix' => 'portal'], function () {
+			
+			// Modules Sheet route
+			Route::controller('modules', 'Portal\ModulesController', [
+				'getIndex'  => 'portal.modules',
+				'getShow'   => 'portal.modules.show',
 			]);
 		});
 				
