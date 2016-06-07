@@ -2,6 +2,7 @@
  *  Autoload Function
  * ======================================================================== */
 	clearInputs();
+	clickCloseBtnDone();
 
 /* ========================================================================
  *  List of Helper Function and Variable
@@ -174,4 +175,11 @@ function selec2DataFormat(data, defaultValue, selector) {
 function scrollTop() {
 	var body = $("html, body");
 		body.stop().animate({scrollTop:0}, '500', 'swing');
+}
+
+function clickCloseBtnDone() {
+	$(document).on('click','.close-btn-done', function() {
+		location.reload();
+		return false;
+	});
 }

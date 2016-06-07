@@ -35,4 +35,51 @@
 		</div>
 	</div>
 </div>
+
+<!-- edit module modal --->
+<div class="modal fade" id="edit-module-modal" tabindex="-1" role="dialog" aria-labelledby="" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h4 class="modal-title"> Edit Module</h4>
+	  </div>
+	  <div class="modal-body">
+	   <center>
+		<h5><span class="load-bar-notif"></span></h5>
+		<div class="load-bar"></div>
+		<form id="edit-module-form">
+			<input type="hidden" name="encryptId" id="encryptId">
+			<div class="form-group">
+				<label class="control-label">Name <span class="required">*</span></label>
+				<input type="text" name="name" class="form-control action-input" id="name"
+					required 
+					data-parsley-required-message= "{{ trans('general.required') }}"
+					style="width:50%">
+			</div>
+			<br>
+			<div class="form-group">
+				<label class="control-label">Label <span class="required">*</span></label>
+				<input type="text" name="label" class="form-control action-input" id="label"
+					required 
+					data-parsley-required-message= "{{ trans('general.required') }}"
+					style="width:50%">
+			</div>
+			<br>
+			<div class="form-group">
+				<label class="control-label">Role</label>
+				<br>
+				{!! Form::select('role', config('users.inverted_role'), null, ['class' => 'form-control select2 action-input', 'id' => 'role', 'style' => 'width:50%']) !!}
+			</div>
+		</form>
+		</center>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-sm btn-default pull-left action-btn close-btn" data-dismiss="modal">Close</button>
+		<button type="button" class="btn btn-sm btn-default pull-left close-btn-done" data-dismiss="modal" style="display:none">Close</button>
+		<button type="button" class="btn btn-sm btn-danger action-btn" id="confirm-btn">Confirm</button>
+	  </div>
+	</div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 @endsection

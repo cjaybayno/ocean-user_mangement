@@ -6,19 +6,17 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>Modules Name : {{ $modules->label }}</h2>
+				<h2> Modules Name : {{ $modules->label }}</h2>
 				<div class="pull-right">	
 					<div class="btn-group">
 						<a href="{{ URL::route('portal.modules') }}">
-							<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-th-list"></i> show list</button>
+							<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-th-list"></i> Show List of Modules</button>
 						</a>
 					</div>
 				</div>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<p class="well well-sm">List of Menu</p>
-					
 				<div class="col-xs-3">
 					<ul class="nav nav-tabs tabs-left">
 						<?php $flag = 0 ?>
@@ -30,13 +28,13 @@
 						@endforeach
 					</ul>
 				</div>
-
 				<div class="col-xs-9">
 					<!-- Tab panes -->
 					<div class="tab-content">
 						<?php $flag = 0 ?>
 						@foreach ($selected_menus as $menu)
 							<div class="tab-pane <?php if ($flag <= 0) echo 'active'?>" id="{{ $menu['name'] }}">
+								<p class="lead">{{ $menu['label'] }}  Menu</p>
 								<table class="table table-hover table-striped">
 									<thead>
 										<tr>
@@ -56,60 +54,39 @@
 											<td>{{ $menu['route'] }}</td>
 											<td><i class="{{ $menu['icon'] }}"></i> ({{ $menu['icon'] }})</td>
 											<td>
-												<button class="btn btn-xs btn-primary"><span class="fa fa-edit"></span> Edit</button>
+												<button class="btn btn-xs btn-info"><span class="fa fa-edit"></span> Edit</button>
 											</td>
 										</tr>
 									</tbody>
 								</table>
 								<?php $flag++ ?>
+								
 								@if (! empty($menu['child']))
-									<div class="x_panel">
-										<div class="x_title">
-											<h2><i class="fa fa-align-left"></i> Sub Menus</h2>
-											<div class="clearfix"></div>
-										</div>
-										<div class="x_content">
-											<!-- start accordion -->
-											<div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
-												@foreach ($menu['child'] as $subMenu)
-													<div class="panel">
-														<a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#{{ $subMenu['name'] }}" aria-expanded="true" aria-controls="{{ $subMenu['name'] }}">
-															<h4 class="panel-title">{{ $subMenu['label'] }}</h4>
-														</a>
-														<div id="{{ $subMenu['name'] }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-															<div class="panel-body">
-																<table class="table table-hover table-striped">
-																	<thead>
-																		<tr>
-																			<th>Name</th>
-																			<th>Label</th>
-																			<th>Order</th>
-																			<th>route</th>
-																			<th>Icon</th>
-																			<th></th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr>
-																			<td>{{ $subMenu['name'] }}</td>
-																			<td>{{ $subMenu['label'] }}</td>
-																			<td>{{ $subMenu['route'] }}</td>
-																			<td>{{ $subMenu['order_list'] }}</td>
-																			<td><i class="{{ $subMenu['icon'] }}"></i> ({{ $subMenu['icon'] }})</td>
-																			<td>
-																				<button class="btn btn-xs btn-primary"><span class="fa fa-edit"></span> Edit</button>
-																			</td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
-												@endforeach
-											</div>
-											<!-- end of accordion -->
-										</div>
-									</div>
+									<p class="lead">Sub Menus</p>
+									<table class="table table-hover table-striped">
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Label</th>
+												<th>Order</th>
+												<th>Route</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach ($menu['child'] as $menu)
+												<tr>
+													<td>{{ $menu['name'] }}</td>
+													<td>{{ $menu['label'] }}</td>
+													<td>{{ $menu['order_list'] }}</td>
+													<td>{{ $menu['route'] }}</td>
+													<td>
+														<button class="btn btn-xs btn-info"><span class="fa fa-edit"></span> Edit</button>
+													</td>
+												</tr>
+											@endforeach
+										</tbody>
+									</table>
 								@endif
 							</div>
 						@endforeach

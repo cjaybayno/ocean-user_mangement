@@ -9,6 +9,7 @@ use Crypt;
 use Datatables;
 
 use App\Module;
+use App\Member;
 use App\Http\Requests;
 use App\Repository\Modules;
 use App\Http\Controllers\Controller;
@@ -47,6 +48,8 @@ class ModulesController extends Controller
 	{
 		$assets = [
 			'scripts' => [
+				'/assets/gentellela-alela/js/select/select2.full.js',
+				'/assets/gentellela-alela/js/parsley/parsley.min.js',
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
@@ -54,6 +57,7 @@ class ModulesController extends Controller
 				'/assets/modules/portal/modules-list.js' 
 			],
 			'stylesheets' => [
+				'/assets/gentellela-alela/css/select/select2.min.css',
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
 				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
 			],
@@ -94,6 +98,47 @@ class ModulesController extends Controller
 			->removeColumn('id')
 			->make();
     }
+	
+	/**
+     * Get 
+     *
+     * @param  string  encrptyId
+     * @return \Illuminate\Http\Response
+     */
+    public function getGetModuleInfo($encrptyId)
+    {
+		return Module::select('name', 'label', 'role')
+			->where('id', Crypt::decrypt($encrptyId))
+			->first();
+    }
+	
+	/**
+     * Update Module
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function postUpdateModule(Request $request) 
+	{
+		$module = Module::find(Crypt::decrypt($request->encryptId));
+		$module->name  = $request->name;
+		$module->label = $request->label;
+		$module->role  = $request->role;
+		$module->save();
+		
+		Log::info('Modify modules info : ', [
+			'table' => [
+				'name' => 'modules',
+				'data' => $module->toArray()
+			],
+			'session' => session()->all()
+		]);
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('members.successModify'),
+		]);
+	}
 	
 	/**
      * Show specific modules 
