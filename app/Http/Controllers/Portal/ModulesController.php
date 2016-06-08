@@ -48,7 +48,6 @@ class ModulesController extends Controller
 	{
 		$assets = [
 			'scripts' => [
-				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
@@ -57,7 +56,6 @@ class ModulesController extends Controller
 				'/assets/modules/portal/modules-list.js' 
 			],
 			'stylesheets' => [
-				'/assets/gentellela-alela/css/select/select2.min.css',
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
 				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
 			],
@@ -79,7 +77,6 @@ class ModulesController extends Controller
     public function getPaginate(Request $request)
     {
 		$modules = Module::where('parent_id', 0)
-		->orderBy('order_list')
 		->select([
 			'name',
 			'label',
@@ -100,7 +97,7 @@ class ModulesController extends Controller
     }
 	
 	/**
-     * Get 
+     * Get Module info
      *
      * @param  string  encrptyId
      * @return \Illuminate\Http\Response
@@ -113,6 +110,23 @@ class ModulesController extends Controller
     }
 	
 	/**
+     * Validate Module Name
+     *
+     * @param  int     $id
+     * @param  string  $name
+     * @return \Illuminate\Http\Response
+     */
+    public function getValidateModuleName(Request $request)
+    {
+		$count = Module::select('id')
+			->where('name', $request->name)
+			->where('id', '!=', Crypt::decrypt($request->encryptId))
+			->count();
+			
+		if ($count > 0) return abort(404);
+    }
+	
+	/**
      * Update Module
      *
      * @param  \Illuminate\Http\Request  $request
@@ -121,9 +135,9 @@ class ModulesController extends Controller
 	public function postUpdateModule(Request $request) 
 	{
 		$module = Module::find(Crypt::decrypt($request->encryptId));
-		$module->name  = $request->name;
-		$module->label = $request->label;
-		$module->role  = $request->role;
+		if ($module->name  != $request->name)  $module->name  = $request->name;
+		if ($module->label != $request->label) $module->label = strtoupper($request->label);
+		if ($module->role  != $request->role)  $module->role  = $request->role;
 		$module->save();
 		
 		Log::info('Modify modules info : ', [

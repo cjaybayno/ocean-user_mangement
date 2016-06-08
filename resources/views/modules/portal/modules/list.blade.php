@@ -1,6 +1,12 @@
 @extends('layouts.gentelella')
 @section('title', 'Modules')
 
+@section('addScripts')
+	<script>
+		var validateModuleNameMessage = "{{ trans('modules.validateModuleName') }}";
+	</script>
+@endsection
+
 @section('content')
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
@@ -37,6 +43,7 @@
 </div>
 
 <!-- edit module modal --->
+<form id="edit-module-form" data-parsley-validate= "">
 <div class="modal fade" id="edit-module-modal" tabindex="-1" role="dialog" aria-labelledby="" data-backdrop="static" data-keyboard="false" >
   <div class="modal-dialog">
 	<div class="modal-content">
@@ -47,7 +54,6 @@
 	   <center>
 		<h5><span class="load-bar-notif"></span></h5>
 		<div class="load-bar"></div>
-		<form id="edit-module-form">
 			<input type="hidden" name="encryptId" id="encryptId">
 			<div class="form-group">
 				<label class="control-label">Name <span class="required">*</span></label>
@@ -62,7 +68,7 @@
 				<input type="text" name="label" class="form-control action-input" id="label"
 					required 
 					data-parsley-required-message= "{{ trans('general.required') }}"
-					style="width:50%">
+					style="width:50%; text-transform:uppercase;">
 			</div>
 			<br>
 			<div class="form-group">
@@ -70,16 +76,15 @@
 				<br>
 				{!! Form::select('role', config('users.inverted_role'), null, ['class' => 'form-control select2 action-input', 'id' => 'role', 'style' => 'width:50%']) !!}
 			</div>
-		</form>
 		</center>
 	  </div>
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-sm btn-default pull-left action-btn close-btn" data-dismiss="modal">Close</button>
 		<button type="button" class="btn btn-sm btn-default pull-left close-btn-done" data-dismiss="modal" style="display:none">Close</button>
-		<button type="button" class="btn btn-sm btn-danger action-btn" id="confirm-btn">Confirm</button>
+		<button type="button" class="btn btn-sm btn-danger action-btn" id="confirm-btn" style="display:none">Confirm</button>
 	  </div>
 	</div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
+</form>
 @endsection
