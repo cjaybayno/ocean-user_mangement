@@ -112,19 +112,65 @@ class ModulesController extends Controller
 	/**
      * Validate Module Name
      *
-     * @param  int     $id
-     * @param  string  $name
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function getValidateModuleName(Request $request)
     {
-		$count = Module::select('id')
-			->where('name', $request->name)
-			->where('id', '!=', Crypt::decrypt($request->encryptId))
-			->count();
+		$module = Module::select('id')->where('name', $request->name);
+		
+		if (! empty($request->encryptId)) 
+			$module->where('id', '!=', Crypt::decrypt($request->encryptId));
 			
-		if ($count > 0) return abort(404);
+		if ($module->count() > 0) return abort(404);
     }
+	
+	/**
+     * Validate Module Label
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getValidateModuleLabel(Request $request)
+    {
+		$module = Module::select('id')
+			->where('label', $request->label)
+			->where('parent_id', 0);
+			
+		if (! empty($request->encryptId)) 
+			$module->where('id', '!=', Crypt::decrypt($request->encryptId));
+			
+		if ($module->count() > 0) return abort(404);
+    }
+	
+	/**
+     * Add Module
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function postStoreModule(Request $request) 
+	{
+		$module = new Module;
+		$module->name  		= $request->name;
+		$module->label 		= strtoupper($request->label);
+		$module->order_list = Module::where('parent_id', 0)->max('order_list') + 1;
+		$module->role  		= $request->role;
+		$module->save();
+		
+		Log::info('Add modules info : ', [
+			'table' => [
+				'name' => 'modules',
+				'data' => $module->toArray()
+			],
+			'session' => session()->all()
+		]);
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('modules.successAddModule'),
+		]);
+	}
 	
 	/**
      * Update Module
@@ -150,7 +196,7 @@ class ModulesController extends Controller
 		
 		return response()->json([
 			'success' => true,
-			'message' => trans('members.successModify'),
+			'message' => trans('modules.successModifyModule'),
 		]);
 	}
 	

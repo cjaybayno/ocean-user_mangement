@@ -4,6 +4,7 @@
 @section('addScripts')
 	<script>
 		var validateModuleNameMessage = "{{ trans('modules.validateModuleName') }}";
+		var validateModuleLabelMessage = "{{ trans('modules.validateModuleLabel') }}";
 	</script>
 @endsection
 
@@ -15,8 +16,8 @@
 				<h2>Modules List</h2>
 				<div class="pull-right">
 					<div class="btn-group">
-						<a href="#">
-							<button type="button" class="btn btn-block btn-sm btn-primary"><i class="glyphicon glyphicon-plus"></i> Add Modules</button>
+						<a href="#add-module-modal" data-toggle="modal">
+							<button type="button" class="btn btn-block btn-sm btn-primary" id="add-module-btn"><i class="glyphicon glyphicon-plus"></i> Add Modules</button>
 						</a>
 					</div>
 				</div>
@@ -30,7 +31,7 @@
 							<th>Label</th>
 							<th>Role</th>
 							<th>Order</th>
-							<th>Action</th>
+							<th></th>
 						</tr>
                     </thead>
                     <tbody>
@@ -57,7 +58,7 @@
 			<input type="hidden" name="encryptId" id="encryptId">
 			<div class="form-group">
 				<label class="control-label">Name <span class="required">*</span></label>
-				<input type="text" name="name" class="form-control action-input" id="name"
+				<input type="text" name="name" class="form-control action-input replace-space" id="name"
 					required 
 					data-parsley-required-message= "{{ trans('general.required') }}"
 					style="width:50%">
@@ -82,6 +83,51 @@
 		<button type="button" class="btn btn-sm btn-default pull-left action-btn close-btn" data-dismiss="modal">Close</button>
 		<button type="button" class="btn btn-sm btn-default pull-left close-btn-done" data-dismiss="modal" style="display:none">Close</button>
 		<button type="button" class="btn btn-sm btn-danger action-btn" id="confirm-btn" style="display:none">Confirm</button>
+	  </div>
+	</div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</form>
+
+<!-- edit module modal --->
+<form id="add-module-form" data-parsley-validate= "">
+<div class="modal fade" id="add-module-modal" tabindex="-1" role="dialog" aria-labelledby="" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h4 class="modal-title"> Add Module</h4>
+	  </div>
+	  <div class="modal-body">
+	   <center>
+		<h5><span class="load-bar-notif"></span></h5>
+		<div class="load-bar"></div>
+			<div class="form-group">
+				<label class="control-label">Name <span class="required">*</span></label>
+				<input type="text" name="name" class="form-control action-input replace-space" id="name"
+					required 
+					data-parsley-required-message= "{{ trans('general.required') }}"
+					style="width:50%">
+			</div>
+			<br>
+			<div class="form-group">
+				<label class="control-label">Label <span class="required">*</span></label>
+				<input type="text" name="label" class="form-control action-input" id="label"
+					required 
+					data-parsley-required-message= "{{ trans('general.required') }}"
+					style="width:50%; text-transform:uppercase;">
+			</div>
+			<br>
+			<div class="form-group">
+				<label class="control-label">Role <span class="required">*</span></label>
+				<br>
+				{!! Form::select('role', array_merge([' ' => 'Select Role'], config('users.inverted_role')), null, ['class' => 'form-control select2 action-input required', 'id' => 'role', 'style' => 'width:50%']) !!}
+			</div>
+		</center>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-sm btn-default pull-left action-btn close-btn" data-dismiss="modal">Close</button>
+		<button type="button" class="btn btn-sm btn-default pull-left close-btn-done" data-dismiss="modal" style="display:none">Close</button>
+		<button type="button" class="btn btn-sm btn-danger action-btn" id="confirm-btn">Confirm</button>
 	  </div>
 	</div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

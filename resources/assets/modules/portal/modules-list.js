@@ -1,8 +1,12 @@
 /* ========================================================================
  *  Initialize Pages
  * ======================================================================== */
-	var formId  = '#edit-module-form';
-	var modalId = '#edit-module-modal';
+	var editFormId  = '#edit-module-form';
+	var editModalId = '#edit-module-modal';
+	
+	var addFormId   = '#add-module-form';
+	var addModalId = '#add-module-modal';
+	
 	$(initialPages);
 
 /* ========================================================================
@@ -13,20 +17,34 @@
 	function initialPages($) {
 		dataTables();
 		clickConfirmEdit();
+		clickConfirmAdd();
 		keyupInputHndlr();
+		blurInputAddModuleHdlr();
+		clickAddModuleBtn();
+	}
+	
+	function blurInputAddModuleHdlr(){
+		$(addFormId+' #name').on('blur', function() {
+			validateModuleName(addFormId);
+			singleInputValidation(this);
+		});
+		
+		$(addFormId+' #label').on('blur', function() {
+			validateModuleLabel(addFormId);
+			singleInputValidation(this);
+		});
 	}
 	
 	function keyupInputHndlr() {
-		$('input').on('keyup', function() {
-			formValidation();
+		$(editFormId+' input').on('keyup', function() {
+			editFormValidation();
 		});
 		
-		$("#name").keyup(function () {
+		$(".replace-space").keyup(function () {
 			this.value = this.value.replace(/ /g, "_");
 		});
 	}
 	 
-	/* === dataTables === */
 	function dataTables() {
 		$('#modules-list').DataTable({
 			columns : [
@@ -46,10 +64,17 @@
 		});
 	}
 	
+	function clickAddModuleBtn() {
+		$('#add-module-btn').click(function(){
+			$(addFormId).parsley().destroy();
+			$(addFormId+' .action-input').val(' ');
+		});
+	}
+	
 	function clickEditModuleModal(encryptId) {
-		$(formId).parsley().destroy();
-		$('#confirm-btn').hide();
-		$('input .action-input').empty();
+		$(editFormId).parsley().destroy();
+		$(editFormId+' #confirm-btn').hide();
+		$(editFormId+' input .action-input').empty();
 		$.ajax({
 			url: route+'/get-module-info/'+encryptId,
 			dataType: 'json',
@@ -57,18 +82,18 @@
 				$.each(result, function( index, value ) {
 				  $('#'+index).val(value);
 				});
-				$('#encryptId').val(encryptId);
+				$(editFormId+' #encryptId').val(encryptId);
 			}
 		});
 	}
 	
 	function clickConfirmEdit() {
-		$(modalId+' #confirm-btn').on('click', function () {
-			var formData = $(formId).serialize();
-			if (formValidation()) {
-				loadingBar(modalId+' .load-bar', 'Modify In process...');
-				$(modalId+' .action-input').attr('disabled', true);
-				$(modalId+' .action-btn').hide();
+		$(editModalId+' #confirm-btn').on('click', function () {
+			var formData = $(editFormId).serialize();
+			if (editFormValidation()) {
+				loadingBar(editModalId+' .load-bar', 'Modify In process...');
+				$(editModalId+' .action-input').attr('disabled', true);
+				$(editModalId+' .action-btn').hide();
 				ajaxCsrfToken();
 				$.ajax({
 					url: route+"/update-module",
@@ -76,17 +101,17 @@
 					data: formData,
 					dataType: 'json',
 					complete: function() {
-						loadingBarClose(modalId+' .load-bar');
+						loadingBarClose(editModalId+' .load-bar');
 					},
 					error: function(result) {
-						$(modalId+' .action-btn').show();
-						$(modalId+' .action-input').removeAttr('disabled');
-						notifier('danger',modalId+' .load-bar-notif', oops);
+						$(editModalId+' .action-btn').show();
+						$(editModalId+' .action-input').removeAttr('disabled');
+						notifier('danger',editModalId+' .load-bar-notif', oops);
 					},
 					success: function(result) {
-						$(modalId+' .close-btn-done').show();
-						$(modalId+' .action-input').attr('disabled', true);
-						notifier('success', modalId+' .load-bar-notif', result.message);
+						$(editModalId+' .close-btn-done').show();
+						$(editModalId+' .action-input').attr('disabled', true);
+						notifier('success', editModalId+' .load-bar-notif', result.message);
 					}
 				});
 			}
@@ -94,21 +119,66 @@
 		});
 	}	
 	
-	function formValidation() {
-		validateModuleName();
-		$(formId).parsley().validate();
-		var valid = $(formId).parsley().isValid();
+	function clickConfirmAdd() {
+		$(addModalId+' #confirm-btn').on('click', function () {
+			var formData = $(addFormId).serialize();
+			if (addFormValidation()) {
+				loadingBar(addModalId+' .load-bar', 'In process...');
+				$(addModalId+' .action-input').attr('disabled', true);
+				$(addModalId+' .action-btn').hide();
+				ajaxCsrfToken();
+				$.ajax({
+					url: route+"/store-module",
+					type: "post",
+					data: formData,
+					dataType: 'json',
+					complete: function() {
+						loadingBarClose(addModalId+' .load-bar');
+					},
+					error: function(result) {
+						$(addModalId+' .action-btn').show();
+						$(addModalId+' .action-input').removeAttr('disabled');
+						notifier('danger',addModalId+' .load-bar-notif', oops);
+					},
+					success: function(result) {
+						$(addModalId+' .close-btn-done').show();
+						$(addModalId+' .action-input').attr('disabled', true);
+						notifier('success', addModalId+' .load-bar-notif', result.message);
+					}
+				});
+			}
+			return false;
+		});
+	}	
+	
+	function editFormValidation() {
+		validateModuleName(editFormId);
+		validateModuleLabel(editFormId);
+		$(editFormId).parsley().validate();
+		var valid = $(editFormId).parsley().isValid();
 		if (valid || valid == null) {
-			$('#confirm-btn').show();
+			$(editFormId+' #confirm-btn').show();
 		} else {
-			$('#confirm-btn').hide();
+			$(editFormId+' #confirm-btn').hide();
 		}
-		
-		return $(formId).parsley().isValid();
+		return valid;
 	}
 	
-	function validateModuleName() {
-		var selector = $("#name");
+	function addFormValidation() {
+		validateModuleName(addFormId);
+		validateModuleLabel(addFormId);
+		$(addFormId).parsley().validate();
+		return $(addFormId).parsley().isValid();
+	}
+	
+	function singleInputValidation(selector) {
+		instance = $(selector).parsley();
+		instance.validate();
+		instance.isValid();
+	}
+	
+	function validateModuleName(formId) {
+		var selector = $(formId+" #name");
 		var valid;
 		selector.attr('data-parsley-remote', '');
 		selector.attr('data-parsley-remote-validator', 'validateModuleName');
@@ -118,8 +188,26 @@
 			}, route+'/validate-module-name', {
 				"dataType" : "jsonp", 
 				"data": {
-						"encryptId"  : $('#encryptId').val(),
-						"name"      : $('#name').val(),
+						"encryptId"  : $(formId+' #encryptId').val(),
+						"name"      : $(formId+' #name').val(),
+				}
+			}
+		);
+	}
+	
+	function validateModuleLabel(formId) {
+		var selector = $(formId+" #label");
+		var valid;
+		selector.attr('data-parsley-remote', '');
+		selector.attr('data-parsley-remote-validator', 'validateModuleLabel');
+		selector.attr('data-parsley-remote-message', validateModuleLabelMessage);
+		window.Parsley.addAsyncValidator('validateModuleLabel', function (xhr) {
+			return xhr.status !== 404;
+			}, route+'/validate-module-label', {
+				"dataType" : "jsonp", 
+				"data": {
+						"encryptId"  : $(formId+' #encryptId').val(),
+						"label"       : $(formId+' #label').val(),
 				}
 			}
 		);
