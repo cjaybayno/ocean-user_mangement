@@ -4,8 +4,11 @@
 	var editFormId  = '#edit-module-form';
 	var editModalId = '#edit-module-modal';
 	
-	var addFormId   = '#add-module-form';
+	var addFormId  = '#add-module-form';
 	var addModalId = '#add-module-modal';
+	
+	var reorderFormId   = '#reorder-module-form';
+	var reorderModalId  = '#reorder-module-modal';
 	
 	$(initialPages);
 
@@ -18,12 +21,27 @@
 		dataTables();
 		clickConfirmEdit();
 		clickConfirmAdd();
+		clickConfirmReorder();
 		keyupInputHndlr();
-		blurInputAddModuleHdlr();
+		inputAddModuleHdlr();
+		inputEditModuleHdlr();
 		clickAddModuleBtn();
+		sortable();
 	}
 	
-	function blurInputAddModuleHdlr(){
+	function sortable() {
+		$('#reorder-module-btn').click(function() {
+			$("#sortable").sortable('refreshPositions');
+		});
+		
+		$('#sortable').sortable({
+		  placeholder: "ui-state-highlight"
+		});
+		
+		$('#sortable').disableSelection();
+	}
+	
+	function inputAddModuleHdlr(){
 		$(addFormId+' #name').on('blur', function() {
 			validateModuleName(addFormId);
 			singleInputValidation(this);
@@ -35,10 +53,18 @@
 		});
 	}
 	
-	function keyupInputHndlr() {
+	function inputEditModuleHdlr() {
 		$(editFormId+' input').on('keyup', function() {
 			editFormValidation();
 		});
+		
+		$(editFormId+' select').on('change', function() {
+			editFormValidation();
+		});
+	}
+	
+	function keyupInputHndlr() {
+		
 		
 		$(".replace-space").keyup(function () {
 			this.value = this.value.replace(/ /g, "_");
@@ -49,6 +75,7 @@
 		$('#modules-list').DataTable({
 			columns : [
 				{"searchable" : true},
+				{"searchable" : false},
 				{"searchable" : false},
 				{"searchable" : false},
 				{"searchable" : false},
@@ -149,7 +176,48 @@
 			}
 			return false;
 		});
-	}	
+	}
+	
+	function clickConfirmReorder() {
+		$(reorderModalId+' #confirm-btn').on('click', function () {			
+			loadingBar(reorderModalId+' .load-bar', 'In process...');
+			$(reorderModalId+' .action-input').attr('disabled', true);
+			$(reorderModalId+' .action-btn').hide();
+			ajaxCsrfToken();
+			$.ajax({
+				url: route+"/reorder-module",
+				type: "post",
+				data: {data: reorderData() },
+				dataType: 'json',
+				complete: function() {
+					loadingBarClose(reorderModalId+' .load-bar');
+				},
+				error: function(result) {
+					$(reorderModalId+' .action-btn').show();
+					notifier('danger',reorderModalId+' .load-bar-notif', oops);
+				},
+				success: function(result) {
+					$(reorderModalId+' .close-btn-done').show();
+					$(reorderModalId+' #sortable').sortable( "option", { disabled: true } );
+					notifier('success', reorderModalId+' .load-bar-notif', result.message);
+				}
+			});
+			
+		});
+	}
+	
+	function reorderData() {
+		var data = [];
+			$(reorderModalId+' #sortable').find('li').each(function(i, li) {
+				var rowData = {
+					id 	  : $(this).attr('id'),
+					order : i,
+				};
+				data.push(rowData);
+			})
+			
+		return data;
+	}
 	
 	function editFormValidation() {
 		validateModuleName(editFormId);

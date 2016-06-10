@@ -159,7 +159,7 @@
 				type 			: $('.type').val(),
 				payment_amount 	: IdSelector.eq(i).closest('tr').find('#payment_amount').val(),
 				payment_or     	: IdSelector.eq(i).closest('tr').find('#payment_or').val(),
-			}
+			};
 			data.push(rowData);
 		}
 		

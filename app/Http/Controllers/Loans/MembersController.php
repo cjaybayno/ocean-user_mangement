@@ -42,7 +42,8 @@ class MembersController extends Controller
 			'getEdit',
         ]]);
 		
-		$this->authorize('moduleAccessByName', 'members');
+		$this->authorize('moduleAccessByName', 'loan');
+		$this->authorize('menuAccessByName', 'members');
 	}
 	
 	/**
@@ -52,7 +53,7 @@ class MembersController extends Controller
      */
 	public function getIndex()
 	{
-		$this->authorize('moduleAccessByName', 'member_list');
+		$this->authorize('subMenuAccessByName', 'member_list');
 		
 		$assets = [
 			'scripts' => [

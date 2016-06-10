@@ -65,7 +65,11 @@ class ModulesController extends Controller
 		Log::info('View modules list : ', ['session' => session()->all()]);
 		
         return view('modules/portal/modules.list')->with([
-			'assets' => $assets
+			'assets'  => $assets,
+			'modules' => Module::select('id', 'label')
+							->where('parent_id', 0)
+							->orderBy('order_list')
+							->get(),
 		]);
 	}
 	
@@ -82,11 +86,15 @@ class ModulesController extends Controller
 			'label',
 			'role',
 			'order_list',
+			'active',
 			'id',
 		]);
 			
 		return Datatables::of($modules)
 			->editColumn('role', '{{ config("users.inverted_role.$role") }}')
+			->editColumn('active', function ($modules) {
+					return view('modules/portal/modules/dataTables.active', $modules)->render();
+			})
 			->addColumn('action', function ($modules) {
 					return view('modules/portal/modules/datatables.action', [
 								'encryptID' => Crypt::encrypt($modules->id)
@@ -104,7 +112,7 @@ class ModulesController extends Controller
      */
     public function getGetModuleInfo($encrptyId)
     {
-		return Module::select('name', 'label', 'role')
+		return Module::select('name', 'label', 'role', 'active')
 			->where('id', Crypt::decrypt($encrptyId))
 			->first();
     }
@@ -181,9 +189,10 @@ class ModulesController extends Controller
 	public function postUpdateModule(Request $request) 
 	{
 		$module = Module::find(Crypt::decrypt($request->encryptId));
-		if ($module->name  != $request->name)  $module->name  = $request->name;
-		if ($module->label != $request->label) $module->label = strtoupper($request->label);
-		if ($module->role  != $request->role)  $module->role  = $request->role;
+		if ($module->name   != $request->name)   $module->name  = $request->name;
+		if ($module->label  != $request->label)  $module->label = strtoupper($request->label);
+		if ($module->role   != $request->role)   $module->role  = $request->role;
+		if ($module->active != $request->active) $module->active  = $request->active;
 		$module->save();
 		
 		Log::info('Modify modules info : ', [
@@ -197,6 +206,34 @@ class ModulesController extends Controller
 		return response()->json([
 			'success' => true,
 			'message' => trans('modules.successModifyModule'),
+		]);
+	}
+	
+	/**
+     * Update Module
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function postReorderModule(Request $request) 
+	{
+		foreach($request->data as $data) {
+			$module = Module::find($data['id']);
+			$module->order_list = $data['order'];
+			$module->save();
+		}
+		
+		Log::info('Reorder modules info : ', [
+			'table' => [
+				'name' => 'modules',
+				'data' => $request->data
+			],
+			'session' => session()->all()
+		]);
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('modules.successReorderModule'),
 		]);
 	}
 	
