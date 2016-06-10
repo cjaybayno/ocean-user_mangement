@@ -75,16 +75,17 @@ class AuthController extends Controller
 				'role',
 				'status',
 				'entity_id',
+				'is_login',
+				'last_login',
 				'group_access_id',
 				'expired_at'
 			])
 			->where('username', $request->username)
 			->first();
 			
-			switch ($user->status) {
-				
-				case Config::get('users.status.active') : 
-					if ($this->checkIsLogin($user->id)) {
+			switch ($user->status) {	
+				case Config::get('users.status.active') :
+					if ($this->checkIsLogin($user)) {
 						$notif = trans('users.currently_login');
 					} elseif ($this->checkExpiry($user->expired_at)) {
 						$notif = $this->tagAsExpired($user->id);
@@ -101,7 +102,10 @@ class AuthController extends Controller
 						]);
 						
 						/* === update user is_login to 1 === */
-						User::where('id', $user->id)->update(['is_login' => 1]);
+						User::where('id', $user->id)->update([
+							'is_login'   => true,
+							'last_login' => date('Y-m-d h:i:s')
+						]);
 						
 						Log::info('Login Result: ', [
 							'username' => $request->username, 
@@ -169,14 +173,35 @@ class AuthController extends Controller
 	/**
      * Check user if is currently log in
      * 
-     * @param  int $id
+     * @param  object $user
      * @return bool
      */
-	private function checkIsLogin($id)
+	private function checkIsLogin($user)
 	{
-		return User::find($id)->is_login;
+		if ($user->is_login) {
+			if ($this->checkIdleTimeAllowed($user->last_login)) {
+				return false;
+			}
+			return true;
+		}
+		
+		return false;
 	}
 	
+	/**
+     * Check Idle time
+     * 
+     * @param  object $user
+     * @return bool
+     */
+	private function checkIdleTimeAllowed($lastLogin)
+	{
+		$lastLoginTimestamp = strtotime($lastLogin);
+		$currentTimestamp   = strtotime(date('Y-m-d h:i:s'));
+		$secondDiff         = ($currentTimestamp - $lastLoginTimestamp);
+		
+		return ($secondDiff >= config('users.allowedIdleTime'));
+	}
 	
 	/**
      * Tag user as expired
