@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2016 at 10:05 PM
+-- Generation Time: Jun 10, 2016 at 09:55 PM
 -- Server version: 5.6.25
 -- PHP Version: 5.6.11
 
@@ -47,8 +47,8 @@ INSERT INTO `balances` (`id`, `member_id`, `type`, `current_balance`, `available
 (15, 15, NULL, 1000, 1000, 0, 0, '2016-05-21 07:40:58', '2016-05-21 07:40:58'),
 (22, 12, 'savings', 1000, 1000, 0, 1, '2016-05-22 01:33:15', '2016-05-22 01:33:15'),
 (24, 12, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:20', '2016-05-25 05:50:20'),
-(25, 1, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
-(26, 3, 'capital', 2000, 2000, 0, 1, '2016-05-25 05:50:21', '2016-06-01 09:05:31'),
+(25, 1, 'capital', 2000, 2000, 0, 1, '2016-05-25 05:50:21', '2016-06-10 19:35:01'),
+(26, 3, 'capital', 3000, 3000, 0, 1, '2016-05-25 05:50:21', '2016-06-10 19:35:01'),
 (27, 11, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
 (28, 5, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
 (29, 2, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-02-09 05:50:21'),
@@ -257,7 +257,7 @@ INSERT INTO `members` (`id`, `first_name`, `middle_name`, `last_name`, `gender`,
 (5, 'Loren Joanne', 'L', 'Sangalang', NULL, NULL, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01 18:09:07', '0000-00-00 00:00:00', 1),
 (9, 'Madonna', 'Novero', 'Alano', 'female', 'unmarried', '1990-06-24', 'Paranaque', 'Novero', '0927872454534', 'madonna@rmail.com', 'Severina 18', 'BETTER LIVING SUBD.', 'PARANAQUE', '1711', '2016-04-02 01:31:03', '2016-04-06 07:28:38', 1),
 (11, 'Lloyd Vincent', 'Del Rosario', 'Abando', 'male', 'unmarried', '1997-11-12', 'Manila', 'Violeta Del Rosario', '09162449573', 'ldabando@gmail.com', 'Julio Dela Cruz', 'PALANAN', 'MAKATI', '1235', '2016-04-02 04:54:59', '2016-04-02 04:54:59', 1),
-(12, 'Carlos', 'Lumbre', 'Sangalang', 'male', 'unmarried', '1995-01-31', 'Quezon City', 'Lorna Lumbre', '09272523543', '', '3380-c Ibarra St.', 'PALANAN', 'MAKATI', '1235', '2016-04-02 06:04:08', '2016-06-01 09:00:30', 1),
+(12, 'Carlos', 'Lumbre', 'Sangalang', 'male', 'unmarried', '1995-01-31', 'Quezon City', 'Lorna Lumbre', '09272523543', '', '3380-c Ibarra St.', 'PALANAN', 'MAKATI', '1235', '2016-04-02 06:04:08', '2016-06-04 01:57:15', 1),
 (13, 'Marjorie', 'R', 'Ordenes', 'female', 'unmarried', '1991-01-10', 'Sablayan Occ Mindoro', 'Evelyn Rico', '09534523462345', '', '#720 Dangeros St. Bu', 'SABLAYAN', 'MINDORO OCCIDENTAL', '5104', '2016-04-18 18:49:46', '2016-05-01 07:30:57', 1),
 (14, 'Mark Lerry', 'Tibayan', 'Agmata', 'male', 'unmarried', '1992-03-11', 'Sablayan Occ Mindoro', 'Mama Tibayan', '0949582345', '', 'Brgy Buenavista ', 'SABLAYAN', 'MINDORO OCCIDENTAL', '5104', '2016-05-21 06:53:33', '2016-05-21 06:53:33', 1),
 (15, 'Gloria', 'Dungo', 'Imabayashi', 'female', 'married', '1972-04-20', 'Sta. Mesa Manila', 'Nanay Dungo', '090000000000', '', 'Milla Lucce', 'ANTIPOLO', 'RIZAL', '1870', '2016-05-21 07:38:47', '2016-05-21 08:28:02', 2),
@@ -290,25 +290,49 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 
 CREATE TABLE IF NOT EXISTS `modules` (
   `id` int(11) NOT NULL,
-  `parent_id` int(11) DEFAULT NULL,
+  `parent_id` int(11) DEFAULT '0',
   `order_list` int(11) NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL,
   `label` varchar(50) NOT NULL,
   `role` int(1) NOT NULL,
-  `route` varchar(20) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `route` text,
   `icon` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `modules`
 --
 
-INSERT INTO `modules` (`id`, `parent_id`, `order_list`, `name`, `label`, `role`, `route`, `icon`) VALUES
-(1, NULL, 2, 'user_management', 'User Management', 0, NULL, NULL),
-(2, 1, 0, 'users', 'Users', 0, 'users', 'fa fa-user'),
-(3, NULL, 0, 'loans', 'Loans', 1, NULL, NULL),
-(4, 3, 1, 'member', 'Members', 1, NULL, 'fa fa-users'),
-(5, 4, 0, 'list', 'List', 1, 'members', NULL);
+INSERT INTO `modules` (`id`, `parent_id`, `order_list`, `name`, `label`, `role`, `active`, `route`, `icon`) VALUES
+(1, 0, 1, 'user_management', 'USER MANAGEMENT', 0, 1, NULL, NULL),
+(2, 1, 0, 'users', 'Users', 0, 1, 'users', 'fa fa-user'),
+(3, 0, 3, 'loan', 'LOAN', 1, 1, NULL, NULL),
+(4, 3, 1, 'members', 'Members', 1, 1, NULL, 'fa fa-users'),
+(5, 4, 0, 'member_list', 'List', 1, 1, 'loan.members', NULL),
+(6, 4, 0, 'member_register', 'Register', 1, 1, 'loan.members.register', NULL),
+(7, 3, 0, 'dashboard', 'Dashboard', 1, 1, NULL, 'fa fa-dashboard'),
+(8, 4, 0, 'member_batch_registration', 'Batch Registration', 1, 1, NULL, NULL),
+(9, 3, 2, 'application', 'Application', 1, 1, NULL, 'fa fa-credit-card'),
+(10, 9, 0, 'current_application', 'Current Application', 1, 1, 'loan.application.current', NULL),
+(11, 9, 0, 'form_application', 'Form Application', 1, 1, 'loan.application.form', NULL),
+(12, 9, 0, 'member_application', 'Member Application', 1, 1, 'loan.application.members', NULL),
+(13, 3, 3, 'consolidation', 'Consolidation', 1, 1, NULL, 'fa fa-cubes'),
+(14, 13, 0, 'conso_loan', 'Loan', 1, 1, 'loan.conso.loan', NULL),
+(15, 13, 0, 'conso_capital', 'Capital', 1, 1, 'loan.conso.capital', NULL),
+(16, 13, 0, 'conso_savings', 'Savings', 1, 1, 'loan.conso.savings', NULL),
+(17, 3, 4, 'payments', 'Payments', 1, 1, NULL, 'fa fa-money'),
+(18, 17, 0, 'list_of_payments', 'List of Payments', 1, 1, 'loan.payments.list', NULL),
+(19, 17, 0, 'make_payments', 'Make Payments', 1, 1, 'loan.payments.form', NULL),
+(20, 3, 5, 'products', 'Products', 1, 1, 'loan.products', 'fa fa-briefcase'),
+(21, 0, 2, 'backoffice', 'BACKOFFICE', 1, 1, NULL, NULL),
+(22, 21, 0, 'balance_sheet', 'Balance Sheet', 1, 1, 'backoffice.balance-sheet.form', 'fa fa-file-text-o'),
+(23, 21, 1, 'income_statement', 'Income Statement', 1, 1, NULL, 'fa fa-file-text'),
+(24, 1, 1, 'user_groups', 'Groups', 0, 1, 'user.groups', 'fa fa-users'),
+(25, 1, 1, 'user_access', 'Access', 0, 1, NULL, 'fa fa-key'),
+(26, 0, 0, 'portal_management', 'PORTAL MANAGEMENT', 0, 1, NULL, NULL),
+(27, 26, 0, 'modules', 'Modules', 0, 1, 'portal.modules', 'fa fa-key'),
+(35, 0, 4, 'insurance', 'INSURANCE', 0, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -441,7 +465,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `type` varchar(20) DEFAULT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `entity_id` int(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `payments`
@@ -521,7 +545,9 @@ INSERT INTO `payments` (`id`, `parent_id`, `outstanding_balance`, `payment_amoun
 (101, 38, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
 (102, 39, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
 (103, 40, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
-(104, 41, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1);
+(104, 41, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
+(105, 25, 1000, 1000, 2000, 'EFDF', 'capital', '2016-06-11 03:35:01', 1),
+(106, 26, 2000, 1000, 3000, 'WEFWEF', 'capital', '2016-06-11 03:35:01', 1);
 
 -- --------------------------------------------------------
 
@@ -543,7 +569,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('211009521f2b3f72f72b5020ef22ad84e8e25d83', 79, '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'YTo5OntzOjY6Il90b2tlbiI7czo0MDoieXc5cVJ5djNEWVF4VTVPblY1TFR3c3VuWFV4UENRWUo4WGlxako4RiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly9sb2NhbGhvc3Qvb2NlYW4vbG9hbi9wYXltZW50cy9mb3JtIjt9czo1OiJmbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjQ6InJvbGUiO2k6MTtzOjc6InVzZXJfaWQiO2k6Nzk7czo5OiJlbnRpdHlfaWQiO2k6MTtzOjg6Imdyb3VwX2lkIjtpOjU7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Nzk7czo5OiJfc2YyX21ldGEiO2E6Mzp7czoxOiJ1IjtpOjE0NjQ5ODI3MjI7czoxOiJjIjtpOjE0NjQ5NjMzMjg7czoxOiJsIjtzOjE6IjAiO319', 1464982723);
+('3fd32c61f9c44fda694268abaa0f5956b6d83657', 83, '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36', 'YTo5OntzOjY6Il90b2tlbiI7czo0MDoiWGllRzVJQWNjOGI1d2FUTVp4RE9GMm5LSXNNWnpIM3VOREtxZEk0ViI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly9sb2NhbGhvc3Qvb2NlYW4vcG9ydGFsL21vZHVsZXMiO31zOjU6ImZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NDoicm9sZSI7aTowO3M6NzoidXNlcl9pZCI7aTo4MztzOjk6ImVudGl0eV9pZCI7TjtzOjg6Imdyb3VwX2lkIjtpOjE7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6ODM7czo5OiJfc2YyX21ldGEiO2E6Mzp7czoxOiJ1IjtpOjE0NjU1ODgzNjg7czoxOiJjIjtpOjE0NjU1NjU2OTQ7czoxOiJsIjtzOjE6IjAiO319', 1465588368);
 
 -- --------------------------------------------------------
 
@@ -566,6 +592,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `entity_id` int(10) DEFAULT NULL,
   `group_access_id` int(10) DEFAULT NULL,
   `remarks` text COLLATE utf8_unicode_ci NOT NULL,
+  `last_login` datetime NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `expired_at` date DEFAULT NULL
@@ -575,26 +602,26 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `name`, `contact_number`, `email`, `avatar`, `remember_token`, `status`, `is_login`, `role`, `entity_id`, `group_access_id`, `remarks`, `created_at`, `updated_at`, `expired_at`) VALUES
-(6, 'ralphdungo', '$2y$10$Rl8sI/CC.1pKvMrY9p1RaOU0okpn1xVPD82dB2KF04nUJ2pLFRvvi', 'Ralph Dungo', '09278726770', 'ralphima@pwr.com.ph', 'public/images/users/1458820187.jpg', 'qcAItIPHQhZkFN9ZRnhn2wJMlpYbK2zbCzKVS92P5f68PTHhYKFJgEHAhptI', 1, 0, 0, NULL, 1, 'Philippine wrestling revolution\r\nchampion', '2015-09-25 11:46:48', '2016-06-03 09:36:11', '2017-02-18'),
-(7, 'kendungo', '$2y$10$KOLS6esmqtQUFa9hvSs/JuMPXEbbEg397bHKu4KEwVgoKLaoFgBo2', 'Ken Dungo', '0927067805', '', 'http://localhost/ocean/public/images/users/1455027516.jpg', NULL, 1, 0, NULL, NULL, NULL, '', '2015-09-25 11:48:25', '2016-02-12 11:26:40', NULL),
-(9, '10204908560140358', '$2y$10$gxw1PLtYc8goGGHOuXIhIu0kUSsXB7GStsEw7L2IGXlgR1rBIXoGO', 'Christian Jay Bayno', '09278726770', '', 'https://graph.facebook.com/v2.4/10204908560140358/picture?type=normal', NULL, 4, 0, 0, NULL, 1, '', '2015-09-26 07:44:07', '2016-02-27 06:39:49', NULL),
-(11, '686774891424693', '$2y$10$m2bY80NYiTaS05hlFraZ4.asxxXVDYeTwKMUsj0Ykf7v6XGwvqY32', 'Jorryn Anne Horan', '', NULL, 'https://graph.facebook.com/v2.4/686774891424693/picture?type=normal', NULL, 4, 0, NULL, NULL, NULL, '', '2015-09-26 08:13:17', '2016-02-22 06:47:10', NULL),
-(12, '115053011677451437961', '$2y$10$Y56dep91SHCXL8gfPOzD4eJpEiiUiVwgilrnuBbY.wzvWafuh9jQG', 'Christian Jay Bayno', '', NULL, '', NULL, 1, 0, NULL, NULL, NULL, '', '2015-09-27 21:13:08', '2015-09-30 02:18:40', NULL),
-(13, '974092285966854', '$2y$10$wFV4tb3MzMVN51HuQBm8jeb0rLERkgWZUvCzNUPXqUUd4BZHPd822', 'Kim Nomar Mariano', '', NULL, 'https://graph.facebook.com/v2.4/974092285966854/picture?type=normal', NULL, 1, 0, NULL, NULL, NULL, '', '2015-10-07 07:44:32', '2015-10-07 07:47:35', NULL),
-(14, '118328122655701822390', '$2y$10$VrwHBRi9F6Iv5iON82nHleZXVMYcffAEM3PGy136s7R9b8DzHpuTW', 'Christian Jay Bayno', '', NULL, 'https://lh6.googleusercontent.com/-tER6DuuAc2E/AAAAAAAAAAI/AAAAAAAAAB0/PxQnZpeWXiI/photo.jpg?sz=50', NULL, 1, 0, NULL, NULL, NULL, '', '2015-10-07 07:48:35', '2015-10-07 07:48:35', NULL),
-(19, 'cjaybayno', '$2y$10$mKHm9BQQQOpLABiJnSpUMuLzs/bXhnCBCyvV43NoOvhCUNTwk/5rm', 'Christian Jay Bayno', '093456345', 'zcbayno@globe.com.ph', 'http://localhost/ocean/public/images/users/1454339765.jpg', 'NPOBFnRlH5Hm5aW7gRxJQXWlw0zJwS9F46YcvxCFJZH2iwFOskF9iGcKFQnh', 1, 0, 0, NULL, 11, '', '2016-02-01 07:16:05', '2016-03-08 07:33:34', '2016-09-02'),
-(20, 'pacifico', '$2y$10$6QA.FFWFyQDT2NHEEjXHdeMN0k8igefFuR4JFsHjwkGtN.PI19rHG', 'Pacifico Bukayo', '092700000000', 'pacifico.bukayo@gmail.com', 'http://localhost/ocean/public/images/users/1454506589.jpg', NULL, 1, 0, NULL, NULL, NULL, '', '2016-02-03 05:36:29', '2016-02-03 05:37:11', NULL),
-(60, 'parengnatoy', '$2y$10$j17NKbe416q626OTlf8SO.PhozlOXRdktvtsAj6NhiDq0LhjXISRW', 'Natoy Kinatay', '0924524534', 'natoy.kinatay@yahoo.com', 'http://localhost/ocean/public/images/users/1454513422.jpg', NULL, 1, 0, NULL, NULL, NULL, '', '2016-02-03 07:30:22', '2016-02-03 07:30:22', NULL),
-(67, 'abraham', '$2y$10$wJsrlpQw9hzhasLUHDOqnOgZKf2Acy.y6owXSi.jPrZhm1ONowvq2', 'Abraham The Greate', '0963456456', 'abraham@gmail.com', 'http://localhost/ocean/public/images/users/1455290423.PNG', NULL, 3, 0, NULL, NULL, 0, 'address:from batangas city', '2016-02-11 10:12:16', '2016-02-12 10:35:52', '2016-08-12'),
-(68, 'lorenzovaldez', '$2y$10$1./0/LLYx8aozh4OwMVASuFNbCsTg9Obg9YamW.wZtjJg9p9FlLXu', 'Lorenzo Valdez', '092762346324', '', 'http://localhost/ocean/public/images/users/1455801977.jpg', NULL, 1, 0, NULL, NULL, 0, 'CEO of ocean system', '2016-02-18 05:26:17', '2016-02-18 05:27:37', '2016-08-18'),
-(76, 'tanauncoop_user', '$2y$10$m4QXvKaI06tIC3qKX3tEQOdVY7FWtZRPTkbzkipTt4hHcDtLpqP6C', 'Tanaun Coop User', '092787253', '', 'http://localhost/ocean/public/images/users/1456852745.jpg', NULL, 1, 0, 1, 1, 2, '', '2016-03-01 09:19:05', '2016-03-01 09:46:16', '2016-09-02'),
-(77, 'support', '$2y$10$eJ0MWteL56gHFokYqkzzKekd/2w7xsh2LpGWUjfbKqL0ySd30xpC6', 'Support Support', '094563456', '', 'NULL', NULL, 1, 0, 0, NULL, 11, '', '2016-03-01 09:49:03', '2016-03-01 09:49:03', '2016-09-02'),
-(78, 'asfasdf', '$2y$10$r9YhBfv66FRh1WocvYJZFexpBN10iT5wg5MmhbBxZ5LA5uVeMaZqu', 'Fasdfs', '9567867', 'christianjaybayno@gmail.com', 'NULL', NULL, 1, 0, 0, NULL, 11, '', '2016-03-16 07:03:16', '2016-03-16 07:03:16', '2016-09-16'),
-(79, 'CTECC_USER', '$2y$10$CEFKDZPD4YTLElSTx20wdeT2l90H3DRT7FytvFOXMY8voO1mlnK4W', 'Christian Jay Bayno', '0927111111', '', 'public/images/users/1463847206.png', 'p3SJC9viYwXjG5iWS3SkOSA5cPZHmXaoa088OyAZMgeoBeHYB4zHAQxHyeC6', 1, 1, 1, 1, 5, '', '2016-03-23 10:46:20', '2016-06-03 10:15:37', '2016-09-24'),
-(82, 'joy_test', '$2y$10$64JlxJ1YW8IK.qyGuQEKJeepLDWA5fHiW/vO1LZWKEFW6x0xCSTMi', 'Marjoirie Ordenes', '09645634564', '', 'public/images/users/1462116923.jpg', NULL, 3, 0, 1, 1, 5, '', '2016-05-01 07:35:23', '2016-05-01 07:36:14', '2016-11-01'),
-(83, 'superadmin', '$2y$10$X74W.ad6.tA61/a7G.GlHO8Mz1u5EN2FGLWu7MAW2nG.m.0as/3b2', 'Christian Jay Bayno', '09278726770', 'christianjaybayno@gmail.com', 'public/images/users/1463847357.png', 'eQJAxlgtKNW7Jlmjg27FT9m5l39E642i3cD6A6DDVD7IUw2wzjdoWMLuc376', 1, 0, 0, NULL, 1, '', '2016-05-21 07:31:47', '2016-06-03 10:15:14', '2016-11-21'),
-(84, 'peoplescoop_user', '$2y$10$i2roqJ2thlCliL4xppzyWu3xfWVGE5Mv6Up9ip1DAj12dTAM1JKwu', 'Peoplescoop Cooperative', '0927876771', '', 'public/images/users/1463847269.png', 'a7YdAQcoAXFsSJrHlgKSKuxrdBv9c1BeRZKkzDEramKZlcVd9r9bgYUOee9q', 1, 0, 1, 2, 4, '', '2016-05-21 07:34:18', '2016-05-21 09:26:38', '2016-11-21');
+INSERT INTO `users` (`id`, `username`, `password`, `name`, `contact_number`, `email`, `avatar`, `remember_token`, `status`, `is_login`, `role`, `entity_id`, `group_access_id`, `remarks`, `last_login`, `created_at`, `updated_at`, `expired_at`) VALUES
+(6, 'ralphdungo', '$2y$10$SSG5uRXCWhfxFGREjvnu9eQjoO0S2skgUq.nU86vU6B67W2paWfDu', 'Ralph Dungo', '09278726770', 'ralphima@pwr.com.ph', 'public/images/users/1458820187.jpg', 'JhSOWvXeBI5YEapahBSTzf0OUtabyhXn6SPFrXdnNOJo62bHgLz2u1yLyLVz', 1, 0, 0, NULL, 11, 'Philippine wrestling revolution\r\nchampion', '2016-06-11 02:18:45', '2015-09-25 11:46:48', '2016-06-10 18:19:40', '2017-02-18'),
+(7, 'kendungo', '$2y$10$KOLS6esmqtQUFa9hvSs/JuMPXEbbEg397bHKu4KEwVgoKLaoFgBo2', 'Ken Dungo', '0927067805', '', 'http://localhost/ocean/public/images/users/1455027516.jpg', NULL, 1, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2015-09-25 11:48:25', '2016-02-12 11:26:40', NULL),
+(9, '10204908560140358', '$2y$10$gxw1PLtYc8goGGHOuXIhIu0kUSsXB7GStsEw7L2IGXlgR1rBIXoGO', 'Christian Jay Bayno', '09278726770', '', 'https://graph.facebook.com/v2.4/10204908560140358/picture?type=normal', NULL, 4, 0, 0, NULL, 1, '', '0000-00-00 00:00:00', '2015-09-26 07:44:07', '2016-02-27 06:39:49', NULL),
+(11, '686774891424693', '$2y$10$m2bY80NYiTaS05hlFraZ4.asxxXVDYeTwKMUsj0Ykf7v6XGwvqY32', 'Jorryn Anne Horan', '', NULL, 'https://graph.facebook.com/v2.4/686774891424693/picture?type=normal', NULL, 4, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2015-09-26 08:13:17', '2016-02-22 06:47:10', NULL),
+(12, '115053011677451437961', '$2y$10$Y56dep91SHCXL8gfPOzD4eJpEiiUiVwgilrnuBbY.wzvWafuh9jQG', 'Christian Jay Bayno', '', NULL, '', NULL, 1, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2015-09-27 21:13:08', '2015-09-30 02:18:40', NULL),
+(13, '974092285966854', '$2y$10$wFV4tb3MzMVN51HuQBm8jeb0rLERkgWZUvCzNUPXqUUd4BZHPd822', 'Kim Nomar Mariano', '', NULL, 'https://graph.facebook.com/v2.4/974092285966854/picture?type=normal', NULL, 1, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2015-10-07 07:44:32', '2015-10-07 07:47:35', NULL),
+(14, '118328122655701822390', '$2y$10$VrwHBRi9F6Iv5iON82nHleZXVMYcffAEM3PGy136s7R9b8DzHpuTW', 'Christian Jay Bayno', '', NULL, 'https://lh6.googleusercontent.com/-tER6DuuAc2E/AAAAAAAAAAI/AAAAAAAAAB0/PxQnZpeWXiI/photo.jpg?sz=50', NULL, 1, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2015-10-07 07:48:35', '2015-10-07 07:48:35', NULL),
+(19, 'cjaybayno', '$2y$10$mKHm9BQQQOpLABiJnSpUMuLzs/bXhnCBCyvV43NoOvhCUNTwk/5rm', 'Christian Jay Bayno', '093456345', 'zcbayno@globe.com.ph', 'http://localhost/ocean/public/images/users/1454339765.jpg', 'NPOBFnRlH5Hm5aW7gRxJQXWlw0zJwS9F46YcvxCFJZH2iwFOskF9iGcKFQnh', 1, 0, 0, NULL, 11, '', '0000-00-00 00:00:00', '2016-02-01 07:16:05', '2016-03-08 07:33:34', '2016-09-02'),
+(20, 'pacifico', '$2y$10$6QA.FFWFyQDT2NHEEjXHdeMN0k8igefFuR4JFsHjwkGtN.PI19rHG', 'Pacifico Bukayo', '092700000000', 'pacifico.bukayo@gmail.com', 'http://localhost/ocean/public/images/users/1454506589.jpg', NULL, 1, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2016-02-03 05:36:29', '2016-02-03 05:37:11', NULL),
+(60, 'parengnatoy', '$2y$10$j17NKbe416q626OTlf8SO.PhozlOXRdktvtsAj6NhiDq0LhjXISRW', 'Natoy Kinatay', '0924524534', 'natoy.kinatay@yahoo.com', 'http://localhost/ocean/public/images/users/1454513422.jpg', NULL, 1, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2016-02-03 07:30:22', '2016-02-03 07:30:22', NULL),
+(67, 'abraham', '$2y$10$wJsrlpQw9hzhasLUHDOqnOgZKf2Acy.y6owXSi.jPrZhm1ONowvq2', 'Abraham The Greate', '0963456456', 'abraham@gmail.com', 'http://localhost/ocean/public/images/users/1455290423.PNG', NULL, 3, 0, NULL, NULL, 0, 'address:from batangas city', '0000-00-00 00:00:00', '2016-02-11 10:12:16', '2016-02-12 10:35:52', '2016-08-12'),
+(68, 'lorenzovaldez', '$2y$10$1./0/LLYx8aozh4OwMVASuFNbCsTg9Obg9YamW.wZtjJg9p9FlLXu', 'Lorenzo Valdez', '092762346324', '', 'http://localhost/ocean/public/images/users/1455801977.jpg', NULL, 1, 0, NULL, NULL, 0, 'CEO of ocean system', '0000-00-00 00:00:00', '2016-02-18 05:26:17', '2016-02-18 05:27:37', '2016-08-18'),
+(76, 'tanauncoop_user', '$2y$10$m4QXvKaI06tIC3qKX3tEQOdVY7FWtZRPTkbzkipTt4hHcDtLpqP6C', 'Tanaun Coop User', '092787253', '', 'http://localhost/ocean/public/images/users/1456852745.jpg', NULL, 1, 0, 1, 1, 2, '', '0000-00-00 00:00:00', '2016-03-01 09:19:05', '2016-03-01 09:46:16', '2016-09-02'),
+(77, 'support', '$2y$10$eJ0MWteL56gHFokYqkzzKekd/2w7xsh2LpGWUjfbKqL0ySd30xpC6', 'Support Support', '094563456', '', 'NULL', NULL, 1, 0, 0, NULL, 11, '', '0000-00-00 00:00:00', '2016-03-01 09:49:03', '2016-03-01 09:49:03', '2016-09-02'),
+(78, 'asfasdf', '$2y$10$r9YhBfv66FRh1WocvYJZFexpBN10iT5wg5MmhbBxZ5LA5uVeMaZqu', 'Fasdfs', '9567867', 'christianjaybayno@gmail.com', 'NULL', NULL, 1, 0, 0, NULL, 11, '', '0000-00-00 00:00:00', '2016-03-16 07:03:16', '2016-03-16 07:03:16', '2016-09-16'),
+(79, 'CTECC_USER', '$2y$10$CEFKDZPD4YTLElSTx20wdeT2l90H3DRT7FytvFOXMY8voO1mlnK4W', 'Christian Jay Bayno', '0927111111', '', 'public/images/users/1463847206.png', 'YwBcbhhQpfJqKIv0RU07wvweM15OmMtrvRnmSDLDo7KAdn45I0OVIlQLC2V1', 1, 0, 1, 1, 5, '', '2016-06-11 03:34:18', '2016-03-23 10:46:20', '2016-06-10 19:37:22', '2016-09-24'),
+(82, 'joy_test', '$2y$10$64JlxJ1YW8IK.qyGuQEKJeepLDWA5fHiW/vO1LZWKEFW6x0xCSTMi', 'Marjoirie Ordenes', '09645634564', '', 'public/images/users/1462116923.jpg', NULL, 3, 0, 1, 1, 5, '', '0000-00-00 00:00:00', '2016-05-01 07:35:23', '2016-05-01 07:36:14', '2016-11-01'),
+(83, 'superadmin', '$2y$10$X74W.ad6.tA61/a7G.GlHO8Mz1u5EN2FGLWu7MAW2nG.m.0as/3b2', 'Christian Jay Bayno', '09278726770', 'christianjaybayno@gmail.com', 'public/images/users/1463847357.png', 'UwYxWKxWhwKnroUNVCuB12dGtGajQD6bDU1qtQaGSGzjRyXnZgWmQejNVj2T', 1, 1, 0, NULL, 1, '', '2016-06-11 03:37:31', '2016-05-21 07:31:47', '2016-06-10 19:37:31', '2016-11-21'),
+(84, 'peoplescoop_user', '$2y$10$i2roqJ2thlCliL4xppzyWu3xfWVGE5Mv6Up9ip1DAj12dTAM1JKwu', 'Peoplescoop Cooperative', '0927876771', '', 'public/images/users/1463847269.png', 'hJojRt2fjaxNFi9SKEUo1KXPgM1w5dAfaajJqlhR8HiHzheg1Vp3bqlTUY95', 1, 0, 1, 2, 4, '', '0000-00-00 00:00:00', '2016-05-21 07:34:18', '2016-06-04 00:06:43', '2016-11-21');
 
 -- --------------------------------------------------------
 
@@ -628,19 +655,26 @@ CREATE TABLE IF NOT EXISTS `user_access_module` (
   `module_id` int(11) NOT NULL,
   `entity_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_access_module`
 --
 
 INSERT INTO `user_access_module` (`id`, `module_id`, `entity_id`, `group_id`) VALUES
-(1, 60, 1, 5),
-(2, 68, 1, 5),
-(3, 61, 1, 5),
-(4, 67, 1, 5),
-(5, 69, 1, 5),
-(6, 70, 1, 5);
+(1, 3, 1, 5),
+(7, 4, 1, 5),
+(8, 7, 1, 5),
+(9, 9, 1, 5),
+(10, 13, 1, 5),
+(11, 17, 1, 5),
+(12, 20, 1, 5),
+(13, 21, 1, 5),
+(14, 22, 1, 5),
+(15, 23, 1, 5),
+(16, 5, 1, 5),
+(17, 6, 1, 5),
+(18, 8, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -662,7 +696,7 @@ CREATE TABLE IF NOT EXISTS `user_groups` (
 INSERT INTO `user_groups` (`id`, `name`, `description`, `entity_id`) VALUES
 (1, 'Administrator', 'System Administrator', NULL),
 (2, 'CGTECC BackOffice', 'Back Office of tanuan coop', 1),
-(3, 'Tester', 'For tester use', NULL),
+(3, '', '', NULL),
 (4, 'PEOPLESCOOP Operation', '', 2),
 (5, 'CGTECC Operation', '', 1),
 (6, 'Marketing', '', NULL),
@@ -3014,7 +3048,7 @@ ALTER TABLE `members`
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `parameters`
 --
@@ -3024,7 +3058,7 @@ ALTER TABLE `parameters`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=105;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=107;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -3039,7 +3073,7 @@ ALTER TABLE `user_access`
 -- AUTO_INCREMENT for table `user_access_module`
 --
 ALTER TABLE `user_access_module`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `user_groups`
 --
