@@ -104,7 +104,7 @@ class AuthController extends Controller
 						/* === update user is_login to 1 === */
 						User::where('id', $user->id)->update([
 							'is_login'   => true,
-							'last_login' => date('Y-m-d h:i:s')
+							'last_login' => date('Y-m-d H:i:s')
 						]);
 						
 						Log::info('Login Result: ', [
@@ -197,8 +197,8 @@ class AuthController extends Controller
 	private function checkIdleTimeAllowed($lastLogin)
 	{
 		$lastLoginTimestamp = strtotime($lastLogin);
-		$currentTimestamp   = strtotime(date('Y-m-d h:i:s'));
-		$secondDiff         = ($currentTimestamp - $lastLoginTimestamp);
+		$currentTimestamp   = strtotime(date('Y-m-d H:i:s'));
+		$secondDiff         = round(abs($currentTimestamp - $lastLoginTimestamp) / 60);
 		
 		return ($secondDiff >= config('users.allowedIdleTime'));
 	}
