@@ -21,27 +21,7 @@
     <link href="{!! asset('resources/assets/gentellela-alela/css/icheck/flat/green.css') !!}" rel="stylesheet">
     <script src="{!! asset('resources/assets/gentellela-alela/js/jquery.min.js') !!}"></script>
 	
-	<!-- Put modal in center -->
 	<style>
-		.modal {
-		  text-align: center;
-		}
-
-		@media screen and (min-width: 768px) {
-		  .modal:before {
-			display: inline-block;
-			vertical-align: middle;
-			content: " ";
-			height: 80%;
-		  }
-		}
-
-		.modal-dialog {
-		  display: inline-block;
-		  text-align: left;
-		  vertical-align: middle;
-		}
-		
 		input.redBackground {
 			color: red;
 		}

@@ -64,8 +64,6 @@
 	}
 	
 	function keyupInputHndlr() {
-		
-		
 		$(".replace-space").keyup(function () {
 			this.value = this.value.replace(/ /g, "_");
 		});

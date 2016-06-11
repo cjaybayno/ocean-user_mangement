@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Portal;
 use Illuminate\Http\Request;
 
 use Log;
+use Route;
 use Crypt;
 use Datatables;
 
@@ -48,6 +49,7 @@ class ModulesController extends Controller
 	{
 		$assets = [
 			'scripts' => [
+				'/assets/gentellela-alela/js/jquery-ui.min.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
@@ -56,6 +58,7 @@ class ModulesController extends Controller
 				'/assets/modules/portal/modules-list.js' 
 			],
 			'stylesheets' => [
+				'/assets/gentellela-alela/css/jquery-ui.min.css',
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
 				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
 			],
@@ -141,15 +144,27 @@ class ModulesController extends Controller
      */
     public function getValidateModuleLabel(Request $request)
     {
-		$module = Module::select('id')
-			->where('label', $request->label)
-			->where('parent_id', 0);
+		$module = Module::select('id')->where('label', $request->label);
 			
+		if (empty($request->isMenu))
+			$module->where('parent_id', 0);
+		
 		if (! empty($request->encryptId)) 
 			$module->where('id', '!=', Crypt::decrypt($request->encryptId));
 			
 		if ($module->count() > 0) return abort(404);
     }
+	
+	/**
+     * Validate Module Route
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function getValidateModuleRoute(Request $request)
+	{
+		if ($request->route != " " AND ! Route::has($request->route)) abort(404);
+	}
 	
 	/**
      * Add Module
@@ -223,7 +238,7 @@ class ModulesController extends Controller
 			$module->save();
 		}
 		
-		Log::info('Reorder modules info : ', [
+		Log::info('Reorder modules : ', [
 			'table' => [
 				'name' => 'modules',
 				'data' => $request->data
@@ -245,14 +260,114 @@ class ModulesController extends Controller
      */
     public function getShow($encrptyId)
     {
-		$id  	 = Crypt::decrypt($encrptyId);
-		$modules = Module::where('parent_id', $id)->first();
-			
+		$modulesId = Crypt::decrypt($encrptyId);
+		$modules   = Module::find($modulesId);
+		
+		$assets = [
+			'scripts' => [
+				'/assets/gentellela-alela/js/jquery-ui.min.js',
+				'/assets/gentellela-alela/js/parsley/parsley.min.js',
+				'/assets/modules/portal/modules-show.js' 
+			],
+			'stylesheets' => [
+				'/assets/gentellela-alela/css/jquery-ui.min.css',
+			],
+			'route' => $this->route,
+		];
+		
 		Log::info('View modules show : ', ['session' => session()->all()]);
 	
         return view('modules/portal/modules.show')->with([
-			'selected_menus' => $this->modules->getMenus($id),
-			'modules' 		 => $modules
-		]);
+			'assets'  		 => $assets,
+			'selected_menus' => $this->modules->getMenus($modulesId),
+			'modules' 		 => $modules,
+			'menuId'		 => $encrptyId,
+		])
+		->nest('iconList', 'modules/portal/modules.iconList');
     }
+	
+	/**
+     * Get Menu info
+     *
+     * @param  string  encrptyId
+     * @return \Illuminate\Http\Response
+     */
+    public function getGetMenuInfo($menuId)
+    {
+		return Module::find(Crypt::decrypt($menuId));
+    }
+	
+	
+	/**
+     * Add Menu
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function postStoreMenu(Request $request) 
+	{
+		$parentModuleId = Crypt::decrypt($request->encryptId);		
+		$module = new Module;
+		$module->parent_id  = $parentModuleId;
+		$module->order_list = Module::where('parent_id', $parentModuleId)->max('order_list') + 1;
+		$module->name  		= $request->name;
+		$module->label 		= ucwords($request->label);
+		$module->role  		= Module::find($parentModuleId)->role;
+		$module->icon  		= $request->icon;
+		if(! empty($request->route)) 
+			$module->route = $request->route;
+		
+		$module->save();
+		
+		Log::info('Add menu: ', [
+			'table' => [
+				'name' => 'modules',
+				'data' => $module->toArray()
+			],
+			'session' => session()->all()
+		]);
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('modules.successAddMenu'),
+		]);
+	}
+	
+	/**
+     * Update Menu
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function postUpdateMenu(Request $request) 
+	{
+		$module = Module::find(Crypt::decrypt($request->menuEncryptId));
+		if ($module->name   != $request->name)   $module->name   = $request->name;
+		if ($module->label  != $request->label)  $module->label  = ucwords($request->label);
+		if ($module->role   != $request->role)   $module->role   = $request->role;
+		if ($module->active != $request->active) $module->active = $request->active;
+		if ($module->icon   != $request->icon) 	 $module->icon   = $request->icon;
+		
+		if ($module->route != $request->route) {
+			if (! empty($request->route))
+				$module->route  = $request->route;
+			else
+				$module->route = NULL;
+		} 
+		
+		$module->save();
+		
+		Log::info('Modify menu info : ', [
+			'table' => [
+				'name' => 'modules',
+				'data' => $module->toArray()
+			],
+			'session' => session()->all()
+		]);
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('modules.successModifyModule'),
+		]);
+	}
 }

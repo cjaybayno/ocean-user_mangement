@@ -22,7 +22,7 @@
 									</a>
 									<ul class="nav child_menu" style="display: none">
 										@foreach ($menu['child'] as $menu)
-											
+											@can('moduleAccessById', $menu['id'])
 												<li>
 													<a 
 														@if (isset($menu['route']))
@@ -32,7 +32,7 @@
 														{{ $menu['label'] }}
 													</a>
 												</li>
-												
+											@endcan
 										@endforeach
 									</ul>
 								</li>

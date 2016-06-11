@@ -17,8 +17,8 @@ return [
 	],
 	
 	'select_status' => [
-		1   => 'active',
-		0   => 'deactive',
+		1   => 'Active',
+		0   => 'Deactive',
 	],
 	
 	/*

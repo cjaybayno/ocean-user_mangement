@@ -2,15 +2,12 @@
 @section('title', 'Modules')
 
 @section('addStylesheets')
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	 <style>
-  
-  .ui-state-highlight { height: 3em; line-height: 2em; }
-  </style>
+	<style>
+		.ui-state-highlight { height: 3em; line-height: 2em; }
+	</style>
 @endsection
 
 @section('addScripts')
-	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script>
 		var validateModuleNameMessage = "{{ trans('modules.validateModuleName') }}";
 		var validateModuleLabelMessage = "{{ trans('modules.validateModuleLabel') }}";
