@@ -28,7 +28,7 @@
 						</a>
 					</div>
 					<div class="btn-group">
-						<a href="#reorder-module-modal" data-toggle="modal">
+						<a href="#reorder-menu-modal" data-toggle="modal">
 							<button type="button" class="btn btn-block btn-sm btn-warning" id="reorder-module-btn"><i class="glyphicon glyphicon-sort-by-order"></i> Re-order Menu</button>
 						</a>
 					</div>
@@ -88,7 +88,13 @@
 													<span class="label label-danger">Deactivated</span>
 												@endif
 											</td>
-											<td>{{ $menu['route'] }}</td>
+											<td>
+												@if (empty($menu['route']))
+													<span class="label label-default">None</span>
+												@else
+													{{ $menu['route'] }}
+												@endif
+											</td>
 											<td><i class="{{ $menu['icon'] }}"></i> <code>{{ $menu['icon'] }}</code></td>
 											<td>
 												<a href="#edit-menu-modal" data-toggle="modal">
@@ -105,10 +111,17 @@
 								</div>
 								<div class="pull-right">
 									<div class="btn-group">
-											<a href="#add-submenu-modal" data-toggle="modal">
-												<button type="button" class="btn btn-block btn-sm btn-primary" onclick='clickAddSubMenuBtn("{{ Crypt::encrypt($menu['id']) }}")'><i class="glyphicon glyphicon-plus"></i> Add Sub-Menu</button>
-											</a>
+										<a href="#add-submenu-modal" data-toggle="modal">
+											<button type="button" class="btn btn-block btn-sm btn-primary" onclick='clickAddSubMenuBtn("{{ Crypt::encrypt($menu['id']) }}")'><i class="glyphicon glyphicon-plus"></i> Add Sub-Menu</button>
+										</a>
 									</div>
+									@if (! empty($menu['child']))
+										<div class="btn-group">
+											<a href="#reorder-submenu-modal" data-toggle="modal">
+												<button type="button" class="btn btn-block btn-sm btn-warning" onclick='clickReorderSubMenuBtn("{{ Crypt::encrypt($menu['id']) }}")'><i class="glyphicon glyphicon-sort-by-order"></i> Re-order Sub-Menu</button>
+											</a>
+										</div>
+									@endif
 								</div>
 								<table class="table table-hover table-striped">
 									<thead>
@@ -163,23 +176,48 @@
 	</div>
 </div>
 
-<!-- reorder module modal --->
-<form id="reorder-module-form" data-parsley-validate= "">
-<div class="modal fade" id="reorder-module-modal" tabindex="-1" role="dialog" aria-labelledby="" data-backdrop="static" data-keyboard="false" >
+<!-- reorder menu modal --->
+<form id="reorder-menu-form" data-parsley-validate= "">
+<div class="modal fade" id="reorder-menu-modal" tabindex="-1" role="dialog" aria-labelledby="" data-backdrop="static" data-keyboard="false" >
   <div class="modal-dialog">
 	<div class="modal-content">
 	  <div class="modal-header">
-		<h4 class="modal-title"> Reorder Module</h4>
+		<h4 class="modal-title"> Reorder Menu</h4>
 	  </div>
 	  <div class="modal-body">
 	   <center>
 		<h5><span class="load-bar-notif"></span></h5>
 		<div class="load-bar"></div>
-			<ul id="sortable" class="to_do">
+			<ul class="to_do sortable">
 				@foreach ($selected_menus as $menu)
 					<li class="ui-state-default" id="{{ $menu['id'] }}">{{ $menu['label'] }}</li>
 				@endforeach
 			</ul>
+		</center>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-sm btn-default pull-left action-btn close-btn" data-dismiss="modal">Close</button>
+		<button type="button" class="btn btn-sm btn-default pull-left close-btn-done" data-dismiss="modal" style="display:none">Close</button>
+		<button type="button" class="btn btn-sm btn-danger action-btn" id="confirm-btn">Confirm</button>
+	  </div>
+	</div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</form>
+
+<!-- reorder submenu modal --->
+<form id="reorder-submenu-form" data-parsley-validate= "">
+<div class="modal fade" id="reorder-submenu-modal" tabindex="-1" role="dialog" aria-labelledby="" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h4 class="modal-title"> Reorder Sub-Menu</h4>
+	  </div>
+	  <div class="modal-body">
+	   <center>
+		<h5><span class="load-bar-notif"></span></h5>
+		<div class="load-bar"></div>
+			<ul class="to_do sortable"></ul>
 		</center>
 	  </div>
 	  <div class="modal-footer">

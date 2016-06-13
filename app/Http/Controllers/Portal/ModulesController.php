@@ -297,6 +297,20 @@ class ModulesController extends Controller
 		return Module::find(Crypt::decrypt($menuId));
     }
 	
+	/**
+     * Get Sub Menus
+     *
+     * @param  string  encrptyId
+     * @return \Illuminate\Http\Response
+     */
+    public function getGetSubMenus($menuId)
+    {
+		return Module::select('id', 'label')
+			->where('parent_id', Crypt::decrypt($menuId))
+			->orderBy('order_list')
+			->get();
+    }
+	
 	
 	/**
      * Add Menu
@@ -344,7 +358,6 @@ class ModulesController extends Controller
 		$module = Module::find(Crypt::decrypt($request->menuEncryptId));
 		if ($module->name   != $request->name)   $module->name   = $request->name;
 		if ($module->label  != $request->label)  $module->label  = ucwords($request->label);
-		if ($module->role   != $request->role)   $module->role   = $request->role;
 		if ($module->active != $request->active) $module->active = $request->active;
 		if ($module->icon   != $request->icon) 	 $module->icon   = $request->icon;
 		
@@ -353,7 +366,7 @@ class ModulesController extends Controller
 				$module->route  = $request->route;
 			else
 				$module->route = NULL;
-		} 
+		}
 		
 		$module->save();
 		
