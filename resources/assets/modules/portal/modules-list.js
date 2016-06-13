@@ -262,19 +262,19 @@
 	}
 	
 	function validateModuleLabel(formId) {
-		var selector = $(formId+" #label");
-		var valid;
-		selector.attr('data-parsley-remote', '');
-		selector.attr('data-parsley-remote-validator', 'validateModuleLabel');
-		selector.attr('data-parsley-remote-message', validateModuleLabelMessage);
-		window.Parsley.addAsyncValidator('validateModuleLabel', function (xhr) {
-			return xhr.status !== 404;
-			}, route+'/validate-module-label', {
-				"dataType" : "jsonp", 
-				"data": {
-						"encryptId"  : $(formId+' #encryptId').val(),
-						"label"       : $(formId+' #label').val(),
-				}
-			}
-		);
+		// var selector = $(formId+" #label");
+		// var valid;
+		// selector.attr('data-parsley-remote', '');
+		// selector.attr('data-parsley-remote-validator', 'validateModuleLabel');
+		// selector.attr('data-parsley-remote-message', validateModuleLabelMessage);
+		// window.Parsley.addAsyncValidator('validateModuleLabel', function (xhr) {
+			// return xhr.status !== 404;
+			// }, route+'/validate-module-label', {
+				// "dataType" : "jsonp", 
+				// "data": {
+						// "encryptId"  : $(formId+' #encryptId').val(),
+						// "label"       : $(formId+' #label').val(),
+				// }
+			// }
+		// );
 	}

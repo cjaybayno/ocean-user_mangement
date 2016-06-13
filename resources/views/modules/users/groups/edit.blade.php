@@ -22,6 +22,10 @@
 			</div>
 			<br>
 			<div class="form-group">
+				<label class="control-label">Entity</label><br>
+				{!! Form::select('group_entity', $entities, null, ['class' => 'form-control select2 action-input', 'id' => 'group_entity', 'style' => 'width:50%', 'required']) !!}
+			</div><br>
+			<div class="form-group">
 				<label class="control-label">Description</label>
 				<textarea name="group_desc" id="group_desc" class="form-control action-input" rows="3" style="width:50%"></textarea>
 			</div>

@@ -66,7 +66,9 @@ class UserGroupController extends Controller
         return view('modules/users/groups.list')->with([
 			'assets' => $assets
 		])
-		->nest('editUserGroupView', 'modules/users/groups.edit')
+		->nest('editUserGroupView', 'modules/users/groups.edit',[
+			'entities' => $entities,
+		])
 		->nest('addUserGroupView',  'modules/users/groups.add', [
 			'entities' => $entities,
 		]);
@@ -120,18 +122,19 @@ class UserGroupController extends Controller
 		
 		$userGroup = UserGroup::findOrFail(Crypt::decrypt($encryptID));
 		
-		return response()->json([
-			'encryptId'  => $encryptID,
-			'groupNAme' => $userGroup->name,
-			'groupDesc' => $userGroup->description,
-		]);
-		
 		Log::info('Edit user groups (get group details) : ', [
 			'table'	=> [
 				'name' => 'user_groups',
 				'data' => $userGroup
 			],
 			'session' => Session::all()
+		]);
+		
+		return response()->json([
+			'encryptId'   => $encryptID,
+			'groupNAme'   => $userGroup->name,
+			'groupEntity' => $userGroup->entity_id,
+			'groupDesc'   => $userGroup->description,
 		]);
 	}
 	
@@ -179,6 +182,7 @@ class UserGroupController extends Controller
 		$userGroup = UserGroup::findOrFail(Crypt::decrypt($request->encryptId));
 		$userGroup->name        = ucwords($request->group_name);
 		$userGroup->description = $request->group_desc;
+		$userGroup->entity_id   = $request->group_entity;
 		$userGroup->save();
 		
 		Log::info('Update user group: ', [

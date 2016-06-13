@@ -54,6 +54,7 @@
 			success: function(result) {
 				$(modalID+' #encryptId').val(result.encryptId);
 				$(modalID+' #group_name').val(result.groupNAme);
+				$(modalID+' #group_entity').select2().val(result.groupEntity).trigger("change");;
 				$(modalID+' #group_desc').text(result.groupDesc);
 			}
 		});			
@@ -73,9 +74,10 @@
 					url: url+"/user/groups/update-group",
 					type: "post",
 					data: { 
-						encryptId : $(modalID+' #encryptId').val(),
-						group_name : $(modalID+' #group_name').val(),
-						group_desc : $(modalID+' #group_desc').val()
+						encryptId    : $(modalID+' #encryptId').val(),
+						group_name   : $(modalID+' #group_name').val(),
+						group_entity : $(modalID+' #group_entity').val(),
+						group_desc   : $(modalID+' #group_desc').val()
 					},
 					dataType: 'json',
 					complete: function() {

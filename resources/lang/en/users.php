@@ -24,22 +24,22 @@ return [
 	'successTermination'  => "User successfully Terminated",
    
     /* === User Modification === */
-    'successUpdateProfile' => "Success Modification! <br> Great, successful account update.",
+    'successUpdateProfile' => "Success Modification! Great successful account update.",
 	
 	/* === User Extend Expiry  === */
-    'successExtendExpiry' => "Expiry Extend! <br> Great, successful account extension.",	
+    'successExtendExpiry' => "Expiry Extend! Great successful account extension.",	
 	
 	/* === User Change Status  === */
-    'successChangeStatus' => "Status Changed! <br> <br> Great, successful status change.",
+    'successChangeStatus' => "Status Changed! Great successful status change.",
     
 	/* === User Change Group  === */
-	'successChangeGroup' => "Group Changed! <br> <br> Great, successful group change.",
+	'successChangeGroup' => "Group Changed! Great successful group change.",
 	
 	/* === User Change Password  === */
-	'successChangePassword' => "Password Change! <br> <br> Great, successful password change.",
+	'successChangePassword' => "Password Change! Great successful password change.",
 
 	/* === User Reset Password  === */
-	'successResetPassword' => "An email is sent! <br> <br> Great, Tell the user to activate his account with temporary password.",
+	'successResetPassword' => "An email is sent! Great Tell the user to activate his account with temporary password.",
 	
 	/* === General error Message === */
    'oops' => "Sorry, we couldn't complete your action because of some problem on our server. Please try again.",
@@ -54,6 +54,6 @@ return [
 	'currently_login'	 => "This user is currently login in another location",
 	
 	/* === User Group === */
-	'successEditUserGroup' => "Group has modified! <br> <br> Great, this group is being modified.",
-	'successAddUserGroup'  => "Group has been save! <br> <br> Great, you have new groups.",
+	'successEditUserGroup' => "Group has modified! Great this group is being modified.",
+	'successAddUserGroup'  => "Group has been save! Great you have new groups.",
 ];
