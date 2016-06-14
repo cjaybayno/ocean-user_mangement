@@ -198,7 +198,7 @@ class AuthController extends Controller
 	{
 		$lastLoginTimestamp = strtotime($lastLogin);
 		$currentTimestamp   = strtotime(date('Y-m-d H:i:s'));
-		$secondDiff         = round(abs($currentTimestamp - $lastLoginTimestamp) / 60);
+		$secondDiff         = abs($currentTimestamp - $lastLoginTimestamp);
 		
 		return ($secondDiff >= config('users.allowedIdleTime'));
 	}
