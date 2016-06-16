@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Portal;
 
 use Illuminate\Http\Request;
 
+use DB;
 use Log;
 use Route;
 use Crypt;
@@ -203,11 +204,18 @@ class ModulesController extends Controller
      */
 	public function postUpdateModule(Request $request) 
 	{
-		$module = Module::find(Crypt::decrypt($request->encryptId));
+		$parentModuleId = Crypt::decrypt($request->encryptId);
+		
+		$module = Module::find($parentModuleId);
 		if ($module->name   != $request->name)   $module->name  = $request->name;
 		if ($module->label  != $request->label)  $module->label = strtoupper($request->label);
-		if ($module->role   != $request->role)   $module->role  = $request->role;
 		if ($module->active != $request->active) $module->active  = $request->active;
+		
+		if ($module->role != $request->role) {
+			$module->role  = $request->role;	
+			$this->updateChildRole($parentModuleId, $request->role);
+		}
+		
 		$module->save();
 		
 		Log::info('Modify modules info : ', [
@@ -222,6 +230,25 @@ class ModulesController extends Controller
 			'success' => true,
 			'message' => trans('modules.successModifyModule'),
 		]);
+	}
+	
+	/**
+     * Update Child Role
+     *
+     * @param  int   $moduleId
+     * @return void
+     */
+	protected function updateChildRole($moduleId, $role)
+	{
+		$roleModules = $this->modules->getMenus($moduleId, false);
+		
+		foreach ($roleModules as $roleModule) {
+			DB::table('modules')->where('id', $roleModule->id)->update(['role' => $role]);
+			
+			if (! empty($roleModule['child'])) {
+				$this->updateChildRole($roleModule['id'], $role);
+			}
+		}
 	}
 	
 	/**

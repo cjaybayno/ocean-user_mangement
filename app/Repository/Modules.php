@@ -50,7 +50,7 @@ class Modules
 		$primaryData = [];
 		for ($i = 0; $i < count($params); $i++) {
 			$child = $this->getMenusQuery($params[$i]['id'], $activeOnly, $role);
-			$params[$i]['child'] = $this->builTree($child);
+			$params[$i]['child'] = $this->builTree($child, $activeOnly, $role);
 			$primaryData[] = $params[$i];
 		}
 		
