@@ -279,7 +279,7 @@ class ModulesController extends Controller
 	
         return view('modules/portal/modules.show')->with([
 			'assets'  		 => $assets,
-			'selected_menus' => $this->modules->getMenus($modulesId),
+			'selected_menus' => $this->modules->getMenus($modulesId, false),
 			'modules' 		 => $modules,
 			'menuId'		 => $encrptyId,
 		])

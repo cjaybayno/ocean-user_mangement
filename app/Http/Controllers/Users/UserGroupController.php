@@ -223,6 +223,8 @@ class UserGroupController extends Controller
 	{
 		$userGroup = UserGroup::findorFail(Crypt::decrypt($encryptId));
 		
+		$role = (! empty($userGroup['entity_id'])) ? config('users.role.client') : false;
+		
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/icheck/icheck.min.js',
@@ -235,7 +237,7 @@ class UserGroupController extends Controller
 		
         return view('modules/users/groups.modules')->with([
 			'assets'    => $assets,
-			'menusUl'   => $this->buildMenusUlTree($this->modules->getMenus()),
+			'menusUl'   => $this->buildMenusUlTree($this->modules->getMenus(0, true, $role)),
 			'menusId'   => json_encode($this->modules->getMenusAccess($userGroup['id'])),
 			'userGroup' => $userGroup,
 			'encryptId' => $encryptId,
