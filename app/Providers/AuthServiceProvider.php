@@ -45,10 +45,9 @@ class AuthServiceProvider extends ServiceProvider
 				->count();
 				
 			if ($count > 0) {
-				$count = DB::table('user_access_module')
+				$count = DB::table('user_group_modules')
 					->where('group_id', $user->group_access_id)
 					->where('module_id', $moduleId)
-					->where('entity_id', $user->entity_id)
 					->count();
 			}
 			
@@ -86,10 +85,9 @@ class AuthServiceProvider extends ServiceProvider
 					->first();
 					
 		if (! empty($params)) {
-			$count = DB::table('user_access_module')
+			$count = DB::table('user_group_modules')
 			->where('group_id', $user->group_access_id)
 			->where('module_id', $params->id)
-			->where('entity_id', $user->entity_id)
 			->count();
 			
 			return ($count > 0);

@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
 				'modules/users.list',
 				'modules/users.form',
 				'modules/users/groups.list',
+				'modules/users/groups.modules',
 				'modules/loans/products.list',
 				'modules/loans/products.form',
 				'modules/loans/application.form',

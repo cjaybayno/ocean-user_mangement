@@ -128,7 +128,8 @@ Route::group(['middleware' => 'web'], function () {
 		Route::group(['prefix' => 'user'], function () {
 			// users/groups route
 			Route::controller('groups', 'Users\UserGroupController', [
-				'getIndex' => 'user.groups',
+				'getIndex'  => 'user.groups',
+				'getAccess' => 'user.groups.access',
 			]);
 		});	
 	});

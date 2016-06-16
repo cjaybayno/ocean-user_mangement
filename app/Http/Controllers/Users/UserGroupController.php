@@ -10,13 +10,27 @@ use Crypt;
 use Session;
 use Datatables;
 
+use App\Module;
 use App\UserGroup;
 use App\Http\Requests;
+use App\Repository\Modules;
 use App\Repository\UserManagement;
 use App\Http\Controllers\Controller;
 
 class UserGroupController extends Controller
 {
+	/**
+	* Frontend route 
+	*/
+	protected $route = '/user/groups';
+	
+	/**
+     * The parameters repository implementation.
+     *
+     * @var parameters
+     */
+    protected $modules;
+	
 	/**
      * The user repository implementation.
      */
@@ -28,11 +42,11 @@ class UserGroupController extends Controller
      * @param  UserManagement  $UserRepository
      * @return void
      */
-	public function __construct(UserManagement $UserRepository)
+	public function __construct(UserManagement $UserRepository, Modules $modules)
 	{
 		$this->userRepo = $UserRepository;
+		$this->modules  = $modules;
 	}
-	
 	
 	/**
      * Display a listing of the user groups
@@ -55,7 +69,8 @@ class UserGroupController extends Controller
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
 				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
 				'/assets/gentellela-alela/css/select/select2.min.css',
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		Log::info('View user groups: ', ['session' => Session::all()]);
@@ -196,6 +211,106 @@ class UserGroupController extends Controller
 		return response()->json([
 			'success' => true,
 			'message' => trans('users.successEditUserGroup')
+		]);
+	}
+	
+	/**
+     * Group Access
+     *
+     * @return \Illuminate\Http\Response
+     */
+	public function getAccess($encryptId)
+	{
+		$userGroup = UserGroup::findorFail(Crypt::decrypt($encryptId));
+		
+		$assets = [
+			'scripts' => [
+				'/assets/gentellela-alela/js/icheck/icheck.min.js',
+				'/assets/modules/users/users-groups-modules.js' ,
+			],
+			'route' => $this->route,
+		];
+		
+		Log::info('View modules list : ', ['session' => session()->all()]);
+		
+        return view('modules/users/groups.modules')->with([
+			'assets'    => $assets,
+			'menusUl'   => $this->buildMenusUlTree($this->modules->getMenus()),
+			'menusId'   => json_encode($this->modules->getMenusAccess($userGroup['id'])),
+			'userGroup' => $userGroup,
+			'encryptId' => $encryptId,
+		]);
+	}
+	
+	/**
+     * Build Menus UL Tree
+     *
+     * @param array $menus
+     * @return string
+     */
+	protected function buildMenusUlTree($menus, $loop = false, $parentId = 0) {
+		$orderList = '';
+		
+		foreach ($menus as $menu) {
+			$ulClass        = (!$loop) ? 'nav side-menu to_do' : 'nav child_menu';
+			$liStyle 	    = (!$loop) ? '' : 'display:none';
+			$moduleParentId = (!$loop) ? '' : $parentId;
+			$childCount     = (! empty($menu['child'])) ? '('.count($menu['child']).')' : '';
+			$cursorPnter    = (! empty($menu['child'])) ? 'cursor:pointer;' : '';
+			
+			/* === build html ul li === */
+			$orderList .= '<ul class="'.$ulClass.'">';
+			$orderList .= '<li style="'.$liStyle.'">';
+			$orderList .= '<p style="'.$cursorPnter.'">';
+			$orderList .= '<input type="checkbox" name=modules[] class="flat" parent-id="'.$moduleParentId.'" id="'.$menu['id'].'"> '.$menu['label'].' '.$childCount;
+			$orderList .= '</p>';
+			
+			if (! empty($menu['child'])) {
+				$orderList .= $this->buildMenusUlTree($menu['child'], true, $menu['id']);
+			}
+			
+			$orderList .= '</li>';
+			$orderList .= '</ul>';
+		}
+		
+		return $orderList;
+	}
+	
+	/**
+	* Update group module
+	*
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
+	public function postUpdateGroupModule(Request $request)
+	{
+		$groupId = Crypt::decrypt($request->encryptId);
+		
+		$currentMenusId = $this->modules->getMenusAccess($groupId);
+		
+		/* === insert new menus === */
+		$insertMenusId = array_diff($request->update_menusId, $currentMenusId);
+		foreach($insertMenusId as $insertMenuId) {
+			DB::table('user_group_modules')->insert([
+				'module_id' => $insertMenuId,
+				'group_id'  => $groupId,
+			]);	
+		}
+		
+		/* === delete remove menus === */
+		$removeMenusId = array_diff($currentMenusId, $request->update_menusId);
+		foreach($removeMenusId as $removeMenuId) {
+			DB::table('user_group_modules')
+				->where('module_id', $removeMenuId)
+				->where('group_id', $groupId)
+				->delete();
+		}
+		
+		return response()->json([
+			'success' => true,
+			'message' => trans('users.successEditUserGroupModule'),
+			'insert' => $insertMenusId,
+			'remove' => $removeMenusId,
 		]);
 	}
 }
