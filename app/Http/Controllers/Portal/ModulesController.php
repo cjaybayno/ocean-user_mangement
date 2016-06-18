@@ -95,7 +95,9 @@ class ModulesController extends Controller
 		]);
 			
 		return Datatables::of($modules)
-			->editColumn('role', '{{ config("users.inverted_role.$role") }}')
+			->editColumn('role', function ($modules) {
+					return view('modules/portal/modules/dataTables.role', $modules)->render();
+			})
 			->editColumn('active', function ($modules) {
 					return view('modules/portal/modules/dataTables.active', $modules)->render();
 			})

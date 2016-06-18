@@ -256,7 +256,7 @@ class UserGroupController extends Controller
 		foreach ($menus as $menu) {
 			$ulClass        = (!$loop) ? 'nav side-menu to_do' : 'nav child_menu';
 			$liStyle 	    = (!$loop) ? '' : 'display:none';
-			$moduleParentId = (!$loop) ? '' : $parentId;
+			$moduleParentId = (!$loop) ? '0' : $parentId;
 			$childCount     = (! empty($menu['child'])) ? '('.count($menu['child']).')' : '';
 			$cursorPnter    = (! empty($menu['child'])) ? 'cursor:pointer;' : '';
 			
@@ -264,7 +264,7 @@ class UserGroupController extends Controller
 			$orderList .= '<ul class="'.$ulClass.'">';
 			$orderList .= '<li style="'.$liStyle.'">';
 			$orderList .= '<p style="'.$cursorPnter.'">';
-			$orderList .= '<input type="checkbox" name=modules[] class="flat" parent-id="'.$moduleParentId.'" id="'.$menu['id'].'"> '.$menu['label'].' '.$childCount;
+			$orderList .= '<input type="checkbox" class="flat" parent-id="'.$moduleParentId.'" id="'.$menu['id'].'"> '.$menu['label'].' '.$childCount;
 			$orderList .= '</p>';
 			
 			if (! empty($menu['child'])) {

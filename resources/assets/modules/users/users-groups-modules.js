@@ -17,12 +17,37 @@
 	}
 	
 	function onCheckHndlr() {
-		$('[type=checkbox]').on('ifChecked', function(event) {
-			var parentId  = $('#'+$(this).attr('parent-id'));
+		$('[type=checkbox]').on('ifClicked', function(event) {
+			var parentId  = $('#'+$(this).attr('parent-id'));				
 				parentId.iCheck('check');
 				
-			// var childId  = $('[parent-id='+$(this).attr('id')+']');
-				// childId.iCheck('check');
+			var currenCheckboxCount = 0;
+			var currenCheckbox = $('[parent-id='+$(this).attr('parent-id')+']');
+				
+			currenCheckbox.on('ifChecked', function(event){
+				currenCheckboxCount = $('[parent-id='+$(this).attr('parent-id')+']:checked').length;
+				if (currenCheckboxCount == 0) {
+					parentId.iCheck('uncheck');
+				}
+			});
+			
+			currenCheckbox.on('ifUnchecked', function(event){
+				currenCheckboxCount = $('[parent-id='+$(this).attr('parent-id')+']:checked').length;
+				if (currenCheckboxCount == 0) {
+					parentId.iCheck('uncheck');
+				}
+			});
+				
+		});
+		
+		$('[type=checkbox]').on('ifChecked', function(event) {
+			var childId  = $('[parent-id='+$(this).attr('id')+']');
+				childId.iCheck('check');
+		});
+		
+		$('[type=checkbox]').on('ifUnchecked', function(event) {
+			var childId  = $('[parent-id='+$(this).attr('id')+']');
+				childId.iCheck('uncheck');
 		});
 		
 	}
