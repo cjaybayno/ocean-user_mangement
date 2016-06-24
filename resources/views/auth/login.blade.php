@@ -42,8 +42,8 @@
 						<br />
 						
 						<div>
-							<h1><i class="fa fa-anchor" style="font-size: 26px;"></i> OCEAN LOAN</h1>
-							<p>©2015 All Rights Reserved. Ocean Loan! Privacy and Terms</p>
+							<h1><i class="fa fa-anchor" style="font-size: 26px;"></i> OCEAN PORTAL</h1>
+							<p>©2016 All Rights Reserved. iCore Technology! <br> Privacy and Terms</p>
 						</div>
 					</div>
 				</form>
