@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2016 at 09:55 PM
+-- Generation Time: Jun 24, 2016 at 05:56 PM
 -- Server version: 5.6.25
 -- PHP Version: 5.6.11
 
@@ -23,67 +23,22 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `balances`
+-- Table structure for table `backoffice_balance_sheets`
 --
 
-CREATE TABLE IF NOT EXISTS `balances` (
-  `id` int(10) NOT NULL,
-  `member_id` int(10) NOT NULL,
-  `type` varchar(20) DEFAULT NULL,
-  `current_balance` float DEFAULT '0',
-  `available_balance` float NOT NULL DEFAULT '0',
-  `pending_balance` float NOT NULL DEFAULT '0',
-  `entity_id` int(10) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `balances`
---
-
-INSERT INTO `balances` (`id`, `member_id`, `type`, `current_balance`, `available_balance`, `pending_balance`, `entity_id`, `created_at`, `updated_at`) VALUES
-(13, 1, 'savings', 13000, 13000, 0, 1, '2016-05-17 08:34:03', '2016-05-21 22:42:36'),
-(15, 15, NULL, 1000, 1000, 0, 0, '2016-05-21 07:40:58', '2016-05-21 07:40:58'),
-(22, 12, 'savings', 1000, 1000, 0, 1, '2016-05-22 01:33:15', '2016-05-22 01:33:15'),
-(24, 12, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:20', '2016-05-25 05:50:20'),
-(25, 1, 'capital', 2000, 2000, 0, 1, '2016-05-25 05:50:21', '2016-06-10 19:35:01'),
-(26, 3, 'capital', 3000, 3000, 0, 1, '2016-05-25 05:50:21', '2016-06-10 19:35:01'),
-(27, 11, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
-(28, 5, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
-(29, 2, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-02-09 05:50:21'),
-(30, 9, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
-(31, 13, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
-(32, 14, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
-(33, 16, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
-(34, 3, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
-(35, 11, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
-(36, 5, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
-(37, 2, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
-(38, 9, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
-(39, 13, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
-(40, 14, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
-(41, 16, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `balance_sheets`
---
-
-CREATE TABLE IF NOT EXISTS `balance_sheets` (
+CREATE TABLE IF NOT EXISTS `backoffice_balance_sheets` (
   `id` int(11) NOT NULL,
   `param_id` int(11) NOT NULL,
   `amount` float NOT NULL DEFAULT '0',
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `entity_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `balance_sheets`
+-- Dumping data for table `backoffice_balance_sheets`
 --
 
-INSERT INTO `balance_sheets` (`id`, `param_id`, `amount`, `date`, `entity_id`) VALUES
+INSERT INTO `backoffice_balance_sheets` (`id`, `param_id`, `amount`, `date`, `entity_id`) VALUES
 (1, 10, 1, '2016-06-02 00:15:35', 0),
 (2, 10, 2500, '2016-06-02 00:18:38', 0),
 (3, 11, 200, '2016-06-02 00:18:39', 0),
@@ -92,7 +47,8 @@ INSERT INTO `balance_sheets` (`id`, `param_id`, `amount`, `date`, `entity_id`) V
 (6, 12, 1, '2016-06-02 00:23:30', 0),
 (7, 19, 4, '2016-06-02 00:24:52', 0),
 (8, 20, 4, '2016-06-02 00:24:52', 0),
-(9, 21, 4.32, '2016-06-02 00:24:52', 0);
+(9, 21, 4.32, '2016-06-02 00:24:52', 0),
+(10, 19, 3000, '2016-06-24 23:45:46', 0);
 
 -- --------------------------------------------------------
 
@@ -163,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `loan_applications` (
 INSERT INTO `loan_applications` (`id`, `member_id`, `application_type`, `loan_product_id`, `amount`, `advance_interest`, `processing_fee`, `capital_build_up`, `outstanding_balance`, `rebate`, `total_deduction`, `net_proceeds`, `amortization`, `num_made_payments`, `total_made_payments`, `fully_paid`, `remarks`, `applied_date`, `paid_date`, `created_date`, `updated_date`, `entity_id`) VALUES
 (8, 1, 'NEW', 1, 100000, 12000, 500, 5000, 79600, 0, 17500, 82500, 3400, 8, 18625, 1, 'closed for renewal', '2016-03-29', '2016-05-17', '2016-03-29 01:00:24', NULL, 1),
 (9, 2, 'NEW', 1, 80000, 9600, 500, 1000, 0, 0, 11100, 68900, 3400, 2, 0, 1, NULL, '2016-03-29', NULL, '2016-03-29 22:35:09', '2016-05-22', 1),
-(10, 3, 'NEW', 1, 70000, 8400, 500, 1000, 83100, 0, 9900, 60100, 3400, 5, 18900, 0, NULL, '2016-03-30', NULL, '2016-03-30 00:38:21', '2016-06-01', 1),
+(10, 3, 'NEW', 1, 70000, 8400, 500, 1000, 76300, 0, 9900, 60100, 3400, 7, 25700, 0, NULL, '2016-03-30', NULL, '2016-03-30 00:38:21', '2016-06-24', 1),
 (12, 5, 'NEW', 3, 30000, 0, 500, 5000, 18000, 0, 5500, 24500, 1800, 2, 0, 0, NULL, '2016-02-01', NULL, '2016-04-01 22:23:08', '2016-05-22', 1),
 (13, 2, 'NEW', 2, 30000, 3600, 500, 1000, 35200, 0, 13500, 86500, 2800, 5, 15200, 0, NULL, '2016-03-30', NULL, '2016-04-04 20:58:00', '2016-05-22', 1),
 (21, 11, 'NEW', 3, 30000, 0, 500, 2000, 30000, 0, 2500, 27500, 2500, 0, 0, 0, NULL, '2016-04-09', NULL, '2016-04-09 01:47:04', '2016-05-22', 1),
@@ -182,6 +138,198 @@ INSERT INTO `loan_applications` (`id`, `member_id`, `application_type`, `loan_pr
 (44, 13, 'RENEWAL', 1, 100000, 12000, 500, 500, 84800, 11000, -13500, 900, 3400, 3, 11800, 0, NULL, '2016-05-22', NULL, '2016-05-22 01:07:40', '2016-06-01', 1),
 (45, 1, 'RENEWAL', 3, 30000, 0, 500, 0, 24100, 0, -500, 5400, 2500, 0, 0, 0, NULL, '2016-05-23', NULL, '2016-05-23 21:07:36', NULL, 1),
 (46, 3, 'NEW', 3, 30000, 0, 500, 1000, 30000, 0, 1500, 28500, 2500, 0, 0, 0, NULL, '2016-06-02', NULL, '2016-06-02 01:05:30', NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `loan_balances`
+--
+
+CREATE TABLE IF NOT EXISTS `loan_balances` (
+  `id` int(10) NOT NULL,
+  `member_id` int(10) NOT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  `current_balance` float DEFAULT '0',
+  `available_balance` float NOT NULL DEFAULT '0',
+  `pending_balance` float NOT NULL DEFAULT '0',
+  `entity_id` int(10) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `loan_balances`
+--
+
+INSERT INTO `loan_balances` (`id`, `member_id`, `type`, `current_balance`, `available_balance`, `pending_balance`, `entity_id`, `created_at`, `updated_at`) VALUES
+(13, 1, 'savings', 13000, 13000, 0, 1, '2016-05-17 08:34:03', '2016-05-21 22:42:36'),
+(15, 15, NULL, 1000, 1000, 0, 0, '2016-05-21 07:40:58', '2016-05-21 07:40:58'),
+(22, 12, 'savings', 1000, 1000, 0, 1, '2016-05-22 01:33:15', '2016-05-22 01:33:15'),
+(24, 12, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:20', '2016-05-25 05:50:20'),
+(25, 1, 'capital', 3000, 3000, 0, 1, '2016-05-25 05:50:21', '2016-06-24 15:07:16'),
+(26, 3, 'capital', 3000, 3000, 0, 1, '2016-05-25 05:50:21', '2016-06-10 19:35:01'),
+(27, 11, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
+(28, 5, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
+(29, 2, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-02-09 05:50:21'),
+(30, 9, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
+(31, 13, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
+(32, 14, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
+(33, 16, 'capital', 1000, 1000, 0, 1, '2016-05-25 05:50:21', '2016-05-25 05:50:21'),
+(34, 3, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
+(35, 11, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
+(36, 5, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
+(37, 2, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
+(38, 9, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
+(39, 13, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
+(40, 14, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11'),
+(41, 16, 'savings', 0, 0, 0, 1, '2016-06-01 09:15:11', '2016-06-01 09:15:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `loan_members`
+--
+
+CREATE TABLE IF NOT EXISTS `loan_members` (
+  `id` int(10) NOT NULL,
+  `first_name` varchar(20) NOT NULL,
+  `middle_name` varchar(20) NOT NULL,
+  `last_name` varchar(20) NOT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `marital_status` varchar(10) DEFAULT NULL,
+  `birth_date` date DEFAULT NULL,
+  `birth_place` varchar(20) DEFAULT NULL,
+  `mother_maiden_name` varchar(20) DEFAULT NULL,
+  `contact_number` varchar(20) DEFAULT NULL,
+  `email_address` varchar(20) DEFAULT NULL,
+  `street_address` varchar(20) DEFAULT NULL,
+  `brgy_town_address` varchar(20) DEFAULT NULL,
+  `province_city_address` varchar(20) DEFAULT NULL,
+  `zipcode_address` varchar(20) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `entity_id` int(10) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `loan_members`
+--
+
+INSERT INTO `loan_members` (`id`, `first_name`, `middle_name`, `last_name`, `gender`, `marital_status`, `birth_date`, `birth_place`, `mother_maiden_name`, `contact_number`, `email_address`, `street_address`, `brgy_town_address`, `province_city_address`, `zipcode_address`, `created_at`, `updated_at`, `entity_id`) VALUES
+(1, 'Christian Jay', 'Dungo', 'Bayno', 'male', 'unmarried', '1992-04-10', 'Sablayan Occ Mindoro', 'Gloria Dungo', '09278726770', 'christianjaybayno@gm', '3380-c Ibarra St', 'PALANAN', 'MAKATI', '1235', '2016-04-01 18:09:07', '2016-04-02 04:51:49', 1),
+(2, 'Lorenzo', 'V', 'Valdez', NULL, NULL, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01 18:09:07', '0000-00-00 00:00:00', 1),
+(3, 'Laravel', 'C', 'Bayno', NULL, NULL, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01 18:09:07', '0000-00-00 00:00:00', 1),
+(4, 'Wally', 'V', 'Valdez', NULL, NULL, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01 18:09:07', '0000-00-00 00:00:00', 1),
+(5, 'Loren Joanne', 'L', 'Sangalang', NULL, NULL, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01 18:09:07', '0000-00-00 00:00:00', 1),
+(9, 'Madonna', 'Novero', 'Alano', 'female', 'unmarried', '1990-06-24', 'Paranaque', 'Novero', '0927872454534', 'madonna@rmail.com', 'Severina 18', 'BETTER LIVING SUBD.', 'PARANAQUE', '1711', '2016-04-02 01:31:03', '2016-04-06 07:28:38', 1),
+(11, 'Lloyd Vincent', 'Del Rosario', 'Abando', 'male', 'unmarried', '1997-11-12', 'Manila', 'Violeta Del Rosario', '09162449573', 'ldabando@gmail.com', 'Julio Dela Cruz', 'PALANAN', 'MAKATI', '1235', '2016-04-02 04:54:59', '2016-04-02 04:54:59', 1),
+(12, 'Carlos', 'Lumbre', 'Sangalang', 'male', 'unmarried', '1995-01-31', 'Quezon City', 'Lorna Lumbre', '09272523543', '', '3380-c Ibarra St.', 'PALANAN', 'MAKATI', '1235', '2016-04-02 06:04:08', '2016-06-24 15:25:23', 1),
+(13, 'Marjorie', 'R', 'Ordenes', 'female', 'unmarried', '1991-01-10', 'Sablayan Occ Mindoro', 'Evelyn Rico', '09534523462345', '', '#720 Dangeros St. Bu', 'SABLAYAN', 'MINDORO OCCIDENTAL', '5104', '2016-04-18 18:49:46', '2016-05-01 07:30:57', 1),
+(14, 'Mark Lerry', 'Tibayan', 'Agmata', 'male', 'unmarried', '1992-03-11', 'Sablayan Occ Mindoro', 'Mama Tibayan', '0949582345', '', 'Brgy Buenavista ', 'SABLAYAN', 'MINDORO OCCIDENTAL', '5104', '2016-05-21 06:53:33', '2016-05-21 06:53:33', 1),
+(15, 'Gloria', 'Dungo', 'Imabayashi', 'female', 'married', '1972-04-20', 'Sta. Mesa Manila', 'Nanay Dungo', '090000000000', '', 'Milla Lucce', 'ANTIPOLO', 'RIZAL', '1870', '2016-05-21 07:38:47', '2016-05-21 08:28:02', 2),
+(16, 'Mayard', 'L', 'Nadura', 'male', 'unmarried', '1992-05-04', 'Sablayan Occ Mindoro', 'Test Name', '09287345635', '', 'Fwervsf ', 'BANGUED', 'ABRA', '2800', '2016-05-24 22:00:11', '2016-05-25 05:37:29', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `loan_payments`
+--
+
+CREATE TABLE IF NOT EXISTS `loan_payments` (
+  `id` int(10) NOT NULL,
+  `parent_id` int(10) NOT NULL,
+  `outstanding_balance` float NOT NULL DEFAULT '0',
+  `payment_amount` float NOT NULL DEFAULT '0',
+  `remaining_balance` float NOT NULL DEFAULT '0',
+  `or_number` varchar(100) DEFAULT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `entity_id` int(10) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `loan_payments`
+--
+
+INSERT INTO `loan_payments` (`id`, `parent_id`, `outstanding_balance`, `payment_amount`, `remaining_balance`, `or_number`, `type`, `date`, `entity_id`) VALUES
+(7, 8, 0, 3400, 0, 'BBB', 'loan', '2016-03-29 01:02:24', 1),
+(8, 8, 0, 345, 0, 'D', 'loan', '2016-03-29 22:36:26', 1),
+(9, 9, 0, 3574, 0, 'A', 'loan', '2016-03-29 22:36:26', 1),
+(11, 9, 0, 0, 0, 'WEFE', 'loan', '2016-03-29 23:05:12', 1),
+(12, 9, 0, 3400, 0, 'AAAA', 'loan', '2016-03-30 01:00:53', 1),
+(13, 9, 0, 95026, 0, 'AAAB', 'loan', '2016-03-30 01:01:46', 1),
+(14, 9, 0, 3400, 0, 'AAA1', 'loan', '2016-03-30 01:05:17', 1),
+(15, 9, 0, 94825, 0, 'AAA2', 'loan', '2016-03-30 01:06:15', 1),
+(16, 12, 0, 1800, 0, 'AAAAA1111', 'loan', '2016-04-01 23:55:37', 1),
+(17, 12, 0, 1800, 0, 'AAAA222', 'loan', '2016-04-02 00:08:55', 1),
+(23, 33, 0, 10000, 0, 'HRDTHERT756', 'loan', '2016-05-01 23:31:40', 1),
+(24, 8, 0, 3500, 0, '10001', 'loan', '2016-05-16 23:50:01', 1),
+(25, 8, 0, 3500, 0, '10002', 'loan', '2016-05-16 23:51:06', 1),
+(26, 8, 0, 3500, 0, '1003', 'loan', '2016-05-16 23:51:46', 1),
+(27, 8, 0, 3500, 0, '1004', 'loan', '2016-05-16 23:55:12', 1),
+(28, 8, 0, 4625, 0, '1005', 'loan', '2016-05-16 23:58:26', 1),
+(29, 35, 0, 40400, 0, '1006', 'loan', '2016-05-17 22:35:07', 1),
+(30, 34, 0, 79600, 0, '1007', 'loan', '2016-05-17 22:41:11', 1),
+(31, 32, 0, 102000, 0, '1008', 'loan', '2016-05-17 22:54:33', 1),
+(32, 1, 0, 1000, 0, '1009', 'loan', '2016-05-17 22:57:00', 1),
+(33, 10, 0, 3500, 0, '1011', 'loan', '2016-05-17 23:56:08', 1),
+(34, 10, 0, 3500, 0, '1012', 'loan', '2016-05-17 23:59:34', 1),
+(35, 13, 0, 3000, 0, '1019', 'loan', '2016-05-18 00:37:57', 1),
+(36, 10, 0, 3500, 0, '1022', 'loan', '2016-05-18 00:45:32', 1),
+(37, 37, 0, 2500, 0, '23423W3R', 'loan', '2016-05-19 00:12:48', 1),
+(38, 36, 79600, 3400, 76200, '1013', 'loan', '2016-05-20 22:09:11', 1),
+(39, 37, 27500, 3400, 24100, '1014', 'loan', '2016-05-20 22:11:05', 1),
+(40, 38, 50000, 2800, 47200, '1015', 'loan', '2016-05-20 22:13:21', 1),
+(41, 36, 76200, 34000, 42200, '1016', 'loan', '2016-05-21 01:40:55', 1),
+(42, 36, 42200, 3400, 38800, '1017', 'loan', '2016-05-21 01:53:14', 1),
+(43, 40, 200000, 5000, 195000, '1010', 'loan', '2016-05-21 23:46:33', 2),
+(44, 43, 100000, 3400, 96600, '1020', 'loan', '2016-05-22 01:06:24', 1),
+(45, 13, 41800, 2800, 39000, '1010', 'loan', '2016-05-22 14:30:04', 1),
+(46, 38, 47200, 2800, 44400, '1021', 'loan', '2016-05-22 14:34:42', 1),
+(47, 38, 44400, 5000, 39400, '1023', 'loan', '2016-05-22 14:37:16', 1),
+(50, 13, 12000, 1000, 13000, '1026', 'savings', '2016-05-22 14:42:36', 1),
+(51, 38, 39400, 2800, 36600, '1027', 'loan', '2016-05-22 15:04:41', 1),
+(52, 38, 36600, 3800, 32800, '1028', 'loan', '2016-05-22 15:05:58', 1),
+(53, 13, 39000, 3800, 35200, '1029', 'loan', '2016-05-22 15:05:58', 1),
+(54, 36, 38800, 5000, 33800, '1030', 'loan', '2016-05-22 15:07:11', 1),
+(55, 10, 91500, 5000, 86500, '1031', 'loan', '2016-05-22 15:07:11', 1),
+(56, 44, 96600, 5000, 91600, '1032', 'loan', '2016-05-22 15:07:11', 1),
+(68, 36, 33800, 4000, 29800, '1046', 'loan', '2016-05-22 15:45:08', 1),
+(69, 36, 29800, 3400, 26400, '1047', 'loan', '2016-05-22 16:13:13', 1),
+(70, 36, 26400, 4000, 22400, '1048', 'loan', '2016-05-22 16:42:06', 1),
+(71, 22, 0, 1000, 1000, '1049', 'savings', '2016-01-20 17:33:15', 1),
+(72, 36, 22400, 5000, 17400, '1050', 'loan', '2016-05-22 17:35:14', 1),
+(73, 36, 17400, 3400, 14000, '1051', 'loan', '2016-05-22 18:01:10', 1),
+(74, 36, 14000, 3400, 10600, '1052', 'loan', '2016-05-22 18:04:42', 1),
+(75, 36, 10600, 4000, 6600, '1053', 'loan', '2016-05-22 18:10:01', 1),
+(76, 44, 91600, 3400, 88200, '1054', 'loan', '2016-05-22 18:11:46', 1),
+(82, 24, 0, 1000, 1000, '1060', 'capital', '2016-05-25 21:50:21', 1),
+(83, 25, 0, 1000, 1000, '1061', 'capital', '2016-05-25 21:50:21', 1),
+(84, 26, 0, 1000, 1000, '1062', 'capital', '2016-05-25 21:50:21', 1),
+(85, 27, 0, 1000, 1000, '1063', 'capital', '2016-05-25 21:50:21', 1),
+(86, 28, 0, 1000, 1000, '1064', 'capital', '2016-05-25 21:50:21', 1),
+(87, 29, 0, 1000, 1000, '1065', 'capital', '2016-02-09 21:50:21', 1),
+(88, 30, 0, 1000, 1000, '1066', 'capital', '2016-05-25 21:50:21', 1),
+(89, 31, 0, 1000, 1000, '1067', 'capital', '2016-05-25 21:50:21', 1),
+(90, 32, 0, 1000, 1000, '1068', 'capital', '2016-03-08 21:50:21', 1),
+(91, 33, 0, 1000, 1000, '1069', 'capital', '2016-04-19 21:50:21', 1),
+(92, 36, 6600, 3400, 3200, 'FQ34FW4', 'loan', '2016-06-02 01:13:12', 1),
+(93, 10, 86500, 3400, 83100, 'D325', 'loan', '2016-06-02 01:13:12', 1),
+(94, 44, 88200, 3400, 84800, '43434', 'loan', '2016-06-02 01:13:12', 1),
+(95, 22, 1000, 0, 1000, '', 'savings', '2016-06-02 01:15:10', 1),
+(96, 13, 13000, 0, 13000, '', 'savings', '2016-06-02 01:15:11', 1),
+(97, 34, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
+(98, 35, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
+(99, 36, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
+(100, 37, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
+(101, 38, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
+(102, 39, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
+(103, 40, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
+(104, 41, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
+(105, 25, 1000, 1000, 2000, 'EFDF', 'capital', '2016-06-11 03:35:01', 1),
+(106, 26, 2000, 1000, 3000, 'WEFWEF', 'capital', '2016-06-11 03:35:01', 1),
+(107, 10, 79700, 3400, 76300, 'RFERF345', 'loan', '2016-06-24 22:55:01', 1),
+(108, 25, 2000, 1000, 3000, 'TESFVR343', 'capital', '2016-06-24 23:07:16', 1);
 
 -- --------------------------------------------------------
 
@@ -221,51 +369,6 @@ INSERT INTO `loan_products` (`id`, `name`, `principal`, `term`, `interest`, `amo
 -- --------------------------------------------------------
 
 --
--- Table structure for table `members`
---
-
-CREATE TABLE IF NOT EXISTS `members` (
-  `id` int(10) NOT NULL,
-  `first_name` varchar(20) NOT NULL,
-  `middle_name` varchar(20) NOT NULL,
-  `last_name` varchar(20) NOT NULL,
-  `gender` varchar(10) DEFAULT NULL,
-  `marital_status` varchar(10) DEFAULT NULL,
-  `birth_date` date DEFAULT NULL,
-  `birth_place` varchar(20) DEFAULT NULL,
-  `mother_maiden_name` varchar(20) DEFAULT NULL,
-  `contact_number` varchar(20) DEFAULT NULL,
-  `email_address` varchar(20) DEFAULT NULL,
-  `street_address` varchar(20) DEFAULT NULL,
-  `brgy_town_address` varchar(20) DEFAULT NULL,
-  `province_city_address` varchar(20) DEFAULT NULL,
-  `zipcode_address` varchar(20) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `entity_id` int(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `members`
---
-
-INSERT INTO `members` (`id`, `first_name`, `middle_name`, `last_name`, `gender`, `marital_status`, `birth_date`, `birth_place`, `mother_maiden_name`, `contact_number`, `email_address`, `street_address`, `brgy_town_address`, `province_city_address`, `zipcode_address`, `created_at`, `updated_at`, `entity_id`) VALUES
-(1, 'Christian Jay', 'Dungo', 'Bayno', 'male', 'unmarried', '1992-04-10', 'Sablayan Occ Mindoro', 'Gloria Dungo', '09278726770', 'christianjaybayno@gm', '3380-c Ibarra St', 'PALANAN', 'MAKATI', '1235', '2016-04-01 18:09:07', '2016-04-02 04:51:49', 1),
-(2, 'Lorenzo', 'V', 'Valdez', NULL, NULL, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01 18:09:07', '0000-00-00 00:00:00', 1),
-(3, 'Laravel', 'C', 'Bayno', NULL, NULL, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01 18:09:07', '0000-00-00 00:00:00', 1),
-(4, 'Wally', 'V', 'Valdez', NULL, NULL, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01 18:09:07', '0000-00-00 00:00:00', 1),
-(5, 'Loren Joanne', 'L', 'Sangalang', NULL, NULL, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-04-01 18:09:07', '0000-00-00 00:00:00', 1),
-(9, 'Madonna', 'Novero', 'Alano', 'female', 'unmarried', '1990-06-24', 'Paranaque', 'Novero', '0927872454534', 'madonna@rmail.com', 'Severina 18', 'BETTER LIVING SUBD.', 'PARANAQUE', '1711', '2016-04-02 01:31:03', '2016-04-06 07:28:38', 1),
-(11, 'Lloyd Vincent', 'Del Rosario', 'Abando', 'male', 'unmarried', '1997-11-12', 'Manila', 'Violeta Del Rosario', '09162449573', 'ldabando@gmail.com', 'Julio Dela Cruz', 'PALANAN', 'MAKATI', '1235', '2016-04-02 04:54:59', '2016-04-02 04:54:59', 1),
-(12, 'Carlos', 'Lumbre', 'Sangalang', 'male', 'unmarried', '1995-01-31', 'Quezon City', 'Lorna Lumbre', '09272523543', '', '3380-c Ibarra St.', 'PALANAN', 'MAKATI', '1235', '2016-04-02 06:04:08', '2016-06-04 01:57:15', 1),
-(13, 'Marjorie', 'R', 'Ordenes', 'female', 'unmarried', '1991-01-10', 'Sablayan Occ Mindoro', 'Evelyn Rico', '09534523462345', '', '#720 Dangeros St. Bu', 'SABLAYAN', 'MINDORO OCCIDENTAL', '5104', '2016-04-18 18:49:46', '2016-05-01 07:30:57', 1),
-(14, 'Mark Lerry', 'Tibayan', 'Agmata', 'male', 'unmarried', '1992-03-11', 'Sablayan Occ Mindoro', 'Mama Tibayan', '0949582345', '', 'Brgy Buenavista ', 'SABLAYAN', 'MINDORO OCCIDENTAL', '5104', '2016-05-21 06:53:33', '2016-05-21 06:53:33', 1),
-(15, 'Gloria', 'Dungo', 'Imabayashi', 'female', 'married', '1972-04-20', 'Sta. Mesa Manila', 'Nanay Dungo', '090000000000', '', 'Milla Lucce', 'ANTIPOLO', 'RIZAL', '1870', '2016-05-21 07:38:47', '2016-05-21 08:28:02', 2),
-(16, 'Mayard', 'L', 'Nadura', 'male', 'unmarried', '1992-05-04', 'Sablayan Occ Mindoro', 'Test Name', '09287345635', '', 'Fwervsf ', 'BANGUED', 'ABRA', '2800', '2016-05-24 22:00:11', '2016-05-25 05:37:29', 1);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `migrations`
 --
 
@@ -298,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `route` text,
   `icon` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `modules`
@@ -307,32 +410,33 @@ CREATE TABLE IF NOT EXISTS `modules` (
 INSERT INTO `modules` (`id`, `parent_id`, `order_list`, `name`, `label`, `role`, `active`, `route`, `icon`) VALUES
 (1, 0, 1, 'user_management', 'USER MANAGEMENT', 0, 1, NULL, NULL),
 (2, 1, 0, 'users', 'Users', 0, 1, 'users', 'fa fa-user'),
-(3, 0, 3, 'loan', 'LOAN', 1, 1, NULL, NULL),
+(3, 0, 2, 'loan', 'LOAN', 1, 1, NULL, NULL),
 (4, 3, 1, 'members', 'Members', 1, 1, NULL, 'fa fa-users'),
 (5, 4, 0, 'member_list', 'List', 1, 1, 'loan.members', NULL),
-(6, 4, 0, 'member_register', 'Register', 1, 1, 'loan.members.register', NULL),
+(6, 4, 1, 'member_register', 'Register', 1, 1, 'loan.members.register', NULL),
 (7, 3, 0, 'dashboard', 'Dashboard', 1, 1, NULL, 'fa fa-dashboard'),
-(8, 4, 0, 'member_batch_registration', 'Batch Registration', 1, 1, NULL, NULL),
+(8, 4, 2, 'member_batch_registration', 'Batch Registration', 1, 1, NULL, NULL),
 (9, 3, 2, 'application', 'Application', 1, 1, NULL, 'fa fa-credit-card'),
-(10, 9, 0, 'current_application', 'Current Application', 1, 1, 'loan.application.current', NULL),
-(11, 9, 0, 'form_application', 'Form Application', 1, 1, 'loan.application.form', NULL),
-(12, 9, 0, 'member_application', 'Member Application', 1, 1, 'loan.application.members', NULL),
+(10, 9, 0, 'current_application', 'List Application', 1, 1, 'loan.application.current', NULL),
+(11, 9, 1, 'form_application', 'Form Application', 1, 1, 'loan.application.form', NULL),
+(12, 9, 2, 'member_application', 'Member Application', 1, 1, 'loan.application.members', NULL),
 (13, 3, 3, 'consolidation', 'Consolidation', 1, 1, NULL, 'fa fa-cubes'),
-(14, 13, 0, 'conso_loan', 'Loan', 1, 1, 'loan.conso.loan', NULL),
+(14, 13, 1, 'conso_loan', 'Loan', 1, 1, 'loan.conso.loan', NULL),
 (15, 13, 0, 'conso_capital', 'Capital', 1, 1, 'loan.conso.capital', NULL),
-(16, 13, 0, 'conso_savings', 'Savings', 1, 1, 'loan.conso.savings', NULL),
+(16, 13, 2, 'conso_savings', 'Savings', 1, 1, 'loan.conso.savings', NULL),
 (17, 3, 4, 'payments', 'Payments', 1, 1, NULL, 'fa fa-money'),
-(18, 17, 0, 'list_of_payments', 'List of Payments', 1, 1, 'loan.payments.list', NULL),
+(18, 17, 1, 'list_of_payments', 'List of Payments', 1, 1, 'loan.payments.list', NULL),
 (19, 17, 0, 'make_payments', 'Make Payments', 1, 1, 'loan.payments.form', NULL),
-(20, 3, 5, 'products', 'Products', 1, 1, 'loan.products', 'fa fa-briefcase'),
-(21, 0, 2, 'backoffice', 'BACKOFFICE', 1, 1, NULL, NULL),
+(20, 3, 5, 'products', 'Products', 1, 1, 'loan.products', 'fa fa-shopping-cart'),
+(21, 0, 3, 'backoffice', 'BACKOFFICE', 1, 1, NULL, NULL),
 (22, 21, 0, 'balance_sheet', 'Balance Sheet', 1, 1, 'backoffice.balance-sheet.form', 'fa fa-file-text-o'),
 (23, 21, 1, 'income_statement', 'Income Statement', 1, 1, NULL, 'fa fa-file-text'),
 (24, 1, 1, 'user_groups', 'Groups', 0, 1, 'user.groups', 'fa fa-users'),
 (25, 1, 1, 'user_access', 'Access', 0, 1, NULL, 'fa fa-key'),
 (26, 0, 0, 'portal_management', 'PORTAL MANAGEMENT', 0, 1, NULL, NULL),
-(27, 26, 0, 'modules', 'Modules', 0, 1, 'portal.modules', 'fa fa-key'),
-(35, 0, 4, 'insurance', 'INSURANCE', 0, 1, NULL, NULL);
+(27, 26, 0, 'modules', 'Modules', 0, 1, 'portal.modules', 'fa fa-list-ul'),
+(35, 0, 4, 'insurance', 'INSURANCE', 1, 1, NULL, NULL),
+(36, 35, 1, 'insurance_list', 'List', 1, 0, 'loan.products', 'fa fa-bars');
 
 -- --------------------------------------------------------
 
@@ -409,33 +513,7 @@ INSERT INTO `parameters` (`id`, `parent_id`, `order_list`, `name`, `label`, `val
 (54, 29, 0, 'utilities', 'Utilities', NULL),
 (55, 29, 0, 'vehicle_expenses', 'Vehicle Expenses', NULL),
 (56, 29, 0, 'wages', 'Wages', NULL),
-(57, 22, 0, 'equity', 'Total Equity', NULL),
-(58, NULL, 0, 'menus', 'Menus', NULL),
-(59, 58, 2, 'user_management', 'User Management', '{"role":"0"}'),
-(60, 59, 0, 'users', 'Users', '{"route":"users", "icon":"fa fa-user"}'),
-(61, 58, 0, 'loans', 'Loans', '{"role":"1"}'),
-(62, 61, 1, 'member', 'Members', '{"icon":"fa fa-users"}'),
-(63, 62, 0, 'list', 'List', '{"route":"members"}'),
-(64, 62, 0, 'register', 'Register', '{"route":"members.register"}'),
-(65, 61, 0, 'dashboard', 'Dashboard', '{"icon":"fa fa-dashboard"}'),
-(66, 62, 0, 'batch_registration', 'Batch Registration', ''),
-(67, 61, 2, 'application', 'Application', '{"icon":"fa fa-credit-card"}'),
-(68, 67, 0, 'current_application', 'Current Application', '{"route":"loan.application.current"}'),
-(69, 67, 0, 'form_application', 'Form Application', '{"route":"loan.application.form"}'),
-(70, 67, 0, 'member_application', 'Member Application', '{"route":"loan.application.members"}'),
-(71, 61, 3, 'consolidation', 'Consolidation', '{"icon":"fa fa-cubes"}'),
-(72, 71, 0, 'loan', 'Loan', '{"route":"conso.loan"}'),
-(73, 71, 0, 'capital', 'Capital', '{"route":"conso.capital"}'),
-(74, 71, 0, 'savings', 'Savings', '{"route":"conso.savings"}'),
-(75, 61, 4, 'payments', 'Payments', '{"icon":"fa fa-money"}'),
-(76, 75, 0, 'list_of_payments', 'List of Payments', '{"route":"payments.list"}'),
-(77, 75, 0, 'make_payments', 'Make Payments', '{"route":"payments.form"}'),
-(78, 61, 5, 'products', 'Products', '{"route":"loan.products", "icon":"fa fa-briefcase"}'),
-(79, 58, 1, 'backoffice', 'BACKOFFICE', '{"role":"1"}'),
-(80, 79, 0, 'balance_sheet', 'Balance Sheet', '{"route":"balance-sheet.form", "icon":"fa fa-file-text-o"}'),
-(81, 79, 1, 'income_statement', 'Income Statement', '{"icon":"fa fa-file-text"}'),
-(82, 59, 0, 'user_groups', 'Groups', '{"route":"user.groups", "icon":"fa fa-users"}'),
-(83, 59, 0, 'user_access', 'Access', '{"icon":"fa fa-key"}');
+(57, 22, 0, 'equity', 'Total Equity', NULL);
 
 -- --------------------------------------------------------
 
@@ -448,106 +526,6 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
   `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payments`
---
-
-CREATE TABLE IF NOT EXISTS `payments` (
-  `id` int(10) NOT NULL,
-  `parent_id` int(10) NOT NULL,
-  `outstanding_balance` float NOT NULL DEFAULT '0',
-  `payment_amount` float NOT NULL DEFAULT '0',
-  `remaining_balance` float NOT NULL DEFAULT '0',
-  `or_number` varchar(100) DEFAULT NULL,
-  `type` varchar(20) DEFAULT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `entity_id` int(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `payments`
---
-
-INSERT INTO `payments` (`id`, `parent_id`, `outstanding_balance`, `payment_amount`, `remaining_balance`, `or_number`, `type`, `date`, `entity_id`) VALUES
-(7, 8, 0, 3400, 0, 'BBB', 'loan', '2016-03-29 01:02:24', 1),
-(8, 8, 0, 345, 0, 'D', 'loan', '2016-03-29 22:36:26', 1),
-(9, 9, 0, 3574, 0, 'A', 'loan', '2016-03-29 22:36:26', 1),
-(11, 9, 0, 0, 0, 'WEFE', 'loan', '2016-03-29 23:05:12', 1),
-(12, 9, 0, 3400, 0, 'AAAA', 'loan', '2016-03-30 01:00:53', 1),
-(13, 9, 0, 95026, 0, 'AAAB', 'loan', '2016-03-30 01:01:46', 1),
-(14, 9, 0, 3400, 0, 'AAA1', 'loan', '2016-03-30 01:05:17', 1),
-(15, 9, 0, 94825, 0, 'AAA2', 'loan', '2016-03-30 01:06:15', 1),
-(16, 12, 0, 1800, 0, 'AAAAA1111', 'loan', '2016-04-01 23:55:37', 1),
-(17, 12, 0, 1800, 0, 'AAAA222', 'loan', '2016-04-02 00:08:55', 1),
-(23, 33, 0, 10000, 0, 'HRDTHERT756', 'loan', '2016-05-01 23:31:40', 1),
-(24, 8, 0, 3500, 0, '10001', 'loan', '2016-05-16 23:50:01', 1),
-(25, 8, 0, 3500, 0, '10002', 'loan', '2016-05-16 23:51:06', 1),
-(26, 8, 0, 3500, 0, '1003', 'loan', '2016-05-16 23:51:46', 1),
-(27, 8, 0, 3500, 0, '1004', 'loan', '2016-05-16 23:55:12', 1),
-(28, 8, 0, 4625, 0, '1005', 'loan', '2016-05-16 23:58:26', 1),
-(29, 35, 0, 40400, 0, '1006', 'loan', '2016-05-17 22:35:07', 1),
-(30, 34, 0, 79600, 0, '1007', 'loan', '2016-05-17 22:41:11', 1),
-(31, 32, 0, 102000, 0, '1008', 'loan', '2016-05-17 22:54:33', 1),
-(32, 1, 0, 1000, 0, '1009', 'loan', '2016-05-17 22:57:00', 1),
-(33, 10, 0, 3500, 0, '1011', 'loan', '2016-05-17 23:56:08', 1),
-(34, 10, 0, 3500, 0, '1012', 'loan', '2016-05-17 23:59:34', 1),
-(35, 13, 0, 3000, 0, '1019', 'loan', '2016-05-18 00:37:57', 1),
-(36, 10, 0, 3500, 0, '1022', 'loan', '2016-05-18 00:45:32', 1),
-(37, 37, 0, 2500, 0, '23423W3R', 'loan', '2016-05-19 00:12:48', 1),
-(38, 36, 79600, 3400, 76200, '1013', 'loan', '2016-05-20 22:09:11', 1),
-(39, 37, 27500, 3400, 24100, '1014', 'loan', '2016-05-20 22:11:05', 1),
-(40, 38, 50000, 2800, 47200, '1015', 'loan', '2016-05-20 22:13:21', 1),
-(41, 36, 76200, 34000, 42200, '1016', 'loan', '2016-05-21 01:40:55', 1),
-(42, 36, 42200, 3400, 38800, '1017', 'loan', '2016-05-21 01:53:14', 1),
-(43, 40, 200000, 5000, 195000, '1010', 'loan', '2016-05-21 23:46:33', 2),
-(44, 43, 100000, 3400, 96600, '1020', 'loan', '2016-05-22 01:06:24', 1),
-(45, 13, 41800, 2800, 39000, '1010', 'loan', '2016-05-22 14:30:04', 1),
-(46, 38, 47200, 2800, 44400, '1021', 'loan', '2016-05-22 14:34:42', 1),
-(47, 38, 44400, 5000, 39400, '1023', 'loan', '2016-05-22 14:37:16', 1),
-(50, 13, 12000, 1000, 13000, '1026', 'savings', '2016-05-22 14:42:36', 1),
-(51, 38, 39400, 2800, 36600, '1027', 'loan', '2016-05-22 15:04:41', 1),
-(52, 38, 36600, 3800, 32800, '1028', 'loan', '2016-05-22 15:05:58', 1),
-(53, 13, 39000, 3800, 35200, '1029', 'loan', '2016-05-22 15:05:58', 1),
-(54, 36, 38800, 5000, 33800, '1030', 'loan', '2016-05-22 15:07:11', 1),
-(55, 10, 91500, 5000, 86500, '1031', 'loan', '2016-05-22 15:07:11', 1),
-(56, 44, 96600, 5000, 91600, '1032', 'loan', '2016-05-22 15:07:11', 1),
-(68, 36, 33800, 4000, 29800, '1046', 'loan', '2016-05-22 15:45:08', 1),
-(69, 36, 29800, 3400, 26400, '1047', 'loan', '2016-05-22 16:13:13', 1),
-(70, 36, 26400, 4000, 22400, '1048', 'loan', '2016-05-22 16:42:06', 1),
-(71, 22, 0, 1000, 1000, '1049', 'savings', '2016-01-20 17:33:15', 1),
-(72, 36, 22400, 5000, 17400, '1050', 'loan', '2016-05-22 17:35:14', 1),
-(73, 36, 17400, 3400, 14000, '1051', 'loan', '2016-05-22 18:01:10', 1),
-(74, 36, 14000, 3400, 10600, '1052', 'loan', '2016-05-22 18:04:42', 1),
-(75, 36, 10600, 4000, 6600, '1053', 'loan', '2016-05-22 18:10:01', 1),
-(76, 44, 91600, 3400, 88200, '1054', 'loan', '2016-05-22 18:11:46', 1),
-(82, 24, 0, 1000, 1000, '1060', 'capital', '2016-05-25 21:50:21', 1),
-(83, 25, 0, 1000, 1000, '1061', 'capital', '2016-05-25 21:50:21', 1),
-(84, 26, 0, 1000, 1000, '1062', 'capital', '2016-05-25 21:50:21', 1),
-(85, 27, 0, 1000, 1000, '1063', 'capital', '2016-05-25 21:50:21', 1),
-(86, 28, 0, 1000, 1000, '1064', 'capital', '2016-05-25 21:50:21', 1),
-(87, 29, 0, 1000, 1000, '1065', 'capital', '2016-02-09 21:50:21', 1),
-(88, 30, 0, 1000, 1000, '1066', 'capital', '2016-05-25 21:50:21', 1),
-(89, 31, 0, 1000, 1000, '1067', 'capital', '2016-05-25 21:50:21', 1),
-(90, 32, 0, 1000, 1000, '1068', 'capital', '2016-03-08 21:50:21', 1),
-(91, 33, 0, 1000, 1000, '1069', 'capital', '2016-04-19 21:50:21', 1),
-(92, 36, 6600, 3400, 3200, 'FQ34FW4', 'loan', '2016-06-02 01:13:12', 1),
-(93, 10, 86500, 3400, 83100, 'D325', 'loan', '2016-06-02 01:13:12', 1),
-(94, 44, 88200, 3400, 84800, '43434', 'loan', '2016-06-02 01:13:12', 1),
-(95, 22, 1000, 0, 1000, '', 'savings', '2016-06-02 01:15:10', 1),
-(96, 13, 13000, 0, 13000, '', 'savings', '2016-06-02 01:15:11', 1),
-(97, 34, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
-(98, 35, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
-(99, 36, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
-(100, 37, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
-(101, 38, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
-(102, 39, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
-(103, 40, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
-(104, 41, 0, 0, 0, '', 'savings', '2016-06-02 01:15:11', 1),
-(105, 25, 1000, 1000, 2000, 'EFDF', 'capital', '2016-06-11 03:35:01', 1),
-(106, 26, 2000, 1000, 3000, 'WEFWEF', 'capital', '2016-06-11 03:35:01', 1);
 
 -- --------------------------------------------------------
 
@@ -569,7 +547,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('3fd32c61f9c44fda694268abaa0f5956b6d83657', 83, '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36', 'YTo5OntzOjY6Il90b2tlbiI7czo0MDoiWGllRzVJQWNjOGI1d2FUTVp4RE9GMm5LSXNNWnpIM3VOREtxZEk0ViI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly9sb2NhbGhvc3Qvb2NlYW4vcG9ydGFsL21vZHVsZXMiO31zOjU6ImZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NDoicm9sZSI7aTowO3M6NzoidXNlcl9pZCI7aTo4MztzOjk6ImVudGl0eV9pZCI7TjtzOjg6Imdyb3VwX2lkIjtpOjE7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6ODM7czo5OiJfc2YyX21ldGEiO2E6Mzp7czoxOiJ1IjtpOjE0NjU1ODgzNjg7czoxOiJjIjtpOjE0NjU1NjU2OTQ7czoxOiJsIjtzOjE6IjAiO319', 1465588368);
+('21a95d4586cc5eab00ca0ead73dd80ec2c2fdde7', 79, '::1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36', 'YTo5OntzOjY6Il90b2tlbiI7czo0MDoieEQ3QWVIUm9mb0c3cjFKUHdITVZmMkdFaDhxcWYzZzhhOWdjYjdjNiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly9sb2NhbGhvc3Qvb2NlYW4vbG9hbi9wcm9kdWN0cyI7fXM6NToiZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo0OiJyb2xlIjtpOjE7czo3OiJ1c2VyX2lkIjtpOjc5O3M6OToiZW50aXR5X2lkIjtpOjE7czo4OiJncm91cF9pZCI7aTo1O3M6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjc5O3M6OToiX3NmMl9tZXRhIjthOjM6e3M6MToidSI7aToxNDY2NzgzNzE0O3M6MToiYyI7aToxNDY2Nzc5MzUxO3M6MToibCI7czoxOiIwIjt9fQ==', 1466783714);
 
 -- --------------------------------------------------------
 
@@ -604,23 +582,23 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `name`, `contact_number`, `email`, `avatar`, `remember_token`, `status`, `is_login`, `role`, `entity_id`, `group_access_id`, `remarks`, `last_login`, `created_at`, `updated_at`, `expired_at`) VALUES
 (6, 'ralphdungo', '$2y$10$SSG5uRXCWhfxFGREjvnu9eQjoO0S2skgUq.nU86vU6B67W2paWfDu', 'Ralph Dungo', '09278726770', 'ralphima@pwr.com.ph', 'public/images/users/1458820187.jpg', 'JhSOWvXeBI5YEapahBSTzf0OUtabyhXn6SPFrXdnNOJo62bHgLz2u1yLyLVz', 1, 0, 0, NULL, 11, 'Philippine wrestling revolution\r\nchampion', '2016-06-11 02:18:45', '2015-09-25 11:46:48', '2016-06-10 18:19:40', '2017-02-18'),
-(7, 'kendungo', '$2y$10$KOLS6esmqtQUFa9hvSs/JuMPXEbbEg397bHKu4KEwVgoKLaoFgBo2', 'Ken Dungo', '0927067805', '', 'http://localhost/ocean/public/images/users/1455027516.jpg', NULL, 1, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2015-09-25 11:48:25', '2016-02-12 11:26:40', NULL),
+(7, 'kendungo', '$2y$10$KOLS6esmqtQUFa9hvSs/JuMPXEbbEg397bHKu4KEwVgoKLaoFgBo2', 'Ken Dungo', '0927067805', '', 'http://localhost/ocean/public/images/users/1455027516.jpg', NULL, 1, 0, 0, NULL, NULL, '', '0000-00-00 00:00:00', '2015-09-25 11:48:25', '2016-02-12 11:26:40', NULL),
 (9, '10204908560140358', '$2y$10$gxw1PLtYc8goGGHOuXIhIu0kUSsXB7GStsEw7L2IGXlgR1rBIXoGO', 'Christian Jay Bayno', '09278726770', '', 'https://graph.facebook.com/v2.4/10204908560140358/picture?type=normal', NULL, 4, 0, 0, NULL, 1, '', '0000-00-00 00:00:00', '2015-09-26 07:44:07', '2016-02-27 06:39:49', NULL),
 (11, '686774891424693', '$2y$10$m2bY80NYiTaS05hlFraZ4.asxxXVDYeTwKMUsj0Ykf7v6XGwvqY32', 'Jorryn Anne Horan', '', NULL, 'https://graph.facebook.com/v2.4/686774891424693/picture?type=normal', NULL, 4, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2015-09-26 08:13:17', '2016-02-22 06:47:10', NULL),
 (12, '115053011677451437961', '$2y$10$Y56dep91SHCXL8gfPOzD4eJpEiiUiVwgilrnuBbY.wzvWafuh9jQG', 'Christian Jay Bayno', '', NULL, '', NULL, 1, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2015-09-27 21:13:08', '2015-09-30 02:18:40', NULL),
-(13, '974092285966854', '$2y$10$wFV4tb3MzMVN51HuQBm8jeb0rLERkgWZUvCzNUPXqUUd4BZHPd822', 'Kim Nomar Mariano', '', NULL, 'https://graph.facebook.com/v2.4/974092285966854/picture?type=normal', NULL, 1, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2015-10-07 07:44:32', '2015-10-07 07:47:35', NULL),
+(13, '974092285966854', '$2y$10$wFV4tb3MzMVN51HuQBm8jeb0rLERkgWZUvCzNUPXqUUd4BZHPd822', 'Kim Nomar Mariano', '', NULL, 'https://graph.facebook.com/v2.4/974092285966854/picture?type=normal', NULL, 1, 0, 0, NULL, NULL, '', '0000-00-00 00:00:00', '2015-10-07 07:44:32', '2015-10-07 07:47:35', NULL),
 (14, '118328122655701822390', '$2y$10$VrwHBRi9F6Iv5iON82nHleZXVMYcffAEM3PGy136s7R9b8DzHpuTW', 'Christian Jay Bayno', '', NULL, 'https://lh6.googleusercontent.com/-tER6DuuAc2E/AAAAAAAAAAI/AAAAAAAAAB0/PxQnZpeWXiI/photo.jpg?sz=50', NULL, 1, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2015-10-07 07:48:35', '2015-10-07 07:48:35', NULL),
 (19, 'cjaybayno', '$2y$10$mKHm9BQQQOpLABiJnSpUMuLzs/bXhnCBCyvV43NoOvhCUNTwk/5rm', 'Christian Jay Bayno', '093456345', 'zcbayno@globe.com.ph', 'http://localhost/ocean/public/images/users/1454339765.jpg', 'NPOBFnRlH5Hm5aW7gRxJQXWlw0zJwS9F46YcvxCFJZH2iwFOskF9iGcKFQnh', 1, 0, 0, NULL, 11, '', '0000-00-00 00:00:00', '2016-02-01 07:16:05', '2016-03-08 07:33:34', '2016-09-02'),
-(20, 'pacifico', '$2y$10$6QA.FFWFyQDT2NHEEjXHdeMN0k8igefFuR4JFsHjwkGtN.PI19rHG', 'Pacifico Bukayo', '092700000000', 'pacifico.bukayo@gmail.com', 'http://localhost/ocean/public/images/users/1454506589.jpg', NULL, 1, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2016-02-03 05:36:29', '2016-02-03 05:37:11', NULL),
+(20, 'pacifico', '$2y$10$6QA.FFWFyQDT2NHEEjXHdeMN0k8igefFuR4JFsHjwkGtN.PI19rHG', 'Pacifico Bukayo', '092700000000', 'pacifico.bukayo@gmail.com', 'http://localhost/ocean/public/images/users/1454506589.jpg', NULL, 1, 0, 0, NULL, NULL, '', '0000-00-00 00:00:00', '2016-02-03 05:36:29', '2016-02-03 05:37:11', NULL),
 (60, 'parengnatoy', '$2y$10$j17NKbe416q626OTlf8SO.PhozlOXRdktvtsAj6NhiDq0LhjXISRW', 'Natoy Kinatay', '0924524534', 'natoy.kinatay@yahoo.com', 'http://localhost/ocean/public/images/users/1454513422.jpg', NULL, 1, 0, NULL, NULL, NULL, '', '0000-00-00 00:00:00', '2016-02-03 07:30:22', '2016-02-03 07:30:22', NULL),
 (67, 'abraham', '$2y$10$wJsrlpQw9hzhasLUHDOqnOgZKf2Acy.y6owXSi.jPrZhm1ONowvq2', 'Abraham The Greate', '0963456456', 'abraham@gmail.com', 'http://localhost/ocean/public/images/users/1455290423.PNG', NULL, 3, 0, NULL, NULL, 0, 'address:from batangas city', '0000-00-00 00:00:00', '2016-02-11 10:12:16', '2016-02-12 10:35:52', '2016-08-12'),
 (68, 'lorenzovaldez', '$2y$10$1./0/LLYx8aozh4OwMVASuFNbCsTg9Obg9YamW.wZtjJg9p9FlLXu', 'Lorenzo Valdez', '092762346324', '', 'http://localhost/ocean/public/images/users/1455801977.jpg', NULL, 1, 0, NULL, NULL, 0, 'CEO of ocean system', '0000-00-00 00:00:00', '2016-02-18 05:26:17', '2016-02-18 05:27:37', '2016-08-18'),
 (76, 'tanauncoop_user', '$2y$10$m4QXvKaI06tIC3qKX3tEQOdVY7FWtZRPTkbzkipTt4hHcDtLpqP6C', 'Tanaun Coop User', '092787253', '', 'http://localhost/ocean/public/images/users/1456852745.jpg', NULL, 1, 0, 1, 1, 2, '', '0000-00-00 00:00:00', '2016-03-01 09:19:05', '2016-03-01 09:46:16', '2016-09-02'),
 (77, 'support', '$2y$10$eJ0MWteL56gHFokYqkzzKekd/2w7xsh2LpGWUjfbKqL0ySd30xpC6', 'Support Support', '094563456', '', 'NULL', NULL, 1, 0, 0, NULL, 11, '', '0000-00-00 00:00:00', '2016-03-01 09:49:03', '2016-03-01 09:49:03', '2016-09-02'),
 (78, 'asfasdf', '$2y$10$r9YhBfv66FRh1WocvYJZFexpBN10iT5wg5MmhbBxZ5LA5uVeMaZqu', 'Fasdfs', '9567867', 'christianjaybayno@gmail.com', 'NULL', NULL, 1, 0, 0, NULL, 11, '', '0000-00-00 00:00:00', '2016-03-16 07:03:16', '2016-03-16 07:03:16', '2016-09-16'),
-(79, 'CTECC_USER', '$2y$10$CEFKDZPD4YTLElSTx20wdeT2l90H3DRT7FytvFOXMY8voO1mlnK4W', 'Christian Jay Bayno', '0927111111', '', 'public/images/users/1463847206.png', 'YwBcbhhQpfJqKIv0RU07wvweM15OmMtrvRnmSDLDo7KAdn45I0OVIlQLC2V1', 1, 0, 1, 1, 5, '', '2016-06-11 03:34:18', '2016-03-23 10:46:20', '2016-06-10 19:37:22', '2016-09-24'),
+(79, 'CTECC_USER', '$2y$10$CEFKDZPD4YTLElSTx20wdeT2l90H3DRT7FytvFOXMY8voO1mlnK4W', 'Christian Jay Bayno', '0927111111', '', 'public/images/users/1463847206.png', 'YvAIin9Tq4BVjTkzENEZQR0g44VgBm8CxWhEvt6yZxZaSo9jUwCJG3W5RFpS', 1, 1, 1, 1, 5, '', '2016-06-24 23:49:50', '2016-03-23 10:46:20', '2016-06-24 15:49:50', '2016-09-24'),
 (82, 'joy_test', '$2y$10$64JlxJ1YW8IK.qyGuQEKJeepLDWA5fHiW/vO1LZWKEFW6x0xCSTMi', 'Marjoirie Ordenes', '09645634564', '', 'public/images/users/1462116923.jpg', NULL, 3, 0, 1, 1, 5, '', '0000-00-00 00:00:00', '2016-05-01 07:35:23', '2016-05-01 07:36:14', '2016-11-01'),
-(83, 'superadmin', '$2y$10$X74W.ad6.tA61/a7G.GlHO8Mz1u5EN2FGLWu7MAW2nG.m.0as/3b2', 'Christian Jay Bayno', '09278726770', 'christianjaybayno@gmail.com', 'public/images/users/1463847357.png', 'UwYxWKxWhwKnroUNVCuB12dGtGajQD6bDU1qtQaGSGzjRyXnZgWmQejNVj2T', 1, 1, 0, NULL, 1, '', '2016-06-11 03:37:31', '2016-05-21 07:31:47', '2016-06-10 19:37:31', '2016-11-21'),
+(83, 'superadmin', '$2y$10$X74W.ad6.tA61/a7G.GlHO8Mz1u5EN2FGLWu7MAW2nG.m.0as/3b2', 'Christian Jay Bayno', '09278726770', 'christianjaybayno@gmail.com', 'public/images/users/1463847357.png', 'm3HAv2e1tKOwfH8nk2q1dhQ1j44zxZLHmstKwXb42pWk8sorZxRrjNQVVLFW', 1, 0, 0, NULL, 1, '', '2016-06-24 23:47:36', '2016-05-21 07:31:47', '2016-06-24 15:49:37', '2016-11-21'),
 (84, 'peoplescoop_user', '$2y$10$i2roqJ2thlCliL4xppzyWu3xfWVGE5Mv6Up9ip1DAj12dTAM1JKwu', 'Peoplescoop Cooperative', '0927876771', '', 'public/images/users/1463847269.png', 'hJojRt2fjaxNFi9SKEUo1KXPgM1w5dAfaajJqlhR8HiHzheg1Vp3bqlTUY95', 1, 0, 1, 2, 4, '', '0000-00-00 00:00:00', '2016-05-21 07:34:18', '2016-06-04 00:06:43', '2016-11-21');
 
 -- --------------------------------------------------------
@@ -647,38 +625,6 @@ INSERT INTO `user_access` (`id`, `name`, `ability`, `user_access_module_id`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_access_module`
---
-
-CREATE TABLE IF NOT EXISTS `user_access_module` (
-  `id` int(11) NOT NULL,
-  `module_id` int(11) NOT NULL,
-  `entity_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `user_access_module`
---
-
-INSERT INTO `user_access_module` (`id`, `module_id`, `entity_id`, `group_id`) VALUES
-(1, 3, 1, 5),
-(7, 4, 1, 5),
-(8, 7, 1, 5),
-(9, 9, 1, 5),
-(10, 13, 1, 5),
-(11, 17, 1, 5),
-(12, 20, 1, 5),
-(13, 21, 1, 5),
-(14, 22, 1, 5),
-(15, 23, 1, 5),
-(16, 5, 1, 5),
-(17, 6, 1, 5),
-(18, 8, 1, 5);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `user_groups`
 --
 
@@ -686,7 +632,7 @@ CREATE TABLE IF NOT EXISTS `user_groups` (
   `id` int(10) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` text NOT NULL,
-  `entity_id` int(10) DEFAULT NULL
+  `entity_id` int(10) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
@@ -694,21 +640,20 @@ CREATE TABLE IF NOT EXISTS `user_groups` (
 --
 
 INSERT INTO `user_groups` (`id`, `name`, `description`, `entity_id`) VALUES
-(1, 'Administrator', 'System Administrator', NULL),
+(1, 'Administrator', 'System Administrator', 0),
 (2, 'CGTECC BackOffice', 'Back Office of tanuan coop', 1),
-(3, '', '', NULL),
 (4, 'PEOPLESCOOP Operation', '', 2),
-(5, 'CGTECC Operation', '', 1),
-(6, 'Marketing', '', NULL),
-(7, 'Finance', '', NULL),
-(8, 'Sales', '', NULL),
-(10, 'Compliance', '', NULL),
-(11, 'Support', '', NULL),
+(5, 'CGTECC Operation', 'Operation of tanuan coop', 1),
+(6, 'Marketing', '', 0),
+(7, 'Finance', '', 0),
+(8, 'Sales', '', 0),
+(10, 'Compliance', '', 0),
+(11, 'Support', '', 0),
 (12, 'PEOPLESCOOP Backoffice', '', 2),
 (13, 'Client Operator', 'Group who mange all the client at back', 2),
 (14, 'Client Backoffice', 'asdfasefae', 2),
-(15, 'Client Approver', 'test', NULL),
-(16, 'CGTECC Admin', '', 1);
+(15, 'Client Approver', 'test client approver', 0),
+(16, 'CGTECC Admin', 'Admin of tanuan coop', 1);
 
 -- --------------------------------------------------------
 
@@ -729,6 +674,53 @@ CREATE TABLE IF NOT EXISTS `user_group_access` (
 INSERT INTO `user_group_access` (`id`, `group_id`, `access_id`) VALUES
 (1, 1, 1),
 (2, 1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_group_modules`
+--
+
+CREATE TABLE IF NOT EXISTS `user_group_modules` (
+  `id` int(11) NOT NULL,
+  `module_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_group_modules`
+--
+
+INSERT INTO `user_group_modules` (`id`, `module_id`, `group_id`) VALUES
+(1, 3, 5),
+(13, 21, 5),
+(14, 22, 5),
+(15, 23, 5),
+(16, 5, 5),
+(17, 6, 5),
+(18, 8, 5),
+(20, 10, 5),
+(21, 11, 5),
+(22, 12, 5),
+(24, 14, 5),
+(25, 15, 5),
+(26, 16, 5),
+(31, 18, 5),
+(32, 19, 5),
+(35, 4, 5),
+(38, 13, 5),
+(39, 17, 5),
+(40, 20, 5),
+(41, 4, 5),
+(43, 13, 5),
+(44, 17, 5),
+(45, 20, 5),
+(46, 4, 5),
+(48, 13, 5),
+(49, 17, 5),
+(50, 20, 5),
+(56, 7, 5),
+(57, 9, 5);
 
 -- --------------------------------------------------------
 
@@ -2858,7 +2850,7 @@ INSERT INTO `zipcodes` (`zipcodes_id`, `region`, `province_city`, `location`, `z
 --
 DROP TABLE IF EXISTS `view_balances`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_balances` AS select `balances`.`id` AS `id`,`balances`.`member_id` AS `member_id`,concat(`members`.`first_name`,' ',`members`.`middle_name`,' ',`members`.`last_name`) AS `member_name`,`balances`.`type` AS `type`,`balances`.`current_balance` AS `current_balance`,`balances`.`available_balance` AS `available_balance`,`balances`.`pending_balance` AS `pending_balance`,`balances`.`entity_id` AS `entity_id`,`balances`.`created_at` AS `created_at`,`balances`.`updated_at` AS `updated_at` from (`balances` join `members` on((`members`.`id` = `balances`.`member_id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_balances` AS select `loan_balances`.`id` AS `id`,`loan_balances`.`member_id` AS `member_id`,concat(`loan_members`.`first_name`,' ',`loan_members`.`middle_name`,' ',`loan_members`.`last_name`) AS `member_name`,`loan_balances`.`type` AS `type`,`loan_balances`.`current_balance` AS `current_balance`,`loan_balances`.`available_balance` AS `available_balance`,`loan_balances`.`pending_balance` AS `pending_balance`,`loan_balances`.`entity_id` AS `entity_id`,`loan_balances`.`created_at` AS `created_at`,`loan_balances`.`updated_at` AS `updated_at` from (`loan_balances` join `loan_members` on((`loan_members`.`id` = `loan_balances`.`member_id`)));
 
 -- --------------------------------------------------------
 
@@ -2867,7 +2859,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_balance_payments`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_balance_payments` AS select `payments`.`id` AS `id`,`view_balances`.`member_id` AS `member_id`,`view_balances`.`member_name` AS `member_name`,`view_balances`.`id` AS `balance_id`,`payments`.`outstanding_balance` AS `outstanding_balance`,`payments`.`payment_amount` AS `payment_amount`,`payments`.`remaining_balance` AS `remaining_balance`,`payments`.`or_number` AS `or_number`,`payments`.`type` AS `type`,`payments`.`date` AS `date`,`payments`.`entity_id` AS `entity_id` from (`payments` join `view_balances` on((`view_balances`.`id` = `payments`.`parent_id`))) where (`payments`.`type` in ('capital','savings'));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_balance_payments` AS select `loan_payments`.`id` AS `id`,`view_balances`.`member_id` AS `member_id`,`view_balances`.`member_name` AS `member_name`,`view_balances`.`id` AS `balance_id`,`loan_payments`.`outstanding_balance` AS `outstanding_balance`,`loan_payments`.`payment_amount` AS `payment_amount`,`loan_payments`.`remaining_balance` AS `remaining_balance`,`loan_payments`.`or_number` AS `or_number`,`loan_payments`.`type` AS `type`,`loan_payments`.`date` AS `date`,`loan_payments`.`entity_id` AS `entity_id` from (`loan_payments` join `view_balances` on((`view_balances`.`id` = `loan_payments`.`parent_id`))) where (`loan_payments`.`type` in ('capital','savings'));
 
 -- --------------------------------------------------------
 
@@ -2876,7 +2868,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_loan_applications`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_loan_applications` AS select `loan_applications`.`id` AS `id`,`members`.`id` AS `member_id`,concat(`members`.`first_name`,' ',`members`.`middle_name`,' ',`members`.`last_name`) AS `member_name`,`loan_products`.`id` AS `loan_product_id`,`loan_products`.`name` AS `loan_product_name`,`loan_applications`.`application_type` AS `application_type`,`loan_applications`.`amount` AS `amount`,`loan_applications`.`advance_interest` AS `advance_interest`,`loan_applications`.`processing_fee` AS `processing_fee`,`loan_applications`.`capital_build_up` AS `capital_build_up`,`loan_applications`.`outstanding_balance` AS `outstanding_balance`,`loan_applications`.`rebate` AS `rebate`,`loan_applications`.`total_deduction` AS `total_deduction`,`loan_applications`.`net_proceeds` AS `net_proceeds`,`loan_applications`.`amortization` AS `amortization`,`loan_applications`.`num_made_payments` AS `num_made_payments`,`loan_applications`.`total_made_payments` AS `total_made_payments`,`loan_applications`.`fully_paid` AS `fully_paid`,`loan_applications`.`applied_date` AS `applied_date`,`loan_applications`.`created_date` AS `created_date`,`loan_applications`.`updated_date` AS `updated_date`,`loan_applications`.`entity_id` AS `entity_id` from ((`loan_applications` left join `members` on((`members`.`id` = `loan_applications`.`member_id`))) left join `loan_products` on((`loan_products`.`id` = `loan_applications`.`loan_product_id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_loan_applications` AS select `loan_applications`.`id` AS `id`,`loan_members`.`id` AS `member_id`,concat(`loan_members`.`first_name`,' ',`loan_members`.`middle_name`,' ',`loan_members`.`last_name`) AS `member_name`,`loan_products`.`id` AS `loan_product_id`,`loan_products`.`name` AS `loan_product_name`,`loan_applications`.`application_type` AS `application_type`,`loan_applications`.`amount` AS `amount`,`loan_applications`.`advance_interest` AS `advance_interest`,`loan_applications`.`processing_fee` AS `processing_fee`,`loan_applications`.`capital_build_up` AS `capital_build_up`,`loan_applications`.`outstanding_balance` AS `outstanding_balance`,`loan_applications`.`rebate` AS `rebate`,`loan_applications`.`total_deduction` AS `total_deduction`,`loan_applications`.`net_proceeds` AS `net_proceeds`,`loan_applications`.`amortization` AS `amortization`,`loan_applications`.`num_made_payments` AS `num_made_payments`,`loan_applications`.`total_made_payments` AS `total_made_payments`,`loan_applications`.`fully_paid` AS `fully_paid`,`loan_applications`.`applied_date` AS `applied_date`,`loan_applications`.`created_date` AS `created_date`,`loan_applications`.`updated_date` AS `updated_date`,`loan_applications`.`entity_id` AS `entity_id` from ((`loan_applications` left join `loan_members` on((`loan_members`.`id` = `loan_applications`.`member_id`))) left join `loan_products` on((`loan_products`.`id` = `loan_applications`.`loan_product_id`)));
 
 -- --------------------------------------------------------
 
@@ -2885,7 +2877,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_loan_payments`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_loan_payments` AS select `payments`.`id` AS `id`,`view_loan_applications`.`member_id` AS `member_id`,`view_loan_applications`.`member_name` AS `member_name`,`view_loan_applications`.`loan_product_id` AS `loan_product_id`,`view_loan_applications`.`loan_product_name` AS `loan_product_name`,`payments`.`parent_id` AS `loan_application_id`,`payments`.`outstanding_balance` AS `outstanding_balance`,`payments`.`payment_amount` AS `payment_amount`,`payments`.`remaining_balance` AS `remaining_balance`,`payments`.`or_number` AS `or_number`,`payments`.`date` AS `date`,`payments`.`entity_id` AS `entity_id` from (`payments` left join `view_loan_applications` on((`view_loan_applications`.`id` = `payments`.`parent_id`))) where (`payments`.`type` = 'loan');
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_loan_payments` AS select `loan_payments`.`id` AS `id`,`view_loan_applications`.`member_id` AS `member_id`,`view_loan_applications`.`member_name` AS `member_name`,`view_loan_applications`.`loan_product_id` AS `loan_product_id`,`view_loan_applications`.`loan_product_name` AS `loan_product_name`,`loan_payments`.`parent_id` AS `loan_application_id`,`loan_payments`.`outstanding_balance` AS `outstanding_balance`,`loan_payments`.`payment_amount` AS `payment_amount`,`loan_payments`.`remaining_balance` AS `remaining_balance`,`loan_payments`.`or_number` AS `or_number`,`loan_payments`.`date` AS `date`,`loan_payments`.`entity_id` AS `entity_id` from (`loan_payments` left join `view_loan_applications` on((`view_loan_applications`.`id` = `loan_payments`.`parent_id`))) where (`loan_payments`.`type` = 'loan');
 
 -- --------------------------------------------------------
 
@@ -2894,22 +2886,16 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_members`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_members` AS select `members`.`id` AS `id`,concat(`members`.`first_name`,' ',`members`.`middle_name`,' ',`members`.`last_name`) AS `member_name`,`members`.`gender` AS `gender`,`members`.`marital_status` AS `marital_status`,`members`.`birth_date` AS `birth_date`,`members`.`birth_place` AS `birth_place`,`members`.`mother_maiden_name` AS `mother_maiden_name`,`members`.`contact_number` AS `contact_number`,`members`.`email_address` AS `email_address`,`members`.`street_address` AS `street_address`,`members`.`brgy_town_address` AS `brgy_town_address`,`members`.`province_city_address` AS `province_city_address`,`members`.`zipcode_address` AS `zipcode_address`,`members`.`created_at` AS `created_at`,`members`.`updated_at` AS `updated_at`,`members`.`entity_id` AS `entity_id` from `members`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_members` AS select `loan_members`.`id` AS `id`,concat(`loan_members`.`first_name`,' ',`loan_members`.`middle_name`,' ',`loan_members`.`last_name`) AS `member_name`,`loan_members`.`gender` AS `gender`,`loan_members`.`marital_status` AS `marital_status`,`loan_members`.`birth_date` AS `birth_date`,`loan_members`.`birth_place` AS `birth_place`,`loan_members`.`mother_maiden_name` AS `mother_maiden_name`,`loan_members`.`contact_number` AS `contact_number`,`loan_members`.`email_address` AS `email_address`,`loan_members`.`street_address` AS `street_address`,`loan_members`.`brgy_town_address` AS `brgy_town_address`,`loan_members`.`province_city_address` AS `province_city_address`,`loan_members`.`zipcode_address` AS `zipcode_address`,`loan_members`.`created_at` AS `created_at`,`loan_members`.`updated_at` AS `updated_at`,`loan_members`.`entity_id` AS `entity_id` from `loan_members`;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `balances`
+-- Indexes for table `backoffice_balance_sheets`
 --
-ALTER TABLE `balances`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `balance_sheets`
---
-ALTER TABLE `balance_sheets`
+ALTER TABLE `backoffice_balance_sheets`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2925,15 +2911,27 @@ ALTER TABLE `loan_applications`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `loan_products`
+-- Indexes for table `loan_balances`
 --
-ALTER TABLE `loan_products`
+ALTER TABLE `loan_balances`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `members`
+-- Indexes for table `loan_members`
 --
-ALTER TABLE `members`
+ALTER TABLE `loan_members`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `loan_payments`
+--
+ALTER TABLE `loan_payments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `loan_products`
+--
+ALTER TABLE `loan_products`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2957,12 +2955,6 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_token_index` (`token`);
 
 --
--- Indexes for table `payments`
---
-ALTER TABLE `payments`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `sessions`
 --
 ALTER TABLE `sessions`
@@ -2982,12 +2974,6 @@ ALTER TABLE `user_access`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_access_module`
---
-ALTER TABLE `user_access_module`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `user_groups`
 --
 ALTER TABLE `user_groups`
@@ -2997,6 +2983,12 @@ ALTER TABLE `user_groups`
 -- Indexes for table `user_group_access`
 --
 ALTER TABLE `user_group_access`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_group_modules`
+--
+ALTER TABLE `user_group_modules`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3015,15 +3007,10 @@ ALTER TABLE `zipcodes`
 --
 
 --
--- AUTO_INCREMENT for table `balances`
+-- AUTO_INCREMENT for table `backoffice_balance_sheets`
 --
-ALTER TABLE `balances`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
---
--- AUTO_INCREMENT for table `balance_sheets`
---
-ALTER TABLE `balance_sheets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+ALTER TABLE `backoffice_balance_sheets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `entities`
 --
@@ -3035,30 +3022,35 @@ ALTER TABLE `entities`
 ALTER TABLE `loan_applications`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=47;
 --
+-- AUTO_INCREMENT for table `loan_balances`
+--
+ALTER TABLE `loan_balances`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
+--
+-- AUTO_INCREMENT for table `loan_members`
+--
+ALTER TABLE `loan_members`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `loan_payments`
+--
+ALTER TABLE `loan_payments`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=109;
+--
 -- AUTO_INCREMENT for table `loan_products`
 --
 ALTER TABLE `loan_products`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
--- AUTO_INCREMENT for table `members`
---
-ALTER TABLE `members`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
---
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `parameters`
 --
 ALTER TABLE `parameters`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=84;
---
--- AUTO_INCREMENT for table `payments`
---
-ALTER TABLE `payments`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=107;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -3070,11 +3062,6 @@ ALTER TABLE `users`
 ALTER TABLE `user_access`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `user_access_module`
---
-ALTER TABLE `user_access_module`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
---
 -- AUTO_INCREMENT for table `user_groups`
 --
 ALTER TABLE `user_groups`
@@ -3084,6 +3071,11 @@ ALTER TABLE `user_groups`
 --
 ALTER TABLE `user_group_access`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `user_group_modules`
+--
+ALTER TABLE `user_group_modules`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
 --
 -- AUTO_INCREMENT for table `zipcodes`
 --

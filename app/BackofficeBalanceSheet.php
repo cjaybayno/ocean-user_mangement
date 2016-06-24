@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BalanceSheet extends Model
+class BackofficeBalanceSheet extends Model
 {
     /**
 	 * Indicates if the model should be timestamped.

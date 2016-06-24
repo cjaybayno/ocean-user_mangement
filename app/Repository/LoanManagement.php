@@ -3,7 +3,7 @@ namespace App\Repository;
 
 use DB;
 use App\Entity;
-use App\Member;
+use App\LoanMember;
 use App\Parameter;
 use App\LoanProduct;
 use App\LoanApplication;
@@ -92,7 +92,7 @@ class LoanManagement
      */
 	public function getMemberInLastName($lastName)
 	{
-		$memberRaw = Member::orderBy('first_name')
+		$memberRaw = LoanMember::orderBy('first_name')
 			->where('last_name', 'LIKE', $lastName.'%')
 			->where('entity_id', session('entity_id'))
 			->get()

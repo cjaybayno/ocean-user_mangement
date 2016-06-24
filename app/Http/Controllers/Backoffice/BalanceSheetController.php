@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Log;
 
 use App\Parameter;
-use App\BalanceSheet;
+use App\BackofficeBalanceSheet;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +16,7 @@ class BalanceSheetController extends Controller
 	/**
 	* Frontend route 
 	*/
-	public $route = '/balance-sheet';
+	public $route = '/backoffice/balance-sheet';
 	
 	/**
      * Create a new instance.
@@ -99,7 +99,7 @@ class BalanceSheetController extends Controller
 	{
 		foreach($request->input() as $paramId => $amount) {
 			if ($amount != 0 OR !empty($amount)) {
-				$balanceSheet = new BalanceSheet;
+				$balanceSheet = new BackofficeBalanceSheet;
 				$balanceSheet->param_id = $paramId;
 				$balanceSheet->amount   = $amount;
 				$balanceSheet->save();

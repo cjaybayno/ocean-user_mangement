@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class LoanPayment extends Model
 {
     /**
      * Indicates if the model should be timestamped.

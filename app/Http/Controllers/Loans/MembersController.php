@@ -9,7 +9,7 @@ use Log;
 use Crypt;
 use Datatables;
 
-use App\Member;
+use App\LoanMember;
 use App\Http\Requests;
 use App\Repository\MemberManagement;
 use App\Http\Controllers\Controller;
@@ -145,7 +145,7 @@ class MembersController extends Controller
 		Log::info('View specific member : ', ['session' => session()->all()]);
 	
         return view('modules/loans/members.show')->with([
-			'member' 	=> Member::findOrFail(Crypt::decrypt($encryptId)),
+			'member' 	=>  LoanMember::findOrFail(Crypt::decrypt($encryptId)),
 			'encryptId' => $encryptId,
 		]);
     }
@@ -158,7 +158,7 @@ class MembersController extends Controller
      */
     public function getEdit($encryptId)
     {
-		$member = Member::findOrFail(Crypt::decrypt($encryptId));
+		$member =  LoanMember::findOrFail(Crypt::decrypt($encryptId));
 		
 		$assets = [
 			'scripts' => [
@@ -166,7 +166,7 @@ class MembersController extends Controller
 				'/assets/gentellela-alela/js/datepicker/daterangepicker.js',
 				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/parsley/parsley.min.js',
-				'/assets/modules/laons/members-modify.js',
+				'/assets/modules/loans/members-modify.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css'
@@ -254,7 +254,7 @@ class MembersController extends Controller
      */
 	public function postUpdate(Request $request) 
 	{
-		$member = Member::findOrFail(Crypt::decrypt($request->encryptId));
+		$member =  LoanMember::findOrFail(Crypt::decrypt($request->encryptId));
 		$member->first_name  			= ucwords($request->first_name);
 		$member->last_name 	 			= ucwords($request->last_name);
 		$member->middle_name 			= ucwords($request->middle_name);

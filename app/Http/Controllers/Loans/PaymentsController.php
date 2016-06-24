@@ -9,8 +9,8 @@ use Log;
 use Crypt;
 use Datatables;
 
-use App\Balance;
-use App\Payment;
+use App\LoanBalance;
+use App\LoanPayment;
 use App\LoanProduct;
 use App\Http\Requests;
 use App\LoanApplication;
@@ -379,20 +379,20 @@ class PaymentsController extends Controller
 		/* === decrypt member id === */
 		$memberId = Crypt::decrypt($paymentParams['id']);
 		
-		$getBalance = Balance::select('id')
+		$getBalance = LoanBalance::select('id')
 			->where('member_id', $memberId)
 			->where('type', $paymentParams['type'])
 			->first();
 		 
 		if (empty($getBalance)) {
 			$logInfo = 'Create '.$paymentParams['type'];
-			$balance = new Balance;
+			$balance = new LoanBalance;
 			$balance->member_id = $memberId;
 			$balance->type 		= $paymentParams['type'];
 			$balance->entity_id = session('entity_id');
 		} else {
 			$logInfo = 'Update '.$paymentParams['type'];
-			$balance = Balance::find($getBalance->id);
+			$balance = LoanBalance::find($getBalance->id);
 		}
 		
 		/* === cal outstanding and remaining balance === */
@@ -434,7 +434,7 @@ class PaymentsController extends Controller
      */
 	private function savePayment($paymentParams) 
 	{
-		$payment = new Payment;
+		$payment = new LoanPayment;
 		$payment->parent_id 		  = $paymentParams['parent_id'];
 		$payment->outstanding_balance = $paymentParams['outstanding_balance'];
 		$payment->payment_amount 	   = $paymentParams['payment_amount'];
@@ -461,7 +461,7 @@ class PaymentsController extends Controller
      */
 	public function getValidateOr(Request $request)
 	{
-		$orNumberCount = Payment::select('or_number')
+		$orNumberCount = LoanPayment::select('or_number')
 			->where('or_number', $request->payment_or)
 			->where('entity_id', session('entity_id'))
 			->count();

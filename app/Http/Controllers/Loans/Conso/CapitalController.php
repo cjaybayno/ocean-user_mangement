@@ -10,7 +10,6 @@ use DateTime;
 use Datatables;
 
 use App\Entity;
-use App\Balance;
 use App\LoanProduct; 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
