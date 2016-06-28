@@ -52,7 +52,7 @@ class UsersController extends Controller
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
-				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
+				'/assets/gentellela-alela/js/datatables/extensions/Responsive/css/dataTables.responsive.css',
 			]
 		];
 		
