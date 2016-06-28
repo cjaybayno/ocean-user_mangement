@@ -96,10 +96,10 @@ class ModulesController extends Controller
 			
 		return Datatables::of($modules)
 			->editColumn('role', function ($modules) {
-					return view('modules/portal/modules/dataTables.role', $modules)->render();
+					return view('modules/portal/modules/datatables.role', $modules)->render();
 			})
 			->editColumn('active', function ($modules) {
-					return view('modules/portal/modules/dataTables.active', $modules)->render();
+					return view('modules/portal/modules/datatables.active', $modules)->render();
 			})
 			->addColumn('action', function ($modules) {
 					return view('modules/portal/modules/datatables.action', [
