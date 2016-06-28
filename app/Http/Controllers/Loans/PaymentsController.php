@@ -63,7 +63,7 @@ class PaymentsController extends Controller
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
-				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
+				'/assets/gentellela-alela/js/datatables/extensions/Responsive/css/dataTables.responsive.css',
 			],
 			'route' => $this->route,
 		];
@@ -144,7 +144,7 @@ class PaymentsController extends Controller
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
-				'/assets/gentellela-alela/js/dataTables/extensions/Responsive/css/dataTables.responsive.css',
+				'/assets/gentellela-alela/js/datatables/extensions/Responsive/css/dataTables.responsive.css',
 				'/assets/gentellela-alela/css/select/select2.min.css'
 			],
 			'route' => $this->route,
