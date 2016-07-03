@@ -113,6 +113,15 @@ Route::group(['middleware' => 'web'], function () {
 				'getShow'   => 'portal.modules.show',
 			]);
 		});
+		
+		// api route gruop
+		Route::group(['prefix' => 'api'], function () {
+			
+			// partner route
+			Route::controller('partners', 'Api\PartnersController', [
+				'getIndex'  => 'api.partners',
+			]);
+		});
 				
 		// Users route
 		Route::controller('users', 'Users\UsersController', [

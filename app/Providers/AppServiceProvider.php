@@ -41,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
 				'modules/backoffice/balanceSheet.form',
 				'modules/portal/modules.list',
 				'modules/portal/modules.show',
+				'modules/api/partners.list',
 			], 
 			'App\Http\ViewComposers\AuthUserProfileComposer'
 		);
