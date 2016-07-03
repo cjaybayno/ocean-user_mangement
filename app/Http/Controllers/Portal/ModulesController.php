@@ -357,10 +357,8 @@ class ModulesController extends Controller
 		$module->label 		= ucwords($request->label);
 		$module->role  		= Module::find($parentModuleId)->role;
 		$module->icon  		= $request->icon;
-		if (! empty($request->route))
+		if (! empty($request->route) AND $request->route != ' ')
 			$module->route  = $request->route;
-		else
-			$module->route = NULL;
 		
 		$module->save();
 		
