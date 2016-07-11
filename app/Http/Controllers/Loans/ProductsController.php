@@ -34,6 +34,8 @@ class ProductsController extends Controller
      */
 	public function __construct(LoanManagement $LoanRepository)
 	{
+		$this->authorize('menuAccessByName', 'products');
+		
 		$this->loanRepo = $LoanRepository;
 	}
 	

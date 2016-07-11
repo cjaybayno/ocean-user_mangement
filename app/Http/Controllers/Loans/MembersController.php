@@ -33,7 +33,7 @@ class MembersController extends Controller
      */
 	public function __construct(MemberManagement $memberRepo)
 	{
-		$this->memberRepo = $memberRepo;
+		$this->authorize('menuAccessByName', 'members');
 		
 		$this->middleware('ajax.request', ['except' => [
             'getIndex',
@@ -42,8 +42,7 @@ class MembersController extends Controller
 			'getEdit',
         ]]);
 		
-		$this->authorize('moduleAccessByName', 'loan');
-		$this->authorize('menuAccessByName', 'members');
+		$this->memberRepo = $memberRepo;
 	}
 	
 	/**

@@ -29,6 +29,8 @@ class SavingsController extends Controller
      */
 	public function __construct()
 	{
+		$this->authorize('menuAccessByName', 'consolidation');
+		
 		$this->middleware('ajax.request', ['except' => [
             'getIndex',
             'getContribution',
@@ -42,6 +44,8 @@ class SavingsController extends Controller
      */
 	public function getIndex()
 	{
+		$this->authorize('subMenuAccessByName', 'conso_savings');
+		
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/moment.min2.js',

@@ -28,6 +28,8 @@ class CapitalController extends Controller
      */
 	public function __construct()
 	{
+		$this->authorize('menuAccessByName', 'consolidation');
+		
 		$this->middleware('ajax.request', ['except' => [
             'getIndex',
             'getContribution',
@@ -41,6 +43,8 @@ class CapitalController extends Controller
      */
 	public function getIndex()
 	{
+		$this->authorize('subMenuAccessByName', 'conso_capital');
+		
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/moment.min2.js',

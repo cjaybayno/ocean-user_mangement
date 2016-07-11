@@ -41,7 +41,7 @@ Route::group(['middleware' => 'web'], function () {
 		});
 		
 		// Loans route group
-		Route::group(['prefix' => 'loan'], function () {
+		Route::group(['prefix' => 'loan', 'middleware' => 'access.module:loan'], function () {
 			
 			// member route
 			Route::controller('members', 'Loans\MembersController', [
@@ -96,7 +96,7 @@ Route::group(['middleware' => 'web'], function () {
 		});
 		
 		// backoffice route gruop
-		Route::group(['prefix' => 'backoffice'], function () {
+		Route::group(['prefix' => 'backoffice',  'middleware' => 'access.module:backoffice'], function () {
 			
 			// Balance Sheet route
 			Route::controller('balance-sheet', 'Backoffice\BalanceSheetController', [

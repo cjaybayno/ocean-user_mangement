@@ -29,11 +29,13 @@ class LoanController extends Controller
      */
 	public function __construct(LoanManagement $LoanRepository)
 	{
-		$this->loanRepo = $LoanRepository;
+		$this->authorize('menuAccessByName', 'consolidation');
 		
 		$this->middleware('ajax.request', ['except' => [
             'getIndex',
         ]]);
+		
+		$this->loanRepo = $LoanRepository;
 	}
 	
 	
@@ -44,6 +46,8 @@ class LoanController extends Controller
      */
 	public function getIndex()
 	{
+		$this->authorize('subMenuAccessByName', 'conso_loan');
+		
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/moment.min2.js',

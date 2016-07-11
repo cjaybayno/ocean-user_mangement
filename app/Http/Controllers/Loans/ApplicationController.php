@@ -37,7 +37,7 @@ class ApplicationController extends Controller
      */
 	public function __construct(LoanManagement $LoanRepository)
 	{
-		$this->loanRepo = $LoanRepository;
+		$this->authorize('menuAccessByName', 'application');
 		
 		$this->middleware('ajax.request', ['except' => [
             'getForm',
@@ -46,7 +46,7 @@ class ApplicationController extends Controller
 			'getMembers',
         ]]);
 		
-		//$this->authorize('controllerAccess', 'applicatio');
+		$this->loanRepo = $LoanRepository;
 	}
 	
 	/**
@@ -56,6 +56,8 @@ class ApplicationController extends Controller
      */
     public function getForm()
     {
+		$this->authorize('subMenuAccessByName', 'form_application');
+		
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/moment.min2.js',
@@ -89,6 +91,8 @@ class ApplicationController extends Controller
      */
 	public function getIndex()
 	{
+		$this->authorize('subMenuAccessByName', 'current_application');
+		
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
@@ -173,6 +177,8 @@ class ApplicationController extends Controller
      */
 	public function getMembers()
 	{
+		$this->authorize('subMenuAccessByName', 'member_application');
+		
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/moment.min2.js',

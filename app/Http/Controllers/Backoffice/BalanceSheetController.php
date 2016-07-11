@@ -25,6 +25,8 @@ class BalanceSheetController extends Controller
      */
 	public function __construct()
 	{
+		$this->authorize('menuAccessByName', 'balance_sheet');
+		
 		$this->middleware('ajax.request', ['except' => [
             'getForm',
             'getIndex',

@@ -37,12 +37,14 @@ class PaymentsController extends Controller
      */
 	public function __construct(LoanManagement $LoanRepository)
 	{
-		$this->loanRepo = $LoanRepository;
+		$this->authorize('menuAccessByName', 'payments');
 		
 		$this->middleware('ajax.request', ['except' => [
             'getForm',
             'getIndex',
         ]]);
+		
+		$this->loanRepo = $LoanRepository;
 	}
 	
 	
@@ -53,6 +55,8 @@ class PaymentsController extends Controller
      */
 	public function getIndex()
 	{
+		$this->authorize('subMenuAccessByName', 'list_payments');
+		
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
@@ -129,6 +133,8 @@ class PaymentsController extends Controller
      */
     public function getForm()
     {
+		$this->authorize('subMenuAccessByName', 'make_payments');
+		
 		$assets = [
 			'scripts' => [
 				'/assets/gentellela-alela/js/moment.min2.js',
