@@ -23,7 +23,7 @@
 							<th>Groups Name</th>
 							<th>Entity</th>
 							<th>Description</th>
-							<th>Action</th>
+							<th></th>
 						</tr>
                     </thead>
                     <tbody>

@@ -23,15 +23,14 @@
 				{"searchable" : true},
 				{"searchable" : false},
 				{"searchable" : false},
-				null
+				{"searchable" : false, "orderable" : false},
 			],
 			oLanguage : {
-				"sSearch": "Search Group Name"
+				"sSearch": "Search "
 			},
 			responsive: true,
 			processing: false,
 			serverSide: true,
-			//'iDisplayLength': 2,
 			ajax: url+'/user/groups/paginate',
 		});
 	}

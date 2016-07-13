@@ -15,8 +15,18 @@
 	/* === dataTables === */
 	function dataTables() {
 		$('#user-list').DataTable({
-			lengthMenu : [ 5, 10, 25, 50, 75, 100 ],
-			iDisplayLength : 5,
+			columns : [
+				{"searchable" : false, "orderable" : false},
+				{"searchable" : true},
+				{"searchable" : true},
+				{"searchable" : true},
+				{"searchable" : false},
+				{"searchable" : false},
+				{"searchable" : false, "orderable" : false},
+			],
+			oLanguage : {
+				"sSearch": "Search "
+			},
 			responsive: true,
 			processing: true,
 			serverSide: true,

@@ -58,6 +58,5 @@ class PartnersController extends Controller
         return view('modules/api/partners.list')->with([
 			'assets' => $assets
 		]);
-		
 	}
 }

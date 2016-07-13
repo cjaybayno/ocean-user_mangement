@@ -26,7 +26,7 @@
 							<th>Groups</th>
 							<th>Login State</th>
 							<th>Status</th>
-							<th>Action</th>
+							<th></th>
 						</tr>
                     </thead>
                     <tbody>
