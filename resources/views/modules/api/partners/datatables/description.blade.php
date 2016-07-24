@@ -1,0 +1,1 @@
+<?php echo wordwrap($description, 50, "</br>") ?>

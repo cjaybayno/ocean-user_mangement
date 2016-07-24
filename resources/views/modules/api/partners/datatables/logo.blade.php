@@ -1,0 +1,1 @@
+<img src="{!! !empty($logo) ? url($logo) : url('public/images/api/partners/default.png') !!}" alt="Partners Logo" class="img-responsive" style="max-width:45px">

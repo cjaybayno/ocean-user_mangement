@@ -37,12 +37,27 @@ class ModulesResources extends Command
      */
     public function handle()
     {
-        $assets = resource_path('/assets/modules/'.$this->argument('moduleName'));
-        mkdir($assets, 0777); 
+		/* === assets modules === */
+        $this->createDir(resource_path('/assets/modules/'.$this->argument('moduleName')));
+       
+		/* === views modules === */
+		$this->createDir(resource_path('/views/modules/'.$this->argument('moduleName')));
 		
-		$views  = resource_path('/views/modules/'.$this->argument('moduleName'));
-		mkdir($views, 0777);
 		
-		$this->line('Resources Created!!');
     }
+	
+	/**
+     * Create Directory
+     *
+     * @return void
+     */
+	protected function createDir($dir)
+	{
+		if (!file_exists($dir)) {
+			mkdir($dir, 0777);
+			$this->line($dir.' Created!!');
+		} else {
+			$this->line($dir.' Already exist!!');
+		}
+	}
 }

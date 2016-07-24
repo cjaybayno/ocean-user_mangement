@@ -20,6 +20,7 @@
 				<table id="api-partners-list"  class="table table-striped responsive-utilities jambo_table" cellspacing="0" width="100%">
                     <thead>
 						 <tr class="headings">
+							<th> </th>
 							<th>Name</th>
 							<th>Code</th>
 							<th>Description</th>

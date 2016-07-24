@@ -44,7 +44,7 @@ class PartnersController extends Controller
 				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
 				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
-				'/assets/modules/loans/application-current.js' 
+				'/assets/modules/api/partner-list.js' 
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
@@ -59,4 +59,42 @@ class PartnersController extends Controller
 			'assets' => $assets
 		]);
 	}
+	
+	/**
+     * Return partners list for paginated.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPaginate(Request $request)
+    {
+		$partners = DB::table('view_gateway_partners')
+		->select([
+			'logo',
+			'name',
+			'code',
+			'description',
+			'id',
+		]);
+			
+		return Datatables::of($partners)
+				->editColumn('logo',  function ($partners) {
+					return view('modules/api/partners/datatables.logo', [
+						'logo' => $partners->logo
+					])->render();
+				})
+				->editColumn('description', function ($partners) {
+					return view('modules/api/partners/datatables.description', [
+						'description' => $partners->description
+					])->render();
+				})
+				->addColumn('action', function ($partners) {
+					return view('modules/api/partners/datatables.action', [
+								'encryptID' => Crypt::encrypt($partners->id)
+							])->render();
+				})
+				->removeColumn('id')
+				->make();
+    }
+	
+	
 }
