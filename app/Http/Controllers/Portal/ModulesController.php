@@ -86,7 +86,6 @@ class ModulesController extends Controller
     {
 		$modules = Module::where('parent_id', 0)
 		->select([
-			'name',
 			'label',
 			'role',
 			'order_list',

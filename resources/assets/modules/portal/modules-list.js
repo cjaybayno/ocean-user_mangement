@@ -76,11 +76,10 @@
 				{"searchable" : false},
 				{"searchable" : false},
 				{"searchable" : false},
-				{"searchable" : false},
 				{"searchable" : false, "orderable" : false},
 			],
 			oLanguage : {
-				"sSearch": "Modules "
+				"sSearch": "Label "
 			},
 			responsive: true,
 			processing: true,

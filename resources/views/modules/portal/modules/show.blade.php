@@ -67,7 +67,6 @@
 								<table class="table table-hover table-striped">
 									<thead>
 										<tr>
-											<th>Name</th>
 											<th>Label</th>
 											<th>Order</th>
 											<th>Status</th>
@@ -78,7 +77,6 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td>{{ $menu['name'] }}</td>
 											<td>{{ $menu['label'] }}</td>
 											<td>{{ $menu['order_list'] }}</td>
 											<td>
@@ -126,7 +124,6 @@
 								<table class="table table-hover table-striped">
 									<thead>
 										<tr>
-											<th>Name</th>
 											<th>Label</th>
 											<th>Order</th>
 											<th>Status</th>
@@ -138,7 +135,6 @@
 										<tbody>
 											@foreach ($menu['child'] as $menu)
 												<tr>
-													<td>{{ $menu['name'] }}</td>
 													<td>{{ $menu['label'] }}</td>
 													<td>{{ $menu['order_list'] }}</td>
 													<td>

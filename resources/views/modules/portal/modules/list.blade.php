@@ -38,7 +38,6 @@
 				<table id="modules-list"  class="table table-striped responsive-utilities jambo_table" cellspacing="0" width="100%">
                     <thead>
 						 <tr class="headings">
-							<th>Name</th>
 							<th>Label</th>
 							<th>Role</th>
 							<th>Order</th>
