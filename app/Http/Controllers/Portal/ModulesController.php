@@ -178,7 +178,7 @@ class ModulesController extends Controller
 	public function postStoreModule(Request $request) 
 	{
 		$module = new Module;
-		$module->name  		= $request->name;
+		$module->name  		= $this->formatName($request->label);
 		$module->label 		= strtoupper($request->label);
 		$module->order_list = Module::where('parent_id', 0)->max('order_list') + 1;
 		$module->role  		= $request->role;
@@ -209,7 +209,7 @@ class ModulesController extends Controller
 		$parentModuleId = Crypt::decrypt($request->encryptId);
 		
 		$module = Module::find($parentModuleId);
-		if ($module->name   != $request->name)   $module->name  = $request->name;
+		if ($module->name   != $request->name)   $module->name  = $this->formatName($request->label);
 		if ($module->label  != $request->label)  $module->label = strtoupper($request->label);
 		if ($module->active != $request->active) $module->active  = $request->active;
 		
@@ -353,12 +353,12 @@ class ModulesController extends Controller
 		$module = new Module;
 		$module->parent_id  = $parentModuleId;
 		$module->order_list = Module::where('parent_id', $parentModuleId)->max('order_list') + 1;
-		$module->name  		= $request->name;
+		$module->name  		= $this->formatName($request->label, $parentModuleId);
 		$module->label 		= ucwords($request->label);
 		$module->role  		= Module::find($parentModuleId)->role;
 		$module->icon  		= $request->icon;
 		if (! empty($request->route) AND $request->route != ' ')
-			$module->route  = $request->route;
+			$module->route  = trim($request->route);
 		
 		$module->save();
 		
@@ -385,14 +385,14 @@ class ModulesController extends Controller
 	public function postUpdateMenu(Request $request) 
 	{
 		$module = Module::find(Crypt::decrypt($request->menuEncryptId));
-		if ($module->name   != $request->name)   $module->name   = $request->name;
+		if ($module->name   != $request->name)   $module->name   = $this->formatName($request->label, $module->id);
 		if ($module->label  != $request->label)  $module->label  = ucwords($request->label);
 		if ($module->active != $request->active) $module->active = $request->active;
 		if ($module->icon   != $request->icon) 	 $module->icon   = $request->icon;
 		
 		if ($module->route != $request->route) {
 			if (! empty($request->route))
-				$module->route  = $request->route;
+				$module->route  = trim($request->route);
 			else
 				$module->route = NULL;
 		}
@@ -411,5 +411,19 @@ class ModulesController extends Controller
 			'success' => true,
 			'message' => trans('modules.successModifyModule'),
 		]);
+	}
+	
+	/**
+     * Format Name
+     *
+     * @param  string  $label
+     * @param  string  $prefix
+     * @return string
+     */
+	private function formatName($label, $prefix = false)
+	{
+		$name = strtolower(str_replace(' ', '_', trim($label)));
+		
+		return ($prefix != false) ? $prefix.'_'.$name : $name;
 	}
 }

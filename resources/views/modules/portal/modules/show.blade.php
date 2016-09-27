@@ -243,13 +243,13 @@
 		<h5><span class="load-bar-notif"></span></h5>
 		<div class="load-bar"></div>
 			<input type="hidden" name="encryptId" id="encryptId" value="{{ $menuId }}">
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label class="control-label">Name <span class="required">*</span></label>
 				<input type="text" name="name" class="form-control action-input replace-space" id="name"
 					required 
 					data-parsley-required-message= "{{ trans('general.required') }}"
 					style="width:50%">
-			</div>
+			</div> will replace this as a backend process, automated-->
 			<div class="form-group">
 				<label class="control-label">Label <span class="required">*</span></label>
 				<input type="text" name="label" class="form-control action-input" id="label"
@@ -301,13 +301,13 @@
 		<h5><span class="load-bar-notif"></span></h5>
 		<div class="load-bar"></div>
 			<input type="hidden" name="menuEncryptId" id="menuEncryptId">
-			<div class="form-group">
+			<!--<div class="form-group">
 				<label class="control-label">Name <span class="required">*</span></label>
 				<input type="text" name="name" class="form-control action-input replace-space" id="name"
 					required 
 					data-parsley-required-message= "{{ trans('general.required') }}"
 					style="width:50%">
-			</div>
+			</div> will replace this as a backend process, automated-->
 			<div class="form-group">
 				<label class="control-label">Label <span class="required">*</span></label>
 				<input type="text" name="label" class="form-control action-input" id="label"
@@ -362,13 +362,13 @@
 		<h5><span class="load-bar-notif"></span></h5>
 		<div class="load-bar"></div>
 			<input type="hidden" name="encryptId" id="encryptId">
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label class="control-label">Name <span class="required">*</span></label>
 				<input type="text" name="name" class="form-control action-input replace-space" id="name"
 					required 
 					data-parsley-required-message= "{{ trans('general.required') }}"
 					style="width:50%">
-			</div>
+			</div> will replace this as a backend process, automated-->
 			<div class="form-group">
 				<label class="control-label">Label <span class="required">*</span></label>
 				<input type="text" name="label" class="form-control action-input" id="label"
@@ -407,13 +407,13 @@
 		<h5><span class="load-bar-notif"></span></h5>
 		<div class="load-bar"></div>
 			<input type="hidden" name="menuEncryptId" id="menuEncryptId">
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label class="control-label">Name <span class="required">*</span></label>
 				<input type="text" name="name" class="form-control action-input replace-space" id="name"
 					required 
 					data-parsley-required-message= "{{ trans('general.required') }}"
 					style="width:50%">
-			</div>
+			</div> will replace this as a backend process, automated-->
 			<div class="form-group">
 				<label class="control-label">Label <span class="required">*</span></label>
 				<input type="text" name="label" class="form-control action-input" id="label"
