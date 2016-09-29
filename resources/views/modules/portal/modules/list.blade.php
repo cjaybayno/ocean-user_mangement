@@ -40,7 +40,6 @@
 						 <tr class="headings">
 							<th>Label</th>
 							<th>Role</th>
-							<th>Order</th>
 							<th>Status</th>
 							<th></th>
 						</tr>

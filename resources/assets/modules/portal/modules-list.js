@@ -72,10 +72,9 @@
 	function dataTables() {
 		$('#modules-list').DataTable({
 			columns : [
-				{"searchable" : true},
-				{"searchable" : false},
-				{"searchable" : false},
-				{"searchable" : false},
+				{"searchable" : true, "orderable" : false},
+				{"searchable" : false, "orderable" : false},
+				{"searchable" : false, "orderable" : false},
 				{"searchable" : false, "orderable" : false},
 			],
 			oLanguage : {

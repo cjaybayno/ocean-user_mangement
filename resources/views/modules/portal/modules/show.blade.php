@@ -4,6 +4,57 @@
 @section('addStylesheets')
 	<style>
 		.ui-state-highlight { height: 3em; line-height: 2em; }
+		
+@media only screen and (max-width: 800px) {
+	
+	/* Force table to not be like tables anymore */
+	.rtable table, 
+	.rtable thead, 
+	.rtable tbody, 
+	.rtable th, 
+	.rtable td, 
+	.rtable tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.rtable thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	.rtable tr { border: 1px solid #ccc; }
+ 
+	.rtable td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+ 
+	.rtable td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+ 
+	/*
+	Label the data
+	*/
+	.rtable td:before { content: attr(data-title); }
+}
+		
 	</style>
 @endsection
 
@@ -20,16 +71,16 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2> Modules : {{ $modules->label }}</h2>
+				<h2> {{ $modules->label }} MENUS</h2>
 				<div class="pull-right">	
 					<div class="btn-group">
 						<a href="#add-menu-modal" data-toggle="modal">
-							<button type="button" class="btn btn-block btn-sm btn-primary" id="add-menu-btn"><i class="glyphicon glyphicon-plus"></i> Add Menu</button>
+							<button type="button" class="btn btn-block btn-sm btn-primary" id="add-menu-btn"><i class="glyphicon glyphicon-plus"></i> Add</button>
 						</a>
 					</div>
 					<div class="btn-group">
 						<a href="#reorder-menu-modal" data-toggle="modal">
-							<button type="button" class="btn btn-block btn-sm btn-warning" id="reorder-module-btn"><i class="glyphicon glyphicon-sort-by-order"></i> Re-order Menu</button>
+							<button type="button" class="btn btn-block btn-sm btn-warning" id="reorder-module-btn"><i class="glyphicon glyphicon-sort-by-order"></i> Re-order</button>
 						</a>
 					</div>
 					<div class="btn-group">
@@ -59,16 +110,15 @@
 						@foreach ($selected_menus as $menu)
 							<div class="tab-pane <?php if ($flag <= 0) echo 'active'?>" id="{{ $menu['name'] }}">
 								<div class="pull-left">
-									<p class="lead">{{ $menu['label'] }}  Menu</p>
+									<p class="lead"></p>
 								</div>
 								<div class="pull-right">
 									
 								</div>
-								<table class="table table-hover table-striped">
+								<table class="table table-hover table-striped rtable">
 									<thead>
 										<tr>
 											<th>Label</th>
-											<th>Order</th>
 											<th>Status</th>
 											<th>Route</th>
 											<th>Icon</th>
@@ -78,7 +128,6 @@
 									<tbody>
 										<tr>
 											<td>{{ $menu['label'] }}</td>
-											<td>{{ $menu['order_list'] }}</td>
 											<td>
 												@if ($menu['active'])
 													<span class="label label-success">Active</span>
@@ -110,22 +159,21 @@
 								<div class="pull-right">
 									<div class="btn-group">
 										<a href="#add-submenu-modal" data-toggle="modal">
-											<button type="button" class="btn btn-block btn-sm btn-primary" onclick='clickAddSubMenuBtn("{{ Crypt::encrypt($menu['id']) }}")'><i class="glyphicon glyphicon-plus"></i> Add Sub-Menu</button>
+											<button type="button" class="btn btn-block btn-sm btn-primary" onclick='clickAddSubMenuBtn("{{ Crypt::encrypt($menu['id']) }}")'><i class="glyphicon glyphicon-plus"></i> Add</button>
 										</a>
 									</div>
 									@if (! empty($menu['child']))
 										<div class="btn-group">
 											<a href="#reorder-submenu-modal" data-toggle="modal">
-												<button type="button" class="btn btn-block btn-sm btn-warning" onclick='clickReorderSubMenuBtn("{{ Crypt::encrypt($menu['id']) }}")'><i class="glyphicon glyphicon-sort-by-order"></i> Re-order Sub-Menu</button>
+												<button type="button" class="btn btn-block btn-sm btn-warning" onclick='clickReorderSubMenuBtn("{{ Crypt::encrypt($menu['id']) }}")'><i class="glyphicon glyphicon-sort-by-order"></i> Re-order</button>
 											</a>
 										</div>
 									@endif
 								</div>
-								<table class="table table-hover table-striped">
+								<table class="table table-hover table-striped rtable">
 									<thead>
 										<tr>
 											<th>Label</th>
-											<th>Order</th>
 											<th>Status</th>
 											<th>Route</th>
 											<th></th>
@@ -136,7 +184,6 @@
 											@foreach ($menu['child'] as $menu)
 												<tr>
 													<td>{{ $menu['label'] }}</td>
-													<td>{{ $menu['order_list'] }}</td>
 													<td>
 														@if ($menu['active'])
 															<span class="label label-success">Active</span>

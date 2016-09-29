@@ -88,10 +88,10 @@ class ModulesController extends Controller
 		->select([
 			'label',
 			'role',
-			'order_list',
 			'active',
 			'id',
-		]);
+		])
+		->orderBy('order_list');
 			
 		return Datatables::of($modules)
 			->editColumn('role', function ($modules) {
