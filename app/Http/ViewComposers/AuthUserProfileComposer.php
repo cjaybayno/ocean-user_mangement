@@ -40,8 +40,11 @@ class AuthUserProfileComposer
         $view->with('email',  $user->email);
         $view->with('avatar', $user->avatar);
 		
-		if (session('entity_id'))
-			$view->with('entity_name', Entity::find($user->entity_id)->entity_name);
+		if (session('entity_id')) {
+			$entity = Entity::find($user->entity_id);
+			$view->with('entityCode', $entity->code);
+			$view->with('entityIcon', $entity->icon);
+		}
 		
 		$view->with('menus', $this->modules->getMenus());
     }

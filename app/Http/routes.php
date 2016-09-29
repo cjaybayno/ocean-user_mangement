@@ -32,9 +32,9 @@ Route::group(['middleware' => 'web'], function () {
 	// Authenticated route group
 	Route::group(['middleware' => 'auth'], function () {
 		
-		Route::get('dashboard', function () {
+		Route::get('dashboard', ['as' => 'test_route', function () {
 			return view('home');
-		});
+		}]);
 		
 		Route::get('/', function () {
 			return view('home');
