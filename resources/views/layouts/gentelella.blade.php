@@ -78,13 +78,13 @@
                     <br />
 					
 					<!-- side bar -->
-                    @include('menus.sidebar')
+                    @include('layouts.sidebar')
 					<!-- /side bar -->
 				</div>
             </div>
 			
 			<!-- top navigation -->
-            @include('menus.topnav')
+            @include('layouts.topnav')
 			<!-- /top navigation -->
 
             <!-- page content -->
@@ -96,7 +96,7 @@
                 </div>
 
                 <!-- footer content -->
-				 @include('menus.footer')
+				 @include('layouts.footer')
                 <!-- /footer content -->
 				
             </div>
