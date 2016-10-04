@@ -95,6 +95,7 @@
 	}
 	
 	function clickEditModuleModal(encryptId) {
+		$('#edit-module-modal').modal('show');
 		$(editFormId).parsley().destroy();
 		$(editFormId+' #confirm-btn').hide();
 		$(editFormId+' input .action-input').empty();
