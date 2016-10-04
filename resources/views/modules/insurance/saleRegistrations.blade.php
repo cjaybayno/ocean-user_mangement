@@ -8,7 +8,6 @@
             // Smart Wizard 	
             $('#wizard').smartWizard({
 				labelFinish:'Save',
-				transitionEffect: 'slide',
 				hideButtonsOnDisabled: true,
 				onShowStep: function () {
 					scrollTop();
