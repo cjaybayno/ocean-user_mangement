@@ -12,7 +12,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>User Group Module [{{ strtoupper($userGroup['name']) }}]</h2>
+				<h2>Group Name: {{ ucwords($userGroup['name']) }}</h2>
 				<div class="pull-right">	
 					<div class="btn-group">
 						<a href="{{ URL::route('user.groups') }}">

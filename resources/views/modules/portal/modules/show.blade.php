@@ -85,7 +85,7 @@
 					</div>
 					<div class="btn-group">
 						<a href="{{ URL::route('portal.modules') }}">
-							<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-th-list"></i> Show List of Modules</button>
+							<button type="button" class="btn btn-block btn-sm btn-default"><i class="glyphicon glyphicon-th-list"></i> Show Modules</button>
 						</a>
 					</div>
 				</div>
