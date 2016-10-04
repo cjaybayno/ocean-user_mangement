@@ -42,6 +42,8 @@ class AppServiceProvider extends ServiceProvider
 				'modules/portal/modules.list',
 				'modules/portal/modules.show',
 				'modules/api/partners.list',
+				
+				'modules/insurance.saleRegistrations',
 			], 
 			'App\Http\ViewComposers\AuthUserProfileComposer'
 		);

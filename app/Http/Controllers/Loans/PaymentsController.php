@@ -37,7 +37,7 @@ class PaymentsController extends Controller
      */
 	public function __construct(LoanManagement $LoanRepository)
 	{
-		$this->authorize('menuAccessByName', 'payments');
+		//$this->authorize('menuAccessByName', 'payments');
 		
 		$this->middleware('ajax.request', ['except' => [
             'getForm',
@@ -55,7 +55,7 @@ class PaymentsController extends Controller
      */
 	public function getIndex()
 	{
-		$this->authorize('subMenuAccessByName', 'list_payments');
+		//$this->authorize('subMenuAccessByName', 'list_payments');
 		
 		$assets = [
 			'scripts' => [
@@ -133,7 +133,7 @@ class PaymentsController extends Controller
      */
     public function getForm()
     {
-		$this->authorize('subMenuAccessByName', 'make_payments');
+		//$this->authorize('subMenuAccessByName', 'make_payments');
 		
 		$assets = [
 			'scripts' => [

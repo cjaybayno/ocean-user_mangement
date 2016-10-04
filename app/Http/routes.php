@@ -40,6 +40,16 @@ Route::group(['middleware' => 'web'], function () {
 			return view('home');
 		});
 		
+		// insurance route group
+		Route::group(['prefix' => 'insurance'], function () {
+			
+			// sales-registration route
+			Route::controller('sales-registration', 'Insurance\SalesRegistrationController', [
+				'getIndex'	  => 'insurance.sales-registration',
+			]);
+			
+		});
+		
 		// Loans route group
 		Route::group(['prefix' => 'loan', 'middleware' => 'access.module:loan'], function () {
 			
