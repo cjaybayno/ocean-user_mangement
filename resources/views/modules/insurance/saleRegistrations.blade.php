@@ -3,13 +3,44 @@
 @section('addScripts')
 	<script type="text/javascript">
         $(document).ready(function () {
+			$('.select2').select2();
+			
             // Smart Wizard 	
-            $('#wizard').smartWizard();
+            $('#wizard').smartWizard({
+				labelFinish:'Save',
+				transitionEffect: 'slide',
+				hideButtonsOnDisabled: true,
+				onShowStep: function () {
+					scrollTop();
+				},
+				onFinish: function () {
+					alert('tapus na');
+					$('#wizard').smartWizard('setError',{stepnum:1,iserror:true});
+					$('#wizard').smartWizard('showMessage','Please correct the errors in the steps and continue');
+				}
+			});
 
             function onFinishCallback() {
                 $('#wizard').smartWizard('showMessage', 'Finish Clicked');
                 //alert('Finish Clicked');
             }
+			
+			function setError(stepnumber){
+            $('#wizard').smartWizard('setError',{stepnum:1, iserror:true});
+        }
+			
+			birthDateHandler();
+			
+			function birthDateHandler() {
+				var selector = "#birth_date";
+				$(selector).daterangepicker({
+					singleDatePicker : true,
+					calender_style : "picker_2",
+					showDropdowns: true,
+					startDate : moment().format('MM/DD/YYYY'),
+					maxDate :  moment().format('MM/DD/YYYY'),
+				});
+			}
         });
     </script>
 @endsection
@@ -33,7 +64,7 @@
 								<span class="step_no">1</span>
 								<span class="step_descr">Step 1<br /><small>Personal Information</small></span>
 							</a>
-						</li>
+						</li> 
 						<li>
 							<a href="#step-2">
 								<span class="step_no">2</span>
@@ -48,7 +79,7 @@
 						</li>
 					</ul>
 					<div id="step-1">
-						<form id="member-registration-form" class="form-horizontal form-label-left">
+						<form id="" class="form-horizontal form-label-left">
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Customer Reference<span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
@@ -56,25 +87,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Country Code<span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Partner Code<span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
-								</div>
-							</div>
-							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Customer ID<span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Title<span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
 								</div>
@@ -116,40 +129,58 @@
 									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
 								</div>
 							</div>
-							<p class="well well-sm">Contact Details</p>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Mobile #1 <span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Mobile #2 <span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Email Address <span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
-								</div>
-							</div>
-							<p class="well well-sm">Others</p>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Type of National ID<span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">ID Reference Number<span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
-								</div>
-							</div>
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Date of Birth<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="birth_date" required="required" class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<p class="well well-sm">Contact Details</p>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Mobile #1<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Mobile #2</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Landline Number</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Email Address</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<p class="well well-sm">ID's</p>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Primary National ID<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Primary ID Number<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Secondary National ID</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Secondary ID Number</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
 								</div>
@@ -157,22 +188,166 @@
 						</form>
 					</div>
 					<div id="step-2">
-						<h2 class="StepTitle">Step 2 Content</h2>
-						<p>
-							do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</p>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</p>
+						<form id="" class="form-horizontal form-label-left">
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Country Code<span class="required"></span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="Re-Populated" class="form-control col-md-7 col-xs-12" disabled>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Partner Code<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									{!! Form::select('partner_code', ['CHOOSE..', 'XIOMI', 'SAMSUNG', 'LENOVO'], null, [
+										'class' => 'form-control select2',
+										'id'    => 'partner_code',
+									]) !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Code<span class="required"></span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="Pre-Populated" class="form-control col-md-7 col-xs-12" readonly>
+								</div>
+							</div>
+							<p class="well well-sm">Product Details</p>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Category<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									{!! Form::select('partner_code', ['CHOOSE..', 'Handsets', 'Phone', 'Screen'], null, [
+										'class' => 'form-control select2',
+										'id'    => 'product_category',
+									]) !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Sub Category<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									{!! Form::select('product_sub_category', ['CHOOSE..', 'Smartphone', 'TV'], null, [
+										'class' => 'form-control select2',
+										'id'    => 'product_sub_category',
+									]) !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Model</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="TGHB-5235-AJ" class="form-control col-md-7 col-xs-12" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Description</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi" class="form-control col-md-7 col-xs-12" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Manufacturer</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="This is the manufacturer data" class="form-control col-md-7 col-xs-12" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Price</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="$ 100.00" class="form-control col-md-7 col-xs-12" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Warranty Period</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="3 Months" class="form-control col-md-7 col-xs-12" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Expiration</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="date(today) + Warranty Period" class="form-control col-md-7 col-xs-12" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Service Rate Band Code</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="Phones from 100$ to 500$" class="form-control col-md-7 col-xs-12" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">IMEI 1<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="" class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">IMEI 2<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="" class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Serial Number<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="" class="form-control col-md-7 col-xs-12">
+								</div>
+							</div>
+						 </form>
 					</div>
 					<div id="step-3">
-						<h2 class="StepTitle">Step 3 Content</h2>
-						<p>
-							sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</p>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</p>
+						<form id="" class="form-horizontal form-label-left">
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Policy Reference Number</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="63564-85432-7-7" class="form-control col-md-7 col-xs-12" disabled>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Certificate Number<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id=""  class="form-control col-md-7 col-xs-12" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Invoice Sales Date</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="{{ date('Y/m/d') }}"  class="form-control col-md-7 col-xs-12" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Invoice Number<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value=""  class="form-control col-md-7 col-xs-12" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Price<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value=""  class="form-control col-md-7 col-xs-12" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Broker<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value=""  class="form-control col-md-7 col-xs-12" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Insurance Plan<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value=""  class="form-control col-md-7 col-xs-12" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Policy Start Date<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value=""  class="form-control col-md-7 col-xs-12" >
+								</div>
+							</div>
+							<div class="form-group"><div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Policy End Date<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value=""  class="form-control col-md-7 col-xs-12" >
+								</div>
+							</div>
+						</form>
 					</div>
 			</div>
 		</div>

@@ -38,16 +38,14 @@ class SalesRegistrationController extends Controller
 	{
 		$assets = [
 			'scripts' => [
-				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
-				'/assets/gentellela-alela/js/datatables/jquery.dataTables.min.js',
-				'/assets/gentellela-alela/js/datatables/dataTables.bootstrap.min.js',
-				'/assets/gentellela-alela/js/datatables/extensions/Responsive/js/dataTables.responsive.min.js',
+				'/assets/gentellela-alela/js/moment.min2.js',
+				'/assets/gentellela-alela/js/datepicker/daterangepicker.js',
+				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/wizard/jquery.smartWizard.js',
 				//'/assets/modules/api/partner-list.js' 
 			],
 			'stylesheets' => [
-				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
-				'/assets/gentellela-alela/js/datatables/extensions/Responsive/css/dataTables.responsive.css',
+				'/assets/gentellela-alela/css/select/select2.min.css'
 			],
 			'route' => $this->route,
 		];
