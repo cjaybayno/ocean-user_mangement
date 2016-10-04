@@ -20,21 +20,23 @@
 											<span class="fa fa-chevron-down"></span>
 										@endif
 									</a>
-									<ul class="nav child_menu" style="display: none">
-										@foreach ($menu['child'] as $menu)
-											@can('moduleAccessById', $menu['id'])
-												<li>
-													<a 
-														@if (isset($menu['route']))
-															@menuRoute($menu['route'])
-														@endif
-													>
-														{{ $menu['label'] }}
-													</a>
-												</li>
-											@endcan
-										@endforeach
-									</ul>
+									@if (count($menu['child']))
+										<ul class="nav child_menu" style="display: none">
+											@foreach ($menu['child'] as $menu)
+												@can('moduleAccessById', $menu['id'])
+													<li>
+														<a 
+															@if (isset($menu['route']))
+																@menuRoute($menu['route'])
+															@endif
+														>
+															{{ $menu['label'] }}
+														</a>
+													</li>
+												@endcan
+											@endforeach
+										</ul>
+									@endif
 								</li>
 							@endcan
 						@endforeach
