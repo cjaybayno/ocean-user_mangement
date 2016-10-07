@@ -203,13 +203,7 @@
 									]) !!}
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Code<span class="required"></span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="Pre-Populated" class="form-control col-md-7 col-xs-12" readonly>
-								</div>
-							</div>
-							<p class="well well-sm">Product Details</p>
+							<p class="well well-sm">Choose Product</p>
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Category<span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
@@ -226,6 +220,19 @@
 										'class' => 'form-control select2',
 										'id'    => 'product_sub_category',
 									]) !!}
+								</div>
+							</div>
+							<p class="well well-sm">Product Details</p>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Code<span class="required"></span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="Pre-Populated" class="form-control col-md-7 col-xs-12" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Code<span class="required"></span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="Pre-Populated" class="form-control col-md-7 col-xs-12" readonly>
 								</div>
 							</div>
 							<div class="form-group">
