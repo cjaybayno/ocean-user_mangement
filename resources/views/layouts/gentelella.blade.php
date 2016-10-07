@@ -120,7 +120,7 @@
 		// define route
 		var route = "{{ $route }}";
 		if (! route) {
-			console.log('route not define in controller');
+			console.log('warning: js "route" variable no assign value for ajax variable call');
 		}
 	
 		// site url of application 
