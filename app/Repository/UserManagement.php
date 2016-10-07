@@ -22,7 +22,7 @@ class UserManagement
 				->keyBy('id');
 		} else {
 			$userGroupRaw = UserGroup::orderBy('name')
-				->whereNull('entity_id')
+				->where('entity_id', 0)
 				->get()
 				->keyBy('id');
 		}
