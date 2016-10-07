@@ -81,6 +81,9 @@
 					extend_expiry : $('input[name=daterangepicker_end]').val() 
 				},
 				dataType: 'json',
+				complete: function() {
+					loadingBarClose(modalID+' .load-bar');
+				},
 				error: function(result) {
 					$(modalID+' .action-btn').show();
 					notifier('danger',modalID+' .load-bar-notif', oops);
@@ -97,7 +100,7 @@
 	function clickConfirmTerminate() {
 		var modalID = '#terminate-user-modal';
 		$(modalID+' #confirm-btn').on('click', function () {
-			loadingBar(modalID+' .load-bar', 'Termination In process...');
+			loadingBar(modalID+' .load-bar-notif', 'Termination In process...');
 			$(modalID+' .action-input').hide();
 			$(modalID+' .action-btn').hide();
 			ajaxCsrfToken();
@@ -106,6 +109,9 @@
 				type: "post",
 				data: { userId : encrptyId },
 				dataType: 'json',
+				complete: function() {
+						loadingBarClose(modalID+' .load-bar');
+					},
 				error: function(result) {
 					$(modalID+' .action-btn').show();
 					notifier('danger',modalID+' .load-bar-notif', oops);
@@ -134,6 +140,9 @@
 					change_status : $('#change_status').val()
 				},
 				dataType: 'json',
+				complete: function() {
+					loadingBarClose(modalID+' .load-bar');
+				},
 				error: function(result) {
 					$(modalID+' .action-btn').show();
 					$(modalID+' .close-btn').hide();
@@ -164,6 +173,9 @@
 					change_group : $('#change_group').val()
 				},
 				dataType: 'json',
+				complete: function() {
+					loadingBarClose(modalID+' .load-bar');
+				},
 				error: function(result) {
 					$(modalID+' .action-btn').show();
 					$(modalID+' .close-btn').hide();
@@ -197,6 +209,9 @@
 						change_password : $('#change_password').val()
 					},
 					dataType: 'json',
+					complete: function() {
+						loadingBarClose(modalID+' .load-bar');
+					},
 					error: function(result) {
 						$(modalID+' .action-btn').show();
 						$(modalID+' .close-btn').hide();
@@ -224,6 +239,9 @@
 				type: "post",
 				data: { userId : encrptyId },
 				dataType: 'json',
+				complete: function() {
+					loadingBarClose(modalID+' .load-bar');
+				},
 				error: function(result) {
 					$(modalID+' .close-btn').hide();
 					notifier('danger',modalID+' .load-bar-notif', oops);
