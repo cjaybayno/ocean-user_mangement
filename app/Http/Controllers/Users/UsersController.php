@@ -32,6 +32,12 @@ class UsersController extends Controller
 	public function __construct(UserManagement $UserRepository)
 	{
 		$this->userRepo = $UserRepository;
+		
+		$this->middleware('ajax.request', ['except' => [
+            'getIndex',
+			'getRegister',
+			'getShow',
+        ]]);
 	}
 	
     /**
@@ -70,10 +76,6 @@ class UsersController extends Controller
      */
     public function getPaginate(Request $request)
     {
-		if (! $request->ajax()) {
-			abort(404);
-		}
-		
 		$select = [
 			'avatar',
 			'username', 
@@ -667,10 +669,6 @@ class UsersController extends Controller
 	*/
 	public function getGetGroupAccess(Request $request, $entityId = '')
 	{
-		if (! $request->ajax()) {
-			abort(404);
-		}
-		
 		return response()->json($this->userRepo->groups($entityId));
 	}
 }
