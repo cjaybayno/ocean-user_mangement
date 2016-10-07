@@ -105,7 +105,7 @@ class UsersController extends Controller
 								'avatar' => $user->avatar
 							])->render();
 				})
-				->addColumn('is_login', function ($user) {
+				->editColumn('is_login', function ($user) {
 					return view('modules/users/datatables.isLogin', [
 								'is_login' => $user->is_login
 							])->render();
