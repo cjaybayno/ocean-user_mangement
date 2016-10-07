@@ -19,6 +19,11 @@ use App\Http\Controllers\Controller;
 class UsersController extends Controller
 {
 	/**
+	* Frontend route 
+	*/
+	public $route = '/users';
+	
+	/**
      * The user repository implementation.
      */
 	protected $userRepo;
@@ -37,6 +42,7 @@ class UsersController extends Controller
             'getIndex',
 			'getRegister',
 			'getShow',
+			'getEditProfile',
         ]]);
 	}
 	
@@ -59,7 +65,9 @@ class UsersController extends Controller
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/datatables/tools/css/dataTables.tableTools.css',
 				'/assets/gentellela-alela/js/datatables/extensions/Responsive/css/dataTables.responsive.css',
-			]
+			],
+			'route' => $this->route,
+			
 		];
 		
 		Log::info('View users list: ', ['session' => Session::all()]);
@@ -148,7 +156,8 @@ class UsersController extends Controller
 				'/assets/gentellela-alela/js/fileinput/css/fileinput.min.css',
 				'/assets/gentellela-alela/css/icheck/flat/green.css',
 				'/assets/gentellela-alela/css/select/select2.min.css'
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		Log::info('View user registration: ', ['session' => Session::all()]);
@@ -303,7 +312,8 @@ class UsersController extends Controller
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css',
 				'/assets/gentellela-alela/css/icheck/flat/green.css',
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		/* === unset unnecessary user data for loggin === */
@@ -339,8 +349,7 @@ class UsersController extends Controller
 		])
 		->nest('terminate', 'modules/users.terminate')
 		->nest('changePassword', 'modules/users.password.change')
-		->nest('changeReset', 'modules/users.password.reset')
-		;
+		->nest('changeReset', 'modules/users.password.reset');
 	}
 	
 	/**
@@ -407,7 +416,8 @@ class UsersController extends Controller
 			'stylesheets' => [
 				'/assets/gentellela-alela/js/fileinput/css/fileinput.min.css',
 				'/assets/gentellela-alela/css/select/select2.min.css'
-			]
+			],
+			'route' => $this->route,
 		];
 		
 		Log::info('View user edit page: ', [

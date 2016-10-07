@@ -52,7 +52,7 @@
 				loadingModal('show','Saving ....');
 				ajaxCsrfToken();
 				$.ajax({
-					url: url+'/users/update-profile',
+					url: route+'/update-profile',
 					type: "post",
 					data: formData(),
 					dataType: 'json',

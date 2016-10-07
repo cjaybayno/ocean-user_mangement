@@ -74,7 +74,7 @@
 			$(modalID+' .action-btn').hide();
 			ajaxCsrfToken();
 			$.ajax({
-				url: url+"/users/extend-expiry",
+				url: route+'/extend-expiry',
 				type: "post",
 				data: {
 					userId : encrptyId, 
@@ -100,12 +100,12 @@
 	function clickConfirmTerminate() {
 		var modalID = '#terminate-user-modal';
 		$(modalID+' #confirm-btn').on('click', function () {
-			loadingBar(modalID+' .load-bar-notif', 'Termination In process...');
+			loadingBar(modalID+' .load-bar', 'Termination In process...');
 			$(modalID+' .action-input').hide();
 			$(modalID+' .action-btn').hide();
 			ajaxCsrfToken();
 			$.ajax({
-				url: url+"/users/terminate",
+				url: route+'/terminate',
 				type: "post",
 				data: { userId : encrptyId },
 				dataType: 'json',
@@ -133,7 +133,7 @@
 			$(modalID+' .action-btn').hide();
 			ajaxCsrfToken();
 			$.ajax({
-				url: url+"/users/change-status",
+				url: route+'/change-status',
 				type: "post",
 				data: {
 					userId : encrptyId,
@@ -166,7 +166,7 @@
 			$(modalID+' .action-btn').hide();
 			ajaxCsrfToken();
 			$.ajax({
-				url: url+"/users/change-group",
+				url: route+'/change-group',
 				type: "post",
 				data: {
 					userId : encrptyId,
@@ -202,7 +202,7 @@
 				$(modalID+' .action-btn').hide();
 				ajaxCsrfToken();
 				$.ajax({
-					url: url+"/users/change-password",
+					url: route+'/change-password',
 					type: "post",
 					data: {
 						userId : encrptyId,
@@ -235,7 +235,7 @@
 			$(modalID+' .action-btn').hide();
 			ajaxCsrfToken();
 			$.ajax({
-				url: url+"/users/reset-password",
+				url: route+'/reset-password',
 				type: "post",
 				data: { userId : encrptyId },
 				dataType: 'json',

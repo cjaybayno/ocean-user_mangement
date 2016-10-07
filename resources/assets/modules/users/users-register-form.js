@@ -71,7 +71,7 @@
 				loadingModal('show','Saving ....');
 				ajaxCsrfToken();
 				$.ajax({
-					url: url+'/users/store',
+					url: route+'/store',
 					type: "post",
 					data: formData(),
 					dataType: 'json',
@@ -116,7 +116,7 @@
 				entitySelector.removeAttr('required');
 				// get group access for admin
 				$.ajax({
-					url: url+'/users/get-group-access',
+					url: route+'/get-group-access',
 					dataType: 'json',
 					success: function(result) {
 						groupAccessSelector.select2({data: selec2DataFormat(result)}).removeAttr('disabled');
@@ -130,7 +130,7 @@
 				if (entityId != '') {
 					// get group access for this entity
 					$.ajax({
-					url: url+'/users/get-group-access/'+entityId,
+					url: route+'/get-group-access/'+entityId,
 					dataType: 'json',
 					success: function(result) {
 						groupAccessSelector.select2({data: selec2DataFormat(result)}).removeAttr('disabled');
@@ -153,7 +153,7 @@
 			
 			if (entityId != '') {
 				$.ajax({
-					url: url+'/users/get-group-access/'+entityId ,
+					url: route+'/get-group-access/'+entityId ,
 					dataType: 'json',
 					success: function(result) {
 						groupAccessSelector.select2({data: selec2DataFormat(result)}).removeAttr('disabled');
@@ -194,7 +194,7 @@
 		/* === validate username availability === */
 		window.Parsley.addAsyncValidator('validateUsername', function (xhr) {
 			return xhr.status !== 422;
-		}, url+'/users/validate-username/test');
+		}, route+'/validate-username');
 		
 		$(formNAme).parsley().validate();
 		

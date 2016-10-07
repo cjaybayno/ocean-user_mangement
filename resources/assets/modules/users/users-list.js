@@ -30,6 +30,6 @@
 			responsive: true,
 			processing: true,
 			serverSide: true,
-			ajax: url+'/users/paginate',
+			ajax: route+'/paginate',
 		});
 	}
