@@ -15,7 +15,6 @@
 			display: table-cell;
 			max-width: 220px;
 		}
-		
 	</style>
 	
 	@if ($viewType === 'view')
@@ -34,7 +33,7 @@
 
 @section('addScripts')
 	<script> 
-		var itemImages 	= '<img src="{!! !empty($user->avatar) ? asset($user->avatar) : url('resources/assets/gentellela-alela/images/user.png') !!}" style="height:120px; width:136px"/>' 
+		var itemImages 	= '<img src="{!! !empty($user->avatar) ? asset($user->avatar) : url('resources/assets/gentellela-alela/images/user.png') !!}" style="height:120px; width:125px"/>' 
 	</script>
 	
 	@if ($viewType === 'edit' OR $viewType === 'view')
