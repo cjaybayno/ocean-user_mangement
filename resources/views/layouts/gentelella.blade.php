@@ -120,7 +120,7 @@
 		// define route
 		var route = "{{ $route }}";
 		if (! route) {
-			console.log('warning: js "route" variable no assign value for ajax variable call');
+			console.warn('warning: js "route" variable no assign value for ajax variable call');
 		}
 	
 		// site url of application 
