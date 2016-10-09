@@ -1,51 +1,6 @@
 @extends('layouts.gentelella')
 @section('title', 'Sales Registration')
-@section('addScripts')
-	<script type="text/javascript">
-        $(document).ready(function () {
-			$('.select2').select2();
-			
-            // Smart Wizard 	
-            $('#wizard').smartWizard({
-				labelFinish:'Save',
-				hideButtonsOnDisabled: true,
-				onShowStep: function () {
-					scrollTop();
-				},
-				onFinish: function () {
-					alert('tapus na');
-					$('#wizard').smartWizard('setError',{stepnum:1,iserror:true});
-					$('#wizard').smartWizard('showMessage','Please correct the errors in the steps and continue');
-				}
-			});
-
-            function onFinishCallback() {
-                $('#wizard').smartWizard('showMessage', 'Finish Clicked');
-                //alert('Finish Clicked');
-            }
-			
-			function setError(stepnumber){
-            $('#wizard').smartWizard('setError',{stepnum:1, iserror:true});
-        }
-			
-			birthDateHandler();
-			
-			function birthDateHandler() {
-				var selector = "#birth_date";
-				$(selector).daterangepicker({
-					singleDatePicker : true,
-					calender_style : "picker_2",
-					showDropdowns: true,
-					startDate : moment().format('MM/DD/YYYY'),
-					maxDate :  moment().format('MM/DD/YYYY'),
-				});
-			}
-        });
-    </script>
-@endsection
-
 @section('content')
-
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
@@ -54,50 +9,70 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<!-- Smart Wizard -->
-				<p>Please fill up the following forms completely.</p>
 				<div id="wizard" class="form_wizard wizard_horizontal">
 					<ul class="wizard_steps">
 						<li>
 							<a href="#step-1">
 								<span class="step_no">1</span>
-								<span class="step_descr">Step 1<br /><small>Personal Information</small></span>
-							</a>
-						</li> 
-						<li>
-							<a href="#step-2">
-								<span class="step_no">2</span>
-								<span class="step_descr">Step 2<br /><small>Product Information</small></span>
+								<span class="step_descr">Step 1<br /><small>Choose Partner and Program</small></span>
 							</a>
 						</li>
 						<li>
+							<a href="#step-2">
+								<span class="step_no">2</span>
+								<span class="step_descr">Step 2<br /><small>Personal Information</small></span>
+							</a>
+						</li>						
+						<li>
 							<a href="#step-3">
 								<span class="step_no">3</span>
-								<span class="step_descr">Step 3<br /><small>Policy Information</small></span>
+								<span class="step_descr">Step 3<br /><small>Product Information</small></span>
 							</a>
 						</li>
 					</ul>
 					<div id="step-1">
 						<form id="" class="form-horizontal form-label-left">
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Customer Reference<span class="required">*</span></label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Partner Name<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									{!! Form::select('partner_name', ['CHOOSE..', 'XIOMI', 'SAMSUNG', 'LENOVO'], null, [
+										'class' => 'form-control select2',
+										'id'    => 'partner_name',
+									]) !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Program Name<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									{!! Form::select('program_name', ['Pre-Populated dependent to partner name', 'Program name 1', 'Program name 1', 'Program name 1'], null, [
+										'class' => 'form-control select2',
+										'id'    => 'program_name',
+									]) !!}
+								</div>
+							</div>
+						</form>
+					</div>
+					<div id="step-2">
+						<form id="" class="form-horizontal form-label-left">
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Customer Reference No.</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Customer ID<span class="required">*</span></label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Customer ID</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
+									<input type="text" name="" id="" value="System Generated" class="form-control col-md-7 col-xs-12" readonly>
 								</div>
 							</div>
+							<p class="well well-sm">Name and Address</p>
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Title<span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
 								</div>
 							</div>
-							<p class="well well-sm">Name and Address</p>
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">First Name<span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
@@ -105,9 +80,9 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name<span class="required">*</span></label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
+									<input type="text" name="" id="" class="form-control col-md-7 col-xs-12">
 								</div>
 							</div>
 							<div class="form-group">
@@ -123,7 +98,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Present Address<span class="required">*</span></label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Permanent Address<span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
 								</div>
@@ -163,7 +138,10 @@
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Primary National ID<span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
+									{!! Form::select('primary_national_id', ['CHOOSE..', 'SSS', 'GSIS', 'TIN', 'Drivers License'], null, [
+										'class' => 'form-control select2',
+										'id'    => 'primary_national_id',
+									]) !!}
 								</div>
 							</div>
 							<div class="form-group">
@@ -175,7 +153,10 @@
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Secondary National ID</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" required="required" class="form-control col-md-7 col-xs-12">
+									{!! Form::select('secondary_national_id', ['CHOOSE..', 'SSS', 'GSIS', 'TIN', 'Drivers License'], null, [
+										'class' => 'form-control select2',
+										'id'    => 'secondary_national_id',
+									]) !!}
 								</div>
 							</div>
 							<div class="form-group">
@@ -186,83 +167,47 @@
 							</div>
 						</form>
 					</div>
-					<div id="step-2">
+					<div id="step-3">
 						<form id="" class="form-horizontal form-label-left">
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Country Code<span class="required"></span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="Re-Populated" class="form-control col-md-7 col-xs-12" disabled>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Partner Code<span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									{!! Form::select('partner_code', ['CHOOSE..', 'XIOMI', 'SAMSUNG', 'LENOVO'], null, [
-										'class' => 'form-control select2',
-										'id'    => 'partner_code',
-									]) !!}
-								</div>
-							</div>
 							<p class="well well-sm">Choose Product</p>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Category<span class="required">*</span></label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Code</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									{!! Form::select('partner_code', ['CHOOSE..', 'Handsets', 'Phone', 'Screen'], null, [
-										'class' => 'form-control select2',
-										'id'    => 'product_category',
-									]) !!}
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Sub Category<span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									{!! Form::select('product_sub_category', ['CHOOSE..', 'Smartphone', 'TV'], null, [
-										'class' => 'form-control select2',
-										'id'    => 'product_sub_category',
-									]) !!}
-								</div>
-							</div>
-							<p class="well well-sm">Product Details</p>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Code<span class="required"></span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="Pre-Populated" class="form-control col-md-7 col-xs-12" readonly>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Code<span class="required"></span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="Pre-Populated" class="form-control col-md-7 col-xs-12" readonly>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Model</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="TGHB-5235-AJ" class="form-control col-md-7 col-xs-12" readonly>
+									<input type="text" name="" id="" class="form-control col-md-7 col-xs-12">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Description</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi" class="form-control col-md-7 col-xs-12" readonly>
+									{!! Form::select('partner_desc', ['CHOOSE..', 'Product 1', 'Product 2', 'Product 3'], null, [
+										'class' => 'form-control select2',
+										'id'    => 'partner_desc',
+									]) !!}
+								</div>
+							</div>
+							<p class="well well-sm">Product Details</p>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Model</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="pre-populated if exists or entered by the user " class="form-control col-md-7 col-xs-12" readonly>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Manufacturer</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="This is the manufacturer data" class="form-control col-md-7 col-xs-12" readonly>
+									<input type="text" name="" id="" value="Pre-Populated" class="form-control col-md-7 col-xs-12" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Manufacturer Period</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="Pre-Populated" class="form-control col-md-7 col-xs-12" readonly>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Price</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="$ 100.00" class="form-control col-md-7 col-xs-12" readonly>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Warranty Period</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="3 Months" class="form-control col-md-7 col-xs-12" readonly>
+									<input type="text" name="" id="" value="$100.00" class="form-control col-md-7 col-xs-12" readonly>
 								</div>
 							</div>
 							<div class="form-group">
@@ -272,19 +217,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Service Rate Band Code</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="Phones from 100$ to 500$" class="form-control col-md-7 col-xs-12" readonly>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">IMEI 1<span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="" class="form-control col-md-7 col-xs-12">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">IMEI 2<span class="required">*</span></label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Invoice No.<span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" name="" id="" value="" class="form-control col-md-7 col-xs-12">
 								</div>
@@ -295,50 +228,47 @@
 									<input type="text" name="" id="" value="" class="form-control col-md-7 col-xs-12">
 								</div>
 							</div>
-						 </form>
-					</div>
-					<div id="step-3">
-						<form id="" class="form-horizontal form-label-left">
+							<p class="well well-sm">Service Details</p>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Policy Reference Number</label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Product Service <span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="63564-85432-7-7" class="form-control col-md-7 col-xs-12" disabled>
+									{!! Form::select('partner_code', ['Pre-Populated from service mapping table'], null, [
+										'class' => 'form-control select2',
+										'id'    => 'product_category',
+									]) !!}
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Certificate Number<span class="required">*</span></label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Category</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id=""  class="form-control col-md-7 col-xs-12" >
+									{!! Form::select('partner_code', ['Pre-Populated (display only)'], null, [
+										'class' => 'form-control select2',
+										'id'    => 'product_category',
+									]) !!}
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Invoice Sales Date</label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Sub Category</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value="{{ date('Y/m/d') }}"  class="form-control col-md-7 col-xs-12" >
+									{!! Form::select('product_sub_category', ['Pre-Populated (display only)'], null, [
+										'class' => 'form-control select2',
+										'id'    => 'product_sub_category',
+									]) !!}
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Invoice Number<span class="required">*</span></label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Policy Plan</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value=""  class="form-control col-md-7 col-xs-12" >
+									<input type="text" name="" id="" value="Pre-Populated" class="form-control col-md-7 col-xs-12" disabled>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Price<span class="required">*</span></label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Policy Term</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value=""  class="form-control col-md-7 col-xs-12" >
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Broker<span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value=""  class="form-control col-md-7 col-xs-12" >
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">Insurance Plan<span class="required">*</span></label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="" id="" value=""  class="form-control col-md-7 col-xs-12" >
+									{!! Form::select('policy_term', ['Pre-Populated dependent to policy plan'], null, [
+										'class' => 'form-control select2',
+										'id'    => 'policy_term',
+									]) !!}
 								</div>
 							</div>
 							<div class="form-group">
@@ -347,14 +277,21 @@
 									<input type="text" name="" id="" value=""  class="form-control col-md-7 col-xs-12" >
 								</div>
 							</div>
-							<div class="form-group"><div class="form-group">
+							<div class="form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">Policy End Date<span class="required">*</span></label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input type="text" name="" id="" value=""  class="form-control col-md-7 col-xs-12" >
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Policy Price<span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" name="" id="" value="$100.00"  class="form-control col-md-7 col-xs-12" >
+								</div>
+							</div>
 						</form>
 					</div>
+				</div>
 			</div>
 		</div>
 	</div>

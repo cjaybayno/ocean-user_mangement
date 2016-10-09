@@ -42,7 +42,7 @@ class SalesRegistrationController extends Controller
 				'/assets/gentellela-alela/js/datepicker/daterangepicker.js',
 				'/assets/gentellela-alela/js/select/select2.full.js',
 				'/assets/gentellela-alela/js/wizard/jquery.smartWizard.js',
-				//'/assets/modules/api/partner-list.js' 
+				'/assets/modules/insurance/sales-registration.js',
 			],
 			'stylesheets' => [
 				'/assets/gentellela-alela/css/select/select2.min.css'
